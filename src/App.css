@@ -1,38 +1,143 @@
-.App {
-  text-align: center;
+.navContainer{
+justify-content: flex-end;
+background-color:  #f9fafb9e!important;
+}
+.imgHeader{
+width: -webkit-fill-available;
+}
+.navLinkContainer{
+    padding-right: 35px;
+    font-family: ui-monospace;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+.divtablaContainer{
+    text-align: -webkit-center;
+}
+.tablaContainer{
+    width: 70%;
+}
+.tablaContainer2{
+    width: 84%;
+    text-align: left;
+}
+.tablaContainer3{
+    width: 67%;
+    text-align: left;
+    background-image:url('./images/colores2.png');
+    height: 478px;
+    background-repeat: no-repeat;
+    background-position: left;
+
+}
+.containerTd{
+    padding-right: 40px;
+}
+.spanClass{
+    font-size: 14px;
+}
+.barra{
+    background-image:url('./images/barra.png');
+    height: 161px;
+    width: 100%;
+    background-repeat-x: no-repeat;
+    background-repeat-y: no-repeat;
+    background-size: cover;
+}
+.barra2{
+    
+    height: 161px;
+    width: 100%;
+    background-repeat-x: no-repeat;
+    background-repeat-y: no-repeat;
+    background-size: cover;
+}
+.rowContainer{
+    text-align: center;
+    padding-top: 50px;
+    font-weight: 900;
+    font-size: x-large;
+    color: white;
+    padding-bottom: 25px;
+}
+.rowContainerLogos{
+    text-align: center;
+    padding-top: 25px;
+    font-weight: 900;
+    font-size: x-large;
+    color: white;
+    padding-bottom: 25px;
+}
+.rowContainer span{
+    font-weight: 200;
+    font-size: 18;
+}
+.medidaLogos{
+    width: 100px;
+}
+.TextInfo{
+    padding-left: 100px;
+}
+.contentlogos{
+    background-color: #F4F4F4;
+}
+.prueba{
+    position:absolute; z-index:1; background-color:#FFFFFF;
+}
+.prueba2{
+    position:absolute; z-index:0;
+}
+.cardRegistro{
+    width: 650px;
+    float: right;
+    margin-top: 70px;
+    color:#fff;
+    text-align: center;
+}
+.cardRegistro1{
+    height: 50px;
+    border-radius: 50px 0px 0px 0px;
+    background-color: #32BD60;
+}
+.cardRegistro2{
+    background-color: #1D8D42;
+}
+.rowfooter{
+    height: 298px;
+    background-color: #3D3D3D;
+}
+.textFooter{
+    color: white;
+}
+.textFooter2{
+    color: white;
+    text-align: center;
+}
+.imgfooter{
+    background-image: url(./images/Frame.png);
+    background-repeat-x: no-repeat;
+    background-repeat-y: no-repeat;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+
+.direction{
+    padding-left: 100px;
+}
+.divServ{
+    width: 85%;
+    background-color: #C12C30;
+}
+.nosotrosimg{
+    background-image: url(./images/circulos.png);
+    background-repeat-x: no-repeat;
+    background-repeat-y: no-repeat;
+
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.barraContacto{
+    background-image: url(./images/barraContato.png);
+    height: 312px;
+    background-repeat-x: no-repeat;
+    background-repeat-y: no-repeat;
+    background-size: cover;
 }
