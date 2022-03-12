@@ -1,52 +1,16 @@
-.navContainer{
-justify-content: flex-end;
-background-color:  #f9fafb9e!important;
-}
 .imgHeader{
 width: -webkit-fill-available;
 }
-.navLinkContainer{
-    padding-right: 35px;
-    font-family: ui-monospace;
-}
-
-
-.divtablaContainer{
-    text-align: -webkit-center;
-}
-.tablaContainer{
-    width: 70%;
-}
-.tablaContainer2{
-    width: 84%;
-    text-align: left;
-}
 .tablaContainer3{
-    width: 67%;
-    text-align: left;
+    width: 100%;
     background-image:url('./images/colores2.png');
     height: 478px;
     background-repeat: no-repeat;
     background-position: left;
+}
 
-}
-.containerTd{
-    padding-right: 40px;
-}
-.spanClass{
-    font-size: 14px;
-}
-.barra{
+.barraInicio{
     background-image:url('./images/barra.png');
-    height: 161px;
-    width: 100%;
-    background-repeat-x: no-repeat;
-    background-repeat-y: no-repeat;
-    background-size: cover;
-}
-.barra2{
-    
-    height: 161px;
     width: 100%;
     background-repeat-x: no-repeat;
     background-repeat-y: no-repeat;
@@ -63,9 +27,6 @@ width: -webkit-fill-available;
 .rowContainerLogos{
     text-align: center;
     padding-top: 25px;
-    font-weight: 900;
-    font-size: x-large;
-    color: white;
     padding-bottom: 25px;
 }
 .rowContainer span{
@@ -75,69 +36,82 @@ width: -webkit-fill-available;
 .medidaLogos{
     width: 100px;
 }
-.TextInfo{
-    padding-left: 100px;
-}
-.contentlogos{
-    background-color: #F4F4F4;
-}
-.prueba{
-    position:absolute; z-index:1; background-color:#FFFFFF;
-}
-.prueba2{
-    position:absolute; z-index:0;
-}
-.cardRegistro{
-    width: 650px;
-    float: right;
-    margin-top: 70px;
-    color:#fff;
-    text-align: center;
-}
-.cardRegistro1{
-    height: 50px;
-    border-radius: 50px 0px 0px 0px;
-    background-color: #32BD60;
-}
-.cardRegistro2{
-    background-color: #1D8D42;
-}
-.rowfooter{
-    height: 298px;
-    background-color: #3D3D3D;
-}
-.textFooter{
-    color: white;
-}
-.textFooter2{
-    color: white;
-    text-align: center;
-}
-.imgfooter{
-    background-image: url(./images/Frame.png);
-    background-repeat-x: no-repeat;
-    background-repeat-y: no-repeat;
-}
-
-
-.direction{
-    padding-left: 100px;
-}
-.divServ{
-    width: 85%;
-    background-color: #C12C30;
-}
-.nosotrosimg{
-    background-image: url(./images/circulos.png);
-    background-repeat-x: no-repeat;
-    background-repeat-y: no-repeat;
-
-}
 
 .barraContacto{
-    background-image: url(./images/barraContato.png);
     height: 312px;
     background-repeat-x: no-repeat;
     background-repeat-y: no-repeat;
     background-size: cover;
 }
+.barraPerfil{
+    background-image: url(./images/barraPerfil.png);
+    height: 388px;;
+    background-repeat-x: no-repeat;
+    background-repeat-y: no-repeat;
+    background-size: cover;
+}
+
+
+@media (max-width: 767.98px) {
+    .navbarobs{
+        justify-content: center
+
+    }
+    .barraContacto{
+        background-image: url(./images/barraContato.png);
+    }
+    .bgFooterMovil{
+        background-color: #3D3D3D;
+        position: absolute !important;
+        bottom: unset !important;
+        left: unset !important;
+        width: 100% !important;
+    }
+    .bgFooterMovil p{
+        line-height: normal;
+    }
+    .cardRegistro{
+        width: 100%;
+        color:#fff;
+        text-align: center;
+        padding-top: 75px;
+    }
+    .grid-container {
+        display: grid;
+        grid-template-columns: 90%;
+        grid-gap: 10px;
+        place-content: center;
+    }
+  }
+  
+  @media (min-width: 768px) {
+      .navbarobs{
+        justify-content: space-between
+      }
+    .barraContacto{
+        background-image: url(./images/barraContato.png);
+    }
+    .MisionVision{
+        display: grid;
+        grid-template-columns: 45% 45%;
+        grid-gap: 10%;
+    }
+
+    .grid-containerContacto {
+        display: grid;
+        grid-template-columns: 60% 40%;
+    }
+    .cardRegistro{
+        padding-top: 75px;
+        width: 50%;
+        color:#fff;
+        text-align: center;
+        margin-left: 400px;
+    }
+    .grid-container {
+        display: grid;
+        grid-template-columns: 45% 45%;
+        grid-gap: 10%;
+    }
+  }
+

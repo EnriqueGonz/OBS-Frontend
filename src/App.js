@@ -1,41 +1,39 @@
 import './App.css';
 import React from "react";
-import { BrowserRouter as Router,Switch,Route,NavLink } from "react-router-dom";
-import FragmentInicio from './Components/FragmentInicio';
-import FragmentNosotros from './Components/FragmentNosotros';
+import { BrowserRouter as Router,Switch,Route } from "react-router-dom";
+import Nosotros from './Components/Nosotros';
+import Tienda from './Components/Tienda';
+import Perfil from './Components/Perfil';
+import Inicio from './Components/Inicio';
+import NavbarOBS from './Components/NavbarOBS.js';
+import FooterOBS from './Components/FooterOBS';
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <div className="button-container">
-
-          <div className="navbar navbar-expand-lg navbar-light bg-light navContainer">
-              <NavLink to="/Inicio" className="navbar-brand navLinkContainer">Inicio</NavLink>
-              <NavLink to="/Nosotros" className="navbar-brand navLinkContainer">Nosotros</NavLink>
-              <NavLink to="/Tienda" className="navbar-brand navLinkContainer">Tienda</NavLink>
-              <NavLink to="/Perfil" className="navbar-brand navLinkContainer">Perfil</NavLink>
-              <NavLink to="/Contacto" className="navbar-brand navLinkContainer">Contacto</NavLink>
-          </div>
-        </div>
-        
+        <NavbarOBS></NavbarOBS>
         <Switch>
+        <Route exact path="/">
+          <Inicio />
+        </Route>
         <Route path="/Inicio">
-            <FragmentInicio></FragmentInicio>
+            <Inicio/>
         </Route>
         <Route path="/Nosotros">
-            <FragmentNosotros></FragmentNosotros>
+            <Nosotros/>
         </Route>
         <Route path="/Tienda">
-            
+            <Tienda/>
         </Route>
         <Route path="/Perfil">
-            
+          <Perfil/>
         </Route>
         <Route path="/Contacto">
             
         </Route>
         </Switch>
+        <FooterOBS></FooterOBS>
       </Router>
     </div>
   );
