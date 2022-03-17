@@ -7,6 +7,7 @@ import Perfil from './Components/Perfil';
 import Inicio from './Components/Inicio';
 import NavbarOBS from './Components/NavbarOBS.js';
 import FooterOBS from './Components/FooterOBS';
+import Contacto from './Components/Contacto'
 
 function App() {
   return (
@@ -22,6 +23,9 @@ function App() {
         </Route>
         <Route path="/Nosotros">
             <Nosotros/>
+        </Route>
+        <Route path="/Contacto">
+            <Contacto/>
         </Route>
         <Route path="/Tienda">
             <Tienda/>
