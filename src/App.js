@@ -10,6 +10,8 @@ import FooterOBS from './Components/FooterOBS';
 import Contacto from './Components/Contacto'
 
 import Maps from './Components/Maps';
+import AgregarDireccion from './Components/AgregarDireccion';
+import MenuUsuario from './Components/MenuUsuario';
 
 function App() {
   return (
@@ -35,10 +37,17 @@ function App() {
         <Route path="/Perfil">
           <Perfil/>
         </Route>
-        <Route path="/Contacto">            
+
+        <Route path="/Direccion">
+          <AgregarDireccion/>
         </Route>
+
+        <Route path="/Menu">
+          <MenuUsuario/>
+        </Route>
+
         </Switch>
-        <FooterOBS></FooterOBS>
+        {/* <FooterOBS></FooterOBS> */}
       </Router>
     </div>
   );

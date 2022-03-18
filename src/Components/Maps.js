@@ -17,6 +17,7 @@ const Maps = () => {
   function MyComponent() {
     const map = useMapEvents({
       click: (e) => {
+        
         const { lat, lng } = e.latlng;
         L.marker([lat, lng], { icon }).addTo(map);
       }
@@ -27,24 +28,24 @@ const Maps = () => {
   return (
     <MapContainer
       center={[23.261534167651845, -101.62353515625]} // MX
-      zoom={5}
+      zoom={6}
       style={{ height: "100%", width:"100%" }}
        whenReady={(map) => {
-        //console.log(map);
          map.target.on("click", function (e) {
            const { lat, lng } = e.latlng;
            L.marker([lat, lng], { icon }).addTo(map.target);
          });
        }}
     >
+      
       <TileLayer
-        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
+        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
+      
       <MapConsumer>
         {(map) => {
           console.log("map center:", map.getCenter());
           map.on("click", function (e) {
+            //console.log('LatLng: ', e.latlng)
             const { lat, lng } = e.latlng;
             L.marker([lat, lng], { icon }).addTo(map);
           });
