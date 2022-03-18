@@ -9,11 +9,13 @@ import NavbarOBS from './Components/NavbarOBS.js';
 import FooterOBS from './Components/FooterOBS';
 import Contacto from './Components/Contacto'
 
+import Maps from './Components/Maps';
+
 function App() {
   return (
     <div className="App">
       <Router>
-        <NavbarOBS></NavbarOBS>
+      <NavbarOBS></NavbarOBS>
         <Switch>
         <Route exact path="/">
           <Inicio />
@@ -33,8 +35,7 @@ function App() {
         <Route path="/Perfil">
           <Perfil/>
         </Route>
-        <Route path="/Contacto">
-            
+        <Route path="/Contacto">            
         </Route>
         </Switch>
         <FooterOBS></FooterOBS>
