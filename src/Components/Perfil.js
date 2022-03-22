@@ -154,9 +154,8 @@ const Perfil = () => {
 
 
         if (is_valid_pw === true && isValidInputsRegister === true && passwordisStrong === true) {
-            console.log('entra a try');
             try {
-                axios.post('http://127.0.0.1:8000/users/api/register/', {
+                axios.post('https://obsbackend.herokuapp.com/users/api/register/', {
                     first_name: inputUser.first_name,
                     last_name: 'null', // This field will send as null
                     email: inputUser.email,
@@ -165,7 +164,6 @@ const Perfil = () => {
                     console.log(response.data);
                 }).catch((err) => {
                     console.log(err);
-                    console.log('err:', err.data);
                     setPwDoNotMatch(false);
                     setRegisterError(true);
                 });
@@ -206,9 +204,9 @@ const Perfil = () => {
     const handleSubmitLogin = (evt) => {
         let isValidaEmailPwLogin = validateEmailPwLogin();
 
-        if (isValidaEmailPwLogin === true) { //Admin:   email: sam@sam.com   password: sam123pw
+        if (isValidaEmailPwLogin === true) {
             try {
-                axios.post('http://127.0.0.1:8000/access/api/login/', {
+                axios.post('https://obsbackend.herokuapp.com/access/api/login/', {
                     email: inputLogin.emailLogin,
                     password: inputLogin.passwordLogin,
                 }, { headers }).then((response) => {
