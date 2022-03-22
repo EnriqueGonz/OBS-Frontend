@@ -10,6 +10,7 @@ const headers = {
 
 
 const Perfil = () => {
+    // Register
     const [inputUser, setInputUser] = useState({
         first_name: '',
         email: '',
@@ -17,12 +18,23 @@ const Perfil = () => {
         confirm_password: '',
     });
 
-
-    // inputs Validate
+    // inputs Validate Register
     const [validateFirstN, setValidateFirstN] = useState(false);
     const [validateEmail, setValidateEmail] = useState(false);
     const [pwDoNotMatch, setPwDoNotMatch] = useState(false);
     const [errorMessage, setErrorMessage] = useState(false);
+    const [registerError, setRegisterError] = useState(false);
+
+    // Login
+    const [inputLogin, setInputLogin] = useState({
+        emailLogin: '',
+        passwordLogin: '',
+    });
+
+    // inputs validate Login
+    const [validateEmailLogin, setValidateEmailLogin] = useState(false);
+    const [validatePasswordLogin, setValidatePasswordLogin] = useState(false);
+    const [loginError, setLoginError] = useState(false);
 
 
     function handleChangeRegister(evt) {
@@ -33,35 +45,15 @@ const Perfil = () => {
     }
 
 
-    function validatePassword() {
-        let pw = inputUser.password;
-        let confirmPw = inputUser.confirm_password;
-
-        if (pw === confirmPw) {
-            return true;
-        } else {
-            setErrorMessage(false);
-            setPwDoNotMatch(true);
-            return false;
-        }
+    function handleChangeLogin(evt) {
+        const name = evt.target.name;
+        const value = evt.target.value;
+        console.log(name, '  ', value);
+        setInputLogin(values => ({ ...values, [name]: value }))
     }
 
 
-    function validateIsStrong() {
-        let value = inputUser.password;
-        if (validator.isStrongPassword(value, {
-            minLength: 8, minUppercase: 1, minNumbers: 1, minSymbols: 1
-        })) {
-            setPwDoNotMatch(false);
-            setErrorMessage(false);
-        } else {
-            setPwDoNotMatch(false);
-            setErrorMessage(true);
-        }
-    }
-
-
-    // Passwords do not match message
+    //Messages
     const FirstNameMessage = () => (
         <div style={{ marginBottom: "1%" }}>
             <span style={{ color: "#FF5733" }}>Por favor, ingrese su nombre.</span>
@@ -71,6 +63,12 @@ const Perfil = () => {
     const EmailMessage = () => (
         <div style={{ marginBottom: "1%" }}>
             <span style={{ color: "#FF5733" }}>Por favor, ingrese un correo válido.</span>
+        </div>
+    )
+
+    const PasswordLoginMessage = () => (
+        <div style={{ marginBottom: "1%" }}>
+            <span style={{ color: "#FF5733" }}>Por favor, ingrese su contraseña.</span>
         </div>
     )
 
@@ -88,10 +86,50 @@ const Perfil = () => {
         </div>
     )
 
+    // Login or Register Error
+    const LoginErrorMessage = () => (
+        <div style={{ marginBottom: "1%" }}>
+            <span style={{ color: "#FF5733" }}>El correo o la contraseña son incorrectas. Inténtelo de nuevo.</span>
+        </div>
+    )
 
-    const handleSubmitRegister = (evt) => {
+    const RegisterErrorMessage = () => (
+        <div style={{ marginBottom: "1%" }}>
+            <span style={{ color: "#FF5733" }}>¡Algo ha salido mal!, Inténtelo de nuevo.</span>
+        </div>
+    )
+
+
+    function validatePassword() {
+        let pw = inputUser.password;
+        let confirmPw = inputUser.confirm_password;
+
+        if (pw === confirmPw) {
+            setErrorMessage(false);
+            return true;
+        } else {
+            setPwDoNotMatch(true);
+            return false;
+        }
+    }
+
+
+    function validateIsStrong() {
+        let value = inputUser.password;
+        if (validator.isStrongPassword(value, {
+            minLength: 8, minUppercase: 1, minNumbers: 1, minSymbols: 1
+        })) {
+            return true;
+        } else {
+            setErrorMessage(true);
+            return false;
+        }
+    }
+
+    function validateInputsRegister() {
         if (validator.isEmpty(inputUser.first_name)) {
             setValidateFirstN(true);
+            return false;
         } else {
             setValidateFirstN(false);
         }
@@ -100,31 +138,89 @@ const Perfil = () => {
             setValidateEmail(false);
         } else {
             setValidateEmail(true);
+            return false;
         }
 
+        return true;
+    }
+
+    const handleSubmitRegister = (evt) => {
+        setRegisterError(false);
+        setErrorMessage(false);
+
+        let isValidInputsRegister = validateInputsRegister();
         let is_valid_pw = validatePassword();
-        if (is_valid_pw === true) {
-            setPwDoNotMatch(false);
-            validateIsStrong();
+        let passwordisStrong = validateIsStrong();
+
+
+        if (is_valid_pw === true && isValidInputsRegister === true && passwordisStrong === true) {
+            console.log('entra a try');
             try {
                 axios.post('http://127.0.0.1:8000/users/api/register/', {
                     first_name: inputUser.first_name,
                     last_name: 'null', // This field will send as null
                     email: inputUser.email,
                     password: inputUser.password,
-                    phone: '', // This field will be sent empty
-                    image: '', // This field will be sent empty
                 }, { headers }).then((response) => {
                     console.log(response.data);
                 }).catch((err) => {
                     console.log(err);
+                    console.log('err:', err.data);
+                    setPwDoNotMatch(false);
+                    setRegisterError(true);
                 });
 
             } catch (error) {
                 //Show error here
+                setPwDoNotMatch(false);
+                setRegisterError(true);
             }
         } else {
             //
+        }
+    }
+
+
+    function validateEmailPwLogin() {
+        setLoginError(false);
+        // Email
+        if (validator.isEmail(inputLogin.emailLogin)) {
+            setValidateEmailLogin(false);
+        } else {
+            setValidateEmailLogin(true);
+            return false;
+        }
+
+        // Password
+        if (validator.isEmpty(inputLogin.passwordLogin)) {
+            setValidatePasswordLogin(true);
+            return false;
+        } else {
+            setValidatePasswordLogin(false);
+        }
+
+
+        return true;
+    }
+
+    const handleSubmitLogin = (evt) => {
+        let isValidaEmailPwLogin = validateEmailPwLogin();
+
+        if (isValidaEmailPwLogin === true) { //Admin:   email: sam@sam.com   password: sam123pw
+            try {
+                axios.post('http://127.0.0.1:8000/access/api/login/', {
+                    email: inputLogin.emailLogin,
+                    password: inputLogin.passwordLogin,
+                }, { headers }).then((response) => {
+                    console.log(response.data);
+                }).catch((err) => {
+                    console.log(err);
+                    setLoginError(true);
+                });
+            } catch (error) {
+                //   
+                setLoginError(true);
+            }
         }
     }
 
@@ -140,22 +236,25 @@ const Perfil = () => {
             <div className="container" style={{ marginBottom: 50, marginTop: 50 }}>
                 <div className="grid-container">
                     <div className="container">
-                        <Form>
+                        <Form onSubmit={handleSubmitLogin}>
                             <h2 style={{ borderLeft: "solid", borderWidth: 10, borderColor: "#C4C4C4" }}><b>&nbsp; Acceder</b></h2>
                             <Row style={{ marginBottom: 5 }}>
                                 <Form.Group as={Col} controlId="">
                                     <Form.Label>Email</Form.Label>
-                                    <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0, borderStyle: "none" }} required type="text" name="email" />
+                                    <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0, borderStyle: "none" }} required type="text" name="emailLogin" value={inputLogin.emailLogin} onChange={handleChangeLogin} />
+                                    {validateEmailLogin ? <EmailMessage /> : null}
                                 </Form.Group>
                             </Row>
                             <Row style={{ marginBottom: 5 }}>
                                 <Form.Group as={Col} controlId="">
                                     <Form.Label>Contraseña</Form.Label>*
-                                    <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0, borderStyle: "none" }} required type="password" name="password" />
+                                    <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0, borderStyle: "none" }} required type="password" name="passwordLogin" value={inputLogin.passwordLogin} onChange={handleChangeLogin} />
+                                    {validatePasswordLogin ? <PasswordLoginMessage /> : null}
                                 </Form.Group>
+                                {loginError ? <LoginErrorMessage /> : null}
                             </Row>
                             <a href="/retorepassword" style={{ paddingRight: 15 }}>¿Olvidate la contraseña</a>
-                            <Button style={{ marginTop: 20, background: "#C12C30", borderRadius: 0, border: "none", float: "right", borderStyle: "none" }} type="button">
+                            <Button style={{ marginTop: 20, background: "#C12C30", borderRadius: 0, border: "none", float: "right", borderStyle: "none" }} type="button" onClick={handleSubmitLogin}>
                                 <b>Acceder</b>
                             </Button>
                         </Form>
@@ -194,6 +293,7 @@ const Perfil = () => {
                                 {/* Error message */}
                                 {pwDoNotMatch ? <PwNotMatchMessage /> : null}
                                 {errorMessage ? <PasswordNotStrongMessage /> : null}
+                                {registerError ? <RegisterErrorMessage /> : null}
                             </Row>
                             <Button style={{ marginTop: 20, background: "#C12C30", borderRadius: 0, border: "none", float: "right" }} type="button" onClick={handleSubmitRegister}>
                                 <b>REGISTRARSE</b>
