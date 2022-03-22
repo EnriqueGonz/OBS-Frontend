@@ -5,6 +5,7 @@ import { ReactComponent as IconTelefono} from '../images/icons/telefono.svg'
 import { ReactComponent as Redes} from '../images/icons/RedesSociales.svg'
 import { ReactComponent as IconWhat} from '../images/icons/Whatsapp.svg'
 import { Form,Button,Row,Col } from 'react-bootstrap';
+import Maps from './Maps';
 
 const Contacto = () =>{
 
@@ -74,9 +75,9 @@ const Contacto = () =>{
                     </div>
                     <div className='grid-item'>
                         <div className='column'>
-                            <h2 style={{borderLeft:"solid",borderWidth:10,borderColor:"#C4C4C4"}}><b>&nbsp; Ubícanos</b></h2>
-                            +
+                            <h2 style={{borderLeft:"solid",borderWidth:10,borderColor:"#C4C4C4"}}><b>&nbsp; Ubícanos</b></h2>                            
                         </div>
+                        <Maps></Maps>
                     </div>
                 </div>
             </div>

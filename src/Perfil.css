@@ -1,0 +1,41 @@
+
+/*Movil*/
+@media (max-width: 767.98px) {
+    .grid-container-perfil {
+        display: grid;
+        grid-template-columns: auto;
+        place-content: center;
+    }
+    .datosPersonales{
+        display: flex;
+    }.logout{
+        width:100%;
+        text-align: center;
+    }
+
+}
+
+/*Web*/
+@media (min-width: 768px) {
+    .grid-container-perfil {
+        display: grid;
+        grid-template-columns: 15% 82%;
+        grid-gap: 3%;
+        place-content: center;
+    }
+    .btnposs{
+        text-align: end;
+    }
+    .logout{
+        width:50%;
+        text-align: center;
+    }
+
+}
+
+.btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 5px;
+}
+

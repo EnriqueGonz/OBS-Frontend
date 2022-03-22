@@ -1,13 +1,17 @@
 import './App.css';
+
 import React from "react";
 import { BrowserRouter as Router,Switch,Route } from "react-router-dom";
 import Nosotros from './Components/Nosotros';
 import Tienda from './Components/Tienda';
 import Perfil from './Components/Perfil';
+import PerfilMain from './Components/PerfilMain';
 import Inicio from './Components/Inicio';
 import NavbarOBS from './Components/NavbarOBS.js';
 import FooterOBS from './Components/FooterOBS';
 import Contacto from './Components/Contacto'
+
+var token = localStorage.getItem('token');  
 
 function App() {
   return (
@@ -30,12 +34,12 @@ function App() {
         <Route path="/Tienda">
             <Tienda/>
         </Route>
-        <Route path="/Perfil">
-          <Perfil/>
+        <Route path="/Perfil" render={() => {
+          return token ? <PerfilMain/> : <Perfil/>
+        }}>
         </Route>
-        <Route path="/Contacto">
-            
-        </Route>
+
+        
         </Switch>
         <FooterOBS></FooterOBS>
       </Router>
