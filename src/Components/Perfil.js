@@ -214,6 +214,7 @@ const Perfil = () => {
                     localStorage.clear();
                     localStorage.setItem('token', response.data.token);
                     localStorage.setItem('idUsuario', response.data.pk);
+                    localStorage.setItem('username', response.data.username);
                     window.location.href = '/Perfil/'
                 }).catch((err) => {
                     console.log(err);
@@ -241,14 +242,14 @@ const Perfil = () => {
                         <Form onSubmit={handleSubmitLogin}>
                             <h2 style={{ borderLeft: "solid", borderWidth: 10, borderColor: "#C4C4C4" }}><b>&nbsp; Acceder</b></h2>
                             <Row style={{ marginBottom: 5 }}>
-                                <Form.Group as={Col} controlId="">
+                                <Form.Group as={Col} >
                                     <Form.Label>Email</Form.Label>
                                     <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0, borderStyle: "none" }} required type="text" name="emailLogin" value={inputLogin.emailLogin} onChange={handleChangeLogin} />
                                     {validateEmailLogin ? <EmailMessage /> : null}
                                 </Form.Group>
                             </Row>
                             <Row style={{ marginBottom: 5 }}>
-                                <Form.Group as={Col} controlId="">
+                                <Form.Group as={Col} >
                                     <Form.Label>Contraseña</Form.Label>*
                                     <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0, borderStyle: "none" }} required type="password" name="passwordLogin" value={inputLogin.passwordLogin} onChange={handleChangeLogin} />
                                     {validatePasswordLogin ? <PasswordLoginMessage /> : null}
@@ -265,14 +266,14 @@ const Perfil = () => {
                         <Form onSubmit={handleSubmitRegister}>
                             <h2 style={{ borderLeft: "solid", borderWidth: 10, borderColor: "#C4C4C4" }}><b>&nbsp; Registrate</b></h2>
                             <Row style={{ marginBottom: 5 }}>
-                                <Form.Group as={Col} controlId="">
+                                <Form.Group as={Col} >
                                     <Form.Label>Nombre de usuario</Form.Label>
                                     <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0, borderStyle: "none" }} required type="text" name="first_name" value={inputUser.first_name} onChange={handleChangeRegister} />
                                     {validateFirstN ? <FirstNameMessage /> : null}
                                 </Form.Group>
                             </Row>
                             <Row style={{ marginBottom: 5 }}>
-                                <Form.Group as={Col} controlId="">
+                                <Form.Group as={Col} >
                                     <Form.Label>Email *</Form.Label>*
                                     <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0, borderStyle: "none" }} required type="email" name="email" value={inputUser.email} onChange={handleChangeRegister} />
                                     {validateEmail ? <EmailMessage /> : null}
@@ -280,14 +281,14 @@ const Perfil = () => {
                             </Row>
 
                             <Row style={{ marginBottom: 5 }}>
-                                <Form.Group as={Col} controlId="" >
+                                <Form.Group as={Col}  >
                                     <Form.Label>Contraseña *</Form.Label>
                                     <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0, borderStyle: "none" }} required type="password" name="password" value={inputUser.password} onChange={handleChangeRegister} />
                                 </Form.Group>
                             </Row>
 
                             <Row style={{ marginBottom: 5 }}>
-                                <Form.Group as={Col} controlId="">
+                                <Form.Group as={Col}>
                                     <Form.Label>Confirma contraseña *</Form.Label>
                                     <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0, borderStyle: "none" }} required type="password" name="confirm_password" value={inputUser.confirm_password} onChange={handleChangeRegister} />
                                 </Form.Group>

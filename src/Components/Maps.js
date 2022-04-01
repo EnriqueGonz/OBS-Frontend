@@ -16,7 +16,7 @@ const Maps = () => {
 
   return (
     <MapContainer
-      center={[19.3834533, -99.1068009,10.28]} // MX
+      center={[19.509066, -99.196682,16.28]} // MX
       zoom={6}
       style={{ height: "100%", width:"100%" }}
        whenReady={(map) => {

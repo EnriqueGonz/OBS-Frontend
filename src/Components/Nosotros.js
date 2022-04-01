@@ -38,7 +38,7 @@ const Nosotros = () =>{
                     <div className='grid-item'>
                         <div className='column'>
                             <h2 style={{borderLeft:"solid",borderWidth:10,borderColor:"#C4C4C4"}}><b>&nbsp; Vision</b></h2>
-                            <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p>
+                            <p>Que nuestros productos sean de la preferencia de nuestros clientes por la calidad, innovación y precios accesibles, así como por el servicio otorgado.</p>
                         </div>
                     </div>
                 </div>

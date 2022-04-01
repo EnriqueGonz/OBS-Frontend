@@ -10,6 +10,8 @@ import Inicio from './Components/Inicio';
 import NavbarOBS from './Components/NavbarOBS.js';
 import FooterOBS from './Components/FooterOBS';
 import Contacto from './Components/Contacto'
+import ProductoEspecifico from './Components/ProductoEspecifico';
+import UserCarShop from './Components/UserCarShop';
 
 var token = localStorage.getItem('token');  
 
@@ -34,6 +36,15 @@ function App() {
         <Route path="/Tienda">
             <Tienda/>
         </Route>
+        <Route path="/Producto/:idproducto/">
+            <ProductoEspecifico/>
+        </Route>
+
+        <Route path="/Micarrito/">
+            <UserCarShop/>
+        </Route>
+
+
         <Route path="/Perfil" render={() => {
           return token ? <PerfilMain/> : <Perfil/>
         }}>

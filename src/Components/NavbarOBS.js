@@ -32,7 +32,7 @@ const NavbarOBS = () =>{
                 <Nav>
                     <Nav.Link href="/Inicio/">Inicio</Nav.Link>
                     <Nav.Link href="/Nosotros/">Nosotros</Nav.Link>
-                    <Nav.Link href="/Tienda/">Tienda</Nav.Link>
+                    <Nav.Link href="/Tienda">Tienda</Nav.Link>
                     <Nav.Link href="/Perfil/">Perfil</Nav.Link>
                     <Nav.Link href="/contacto/">Contacto</Nav.Link>
                 </Nav>
