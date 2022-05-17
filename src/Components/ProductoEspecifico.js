@@ -4,7 +4,10 @@ import { useParams } from 'react-router-dom';
 import LoginModal from './LoginModal';
 import { Modal } from 'react-bootstrap';
 import { MdAdd, MdRemove,MdCategory,MdReceiptLong,MdInfo } from 'react-icons/md';
+import '../config';
 
+
+var baseUrl = global.config.i18n.route.url;
 var token = localStorage.getItem('token');
 var id_usuario = localStorage.getItem('idUsuario');
 
@@ -25,7 +28,7 @@ const ProductoEspecifico = () =>{
 
     useEffect(() => {
         try {
-            axios.get('https://obsbackend.herokuapp.com/products/api/get_specific_product/'+idproducto+'/')
+            axios.get(baseUrl+'/products/api/specific-product/'+idproducto+'/')
             .then((response) => {
             console.log(response);
             setlistProduct(response.data[0])
@@ -57,7 +60,7 @@ const ProductoEspecifico = () =>{
         if(token === null){
             handleShow();
         }else{
-            axios.post('https://obsbackend.herokuapp.com/shoppingcart/api/add/',{
+            axios.post(baseUrl+'/shoppingcart/api/add/',{
                 user:id_usuario,
                 products:idproducto,
                 amount:amount

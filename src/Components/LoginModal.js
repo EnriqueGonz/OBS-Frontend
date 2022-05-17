@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import validator from 'validator'
+import '../config';
 
+
+var baseUrl = global.config.i18n.route.url;
 const headers = {
     'Content-Type': 'application/json',
 };
@@ -80,7 +83,7 @@ const LoginModal = () => {
 
         if (isValidaEmailPwLogin === true) {
             try {
-                axios.post('https://obsbackend.herokuapp.com/access/api/login/', {
+                axios.post(baseUrl+'/access/api/login/', {
                     email: inputLogin.emailLogin,
                     password: inputLogin.passwordLogin,
                 }, { headers }).then((response) => {

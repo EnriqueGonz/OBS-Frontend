@@ -5,7 +5,10 @@ import '../Productos.css';
 import { ReactComponent as IconCarShop} from '../images/icons/CarShop.svg'
 import { Dropdown,Pagination,Modal } from 'react-bootstrap';
 import LoginModal from './LoginModal';
+import '../config';
 
+
+var baseUrl = global.config.i18n.route.url;
 var paginas = 0;
 var token = localStorage.getItem('token');
 var id_usuario = localStorage.getItem('idUsuario');
@@ -27,13 +30,14 @@ const Tienda = () =>{
 
     useEffect(() => {
         try {
-            axios.post('https://obsbackend.herokuapp.com/products/api/get_list/',{
+            axios.post(baseUrl+'/products/api/all-products/',{
                 product_name:"",
+                category_name:"",
                 page:1
             })
             .then((response) => {
             console.log(response);
-            paginas = response.data[0][0]["num_pages "];
+            paginas = response.data[0][0]["num_pages"];
             setlistProducts(response.data[1]);
             for (let num = 0; num < array.length; num++) {
                 setArray([...array, num])
@@ -49,9 +53,10 @@ const Tienda = () =>{
     },[setlistProducts],[setArray])
 
     function methodName(number){
-        axios.post('https://obsbackend.herokuapp.com/products/api/get_list/',{
+        axios.post(baseUrl+'/products/api/all-products/',{
             product_name:"",
-            page:number
+            page:number,
+            category_name:""
         })
         .then((response) => {
         console.log(response);
@@ -66,7 +71,7 @@ const Tienda = () =>{
         if(token === null){
             handleShow();
         }else{
-            axios.post('https://obsbackend.herokuapp.com/shoppingcart/api/add/',{
+            axios.post(baseUrl+'/shoppingcart/api/add/',{
                 user:id_usuario,
                 products:id_producto,
                 amount:1

@@ -3,7 +3,10 @@ import header from '../images/headerPerfil.png';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import validator from 'validator'
+import '../config';
 
+
+var baseUrl = global.config.i18n.route.url;
 const headers = {
     'Content-Type': 'application/json',
 };
@@ -155,7 +158,7 @@ const Perfil = () => {
 
         if (is_valid_pw === true && isValidInputsRegister === true && passwordisStrong === true) {
             try {
-                axios.post('https://obsbackend.herokuapp.com/users/api/register/', {
+                axios.post(baseUrl+'/users/api/register/', {
                     first_name: inputUser.first_name,
                     last_name: 'null', // This field will send as null
                     email: inputUser.email,
@@ -206,16 +209,24 @@ const Perfil = () => {
 
         if (isValidaEmailPwLogin === true) {
             try {
-                axios.post('https://obsbackend.herokuapp.com/access/api/login/', {
+                axios.post(baseUrl+'/access/api/login/', {
                     email: inputLogin.emailLogin,
                     password: inputLogin.passwordLogin,
                 }, { headers }).then((response) => {
                     console.log(response);
                     localStorage.clear();
-                    localStorage.setItem('token', response.data.token);
-                    localStorage.setItem('idUsuario', response.data.pk);
-                    localStorage.setItem('username', response.data.username);
-                    window.location.href = '/Perfil/'
+                    if(response.data.is_staff === true){
+                        localStorage.setItem('tokenAdmin', response.data.token);
+                        localStorage.setItem('idAdmin', response.data.pk);
+                        localStorage.setItem('usernameAdmin', response.data.username);
+                        window.location.href = '/admin/inicio/'
+
+                    }else{
+                        localStorage.setItem('token', response.data.token);
+                        localStorage.setItem('idUsuario', response.data.pk);
+                        localStorage.setItem('username', response.data.username);
+                        window.location.href = '/Perfil/'
+                    }
                 }).catch((err) => {
                     console.log(err);
                     setLoginError(true);

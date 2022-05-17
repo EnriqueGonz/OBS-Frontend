@@ -4,12 +4,14 @@ import header from '../images/HeaderCarrito.png';
 import '../Productos.css';
 import { MdDeleteOutline, } from 'react-icons/md';
 import { Modal } from 'react-bootstrap';
+import '../config';
 
 
+var baseUrl = global.config.i18n.route.url;
 var token = localStorage.getItem('token');
 var username = localStorage.getItem('username');
 var idproducto = 0;
-var costo_total = 0;
+
 
 const headers = {
   'Content-Type': 'application/json',
@@ -29,7 +31,7 @@ const UserCarShop = () => {
 
   useEffect(() => {
     try {
-        axios.get('https://obsbackend.herokuapp.com/shoppingcart/api/my-shopping-cart/'+username+'/', { headers })
+        axios.get(baseUrl+'/shoppingcart/api/my-shopping-cart/'+username+'/', { headers })
         .then((response) => {
           console.log(response);
           setlistProducts(response.data);
@@ -53,7 +55,7 @@ const UserCarShop = () => {
 
 
     function methodRefreshList(){
-        axios.get('https://obsbackend.herokuapp.com/shoppingcart/api/my-shopping-cart/'+username+'/', { headers })
+        axios.get(baseUrl+'/shoppingcart/api/my-shopping-cart/'+username+'/', { headers })
         .then((response) => {
           console.log(response);
           setlistProducts(response.data);
@@ -69,7 +71,7 @@ const UserCarShop = () => {
     }
 
     function methodDelCarShop(){
-        axios.delete('https://obsbackend.herokuapp.com/shoppingcart/api/delete/'+idproducto+'/', { headers })
+        axios.delete(baseUrl+'/shoppingcart/api/delete/'+idproducto+'/', { headers })
         .then((response) => {
         console.log(response);
         if (response.status === 200) {
@@ -90,10 +92,9 @@ const UserCarShop = () => {
             if( parseInt(inputsAmount[i].value) === parseInt(listProducts[i][0][0]["amount"])){
                 console.log(listProducts[i][0][0]["amount"])
                 console.log(inputsAmount[i].value )
-                console.log('icuales')
             }else{
                 console.log('-')
-                axios.put('https://obsbackend.herokuapp.com/shoppingcart/api/update/'+listProducts[i][0][0]["id"]+'/',{
+                axios.put(baseUrl+'/shoppingcart/api/update/'+listProducts[i][0][0]["id"]+'/',{
                     amount:parseInt(inputsAmount[i].value)
                 }, { headers })
                 .then((response) => {
@@ -137,14 +138,20 @@ const UserCarShop = () => {
                             </div>
                         </td>
                         <td>
-                            <img style={{width:65,height:65,margin:10}} src={'https://obsbucket.s3.amazonaws.com/'+item[1][0]["image"]} alt=""></img>
+                            <a href={'/producto/'+item[1][0]["id"]}><img style={{width:65,height:65,margin:10}} src={'https://obsbucket.s3.amazonaws.com/'+item[1][0]["image"]} alt=""></img></a>
                         </td>
-                        <td><h5 style={{color:"#C12C30"}}><b>{item[1][0]["product_name"]} <br/></b></h5><p>{item[1][0]["description"]}</p></td>
-                        <td>{item[0][0]["unit_price"]}</td>
+                        <td>
+                            <a href={'/producto/'+item[1][0]["id"]}><h5 style={{color:"#C12C30"}}><b>{item[1][0]["product_name"]} <br/></b></h5></a><p>{item[1][0]["description"]}</p>
+                        </td>
+                        <td>
+                            {item[0][0]["unit_price"]}
+                        </td>
                         <td>
                             <input style={{width:50}} type="number" defaultValue={item[0][0]["amount"]} min="1" max="100" name='foo'/>
                         </td>
-                        <td>{item[0][0]["total_price"]}</td>
+                        <td>
+                            {item[0][0]["total_price"]}
+                        </td>
                     </tr>
                 ))}
                 <tr>
@@ -158,6 +165,7 @@ const UserCarShop = () => {
                 </tr>
             </tbody>
         </table>
+
         
         </div>
         </div>

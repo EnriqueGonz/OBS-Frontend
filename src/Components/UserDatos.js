@@ -1,10 +1,13 @@
 import React,{ useState,useEffect } from 'react';
 import { Form,Button,Row,Col,Modal } from 'react-bootstrap';
 import axios from 'axios';
+import '../config';
 
 
+var baseUrl = global.config.i18n.route.url;
 var token = localStorage.getItem('token');
 var id_usuario = localStorage.getItem('idUsuario');
+var username = localStorage.getItem('username');
 
 const headers = {
     'Content-Type': 'application/json',
@@ -48,7 +51,7 @@ const UserDatos = () =>{
 
     useEffect(() =>{  
         try {
-          axios.get('https://obsbackend.herokuapp.com/users/api/user_details/'+id_usuario+'/',{ headers })
+          axios.get(baseUrl+'/users/api/my-account/'+username+'/',{ headers })
           .then((response) => {
             console.log(response.data);
             setlistUserData(response.data);
@@ -66,7 +69,7 @@ const UserDatos = () =>{
 
       function methodUpdateUser() {
           console.log('methodUpdateUser');
-          axios.put('https://obsbackend.herokuapp.com/users/api/update_customer/'+id_usuario+'/',{
+          axios.put(baseUrl+'/users/api/update_customer/'+id_usuario+'/',{
             first_name:inputs.first_name,
             last_name:inputs.last_name,
             email:inputs.email,

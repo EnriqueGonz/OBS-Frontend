@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../config';
 
-
+var baseUrl = global.config.i18n.route.url;
 var token = localStorage.getItem('token');
 var id_usuario = localStorage.getItem('idUsuario');
 
@@ -19,7 +20,7 @@ const UserPedidos = () => {
 
   useEffect(() => {
     try {
-        axios.get('https://obsbackend.herokuapp.com/orders/api/get_list_customer/' + id_usuario + '/', { headers })
+        axios.get(baseUrl+'/orders/api/get_list_customer/' + id_usuario + '/', { headers })
         .then((response) => {
           console.log(response);
           setlistOrder(response.data);
