@@ -33,7 +33,8 @@ const Tienda = () =>{
             axios.post(baseUrl+'/products/api/all-products/',{
                 product_name:"",
                 category_name:"",
-                page:1
+                subcategory_name:"",
+                page:1,
             })
             .then((response) => {
             console.log(response);
@@ -56,7 +57,8 @@ const Tienda = () =>{
         axios.post(baseUrl+'/products/api/all-products/',{
             product_name:"",
             page:number,
-            category_name:""
+            category_name:"",
+            subcategory_name:""
         })
         .then((response) => {
         console.log(response);
@@ -183,7 +185,12 @@ const Tienda = () =>{
                 {listProducts.map((item,index) => (
                     <div key={index} style={{marginBottom:20}}>
                         <div style={{textAlign:"center",marginBottom:10}}>
-                            <a href={'/producto/'+item.id}><img alt="" className='imgProducto' src={'https://obsbucket.s3.amazonaws.com/'+item.image}></img></a>
+                            {
+                                (item.image === "")
+                                ? <a href={'/producto/'+item.id}><img alt="" className='imgProducto' style={{objectFit:"none"}} src='https://obsbucket.s3.amazonaws.com/assets/images/imgDefault.png'></img></a>
+                                : <a href={'/producto/'+item.id}><img alt="" className='imgProducto' src={'https://obsbucket.s3.amazonaws.com/'+item.image}></img></a>
+                            }
+                            
                         </div>
                         <div className='module line-clamp'>
                             <a href={'/producto/'+item.id}><p style={{fontWeight:"bold",color:"#C12C30"}}>{item.product_name}</p></a>

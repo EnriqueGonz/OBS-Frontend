@@ -17,18 +17,26 @@ import AdminProductos from './Components/AdminProductos';
 import AdminAñadir from './Components/AdminAñadir';
 import AdminPedidos from './Components/AdminPedidos';
 import AdminProductoUpdate from './Components/AdminProductoUpdate';
+import Opiniones from './Components/Opiniones';
+import AdminOpiniones from './Components/AdminOpiniones';
+import ForgotPassword from './Components/ForgotPassword';
+import RestorePassword from './Components/RestorePassword';
+import ConfirmOrder from './Components/ConfirmOrder';
 
 var token = localStorage.getItem('token');  
+var tokenAdmin = localStorage.getItem('tokenAdmin');  
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Switch>
+
         <Route exact path="/">
             <NavbarOBS/>
             <Inicio />
         </Route>
+        
         <Route path="/Inicio">
             <NavbarOBS/>
             <Inicio></Inicio>
@@ -62,22 +70,55 @@ function App() {
         </Route>
 
 
-        <Route path="/admin/inicio/">
-            <AdminInicio/>
-        </Route>
-        <Route path="/admin/productos/">
-            <AdminProductos/>
-        </Route>
-        <Route path="/admin/añadir/">
-            <AdminAñadir/>
-        </Route>
-        <Route path="/admin/producto/api/update/:idproducto/:idcategoria/">
-            <AdminProductoUpdate/>
-        </Route>
-        <Route path="/admin/pedidos/">
-            <AdminPedidos/>
+        {/* Rutas de admin */}
+
+        <Route path="/admin/inicio/" render={() => {
+          return tokenAdmin ? <AdminInicio/> : <><NavbarOBS/><Perfil/></>
+        }}>
         </Route>
 
+        <Route path="/admin/productos/" render={() => {
+          return tokenAdmin ? <AdminProductos/> : <><NavbarOBS/><Perfil/></>
+        }}>
+        </Route>
+
+        <Route path="/admin/añadir/" render={() => {
+          return tokenAdmin ? <AdminAñadir/> : <><NavbarOBS/><Perfil/></>
+        }}>
+        </Route>
+
+        <Route path="/admin/producto/api/update/:idproducto/:idcategoria/" render={() => {
+          return tokenAdmin ? <AdminProductoUpdate/> : <><NavbarOBS/><Perfil/></>
+        }}>
+        </Route>
+
+        <Route path="/admin/pedidos/" render={() => {
+          return tokenAdmin ? <AdminPedidos/> : <><NavbarOBS/><Perfil/></>
+        }}>
+        </Route>
+
+        <Route path="/admin/opiniones/" render={() => {
+          return tokenAdmin ? <AdminOpiniones/> : <><NavbarOBS/><Perfil/></>
+        }}>
+        </Route>
+
+        <Route path="/opiniones/">
+            <Opiniones/>
+        </Route>
+        <Route path="/olvide-mi-contraseña/">
+            <NavbarOBS/>
+            <ForgotPassword/>
+        </Route>
+
+        <Route path="/password/reset/:uidd/:rtoken/">
+            <NavbarOBS/>
+            <RestorePassword/>
+        </Route>
+
+        <Route path="/pagar/">
+            <NavbarOBS/>
+            <ConfirmOrder/>
+        </Route>
         
         </Switch>
         <FooterOBS/>

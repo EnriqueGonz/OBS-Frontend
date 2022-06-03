@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import LoginModal from './LoginModal';
 import { Modal } from 'react-bootstrap';
-import { MdAdd, MdRemove,MdCategory,MdReceiptLong,MdInfo } from 'react-icons/md';
+import { MdAdd, MdRemove,MdCategory,MdInfo } from 'react-icons/md';
 import '../config';
 
 
@@ -89,7 +89,11 @@ const ProductoEspecifico = () =>{
                 <div className='row' style={{paddingTop:50}}>
                     <div className='col-12 col-md-1'></div>
                     <div className='col-12 col-md-4'>
-                        <img alt="" style={{width:"100%"}} src={ 'https://obsbucket.s3.amazonaws.com/'+listProduct.image }></img>
+                        {
+                            (listProduct.image  === "")
+                            ? <img alt="" style={{width:"100%",objectFit:"none"}} src='https://obsbucket.s3.amazonaws.com/assets/images/imgDefault.png'></img>
+                            : <img alt="" style={{width:"100%"}} src={ 'https://obsbucket.s3.amazonaws.com/'+listProduct.image }></img>
+                        }
                     </div>
                     <div className='col-12 col-md-1'></div>
                     <div className='col-12 col-md-5'>
@@ -111,7 +115,7 @@ const ProductoEspecifico = () =>{
                                 <p style={{fontSize:20}}><MdCategory/><b>Categoria:</b>{' '+listProduct.category_name}</p>
                             </div>
                             <div className='col'>
-                                <p style={{fontSize:20}}><MdReceiptLong/><b>Marca:</b>{' '+listProduct.brand_name}</p>
+                                
                             </div>
                         </div>
                         <p style={{fontSize:20}}><MdInfo/><b>Descripcion:</b>{' '+listProduct.description}</p>

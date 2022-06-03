@@ -56,6 +56,7 @@ const AdminProductos = () =>{
           axios.post(baseUrl+'/products/api/all-products-admin/',{
             product_name: "",
             category_name:"",
+            subcategory_name:"",
             page:1
           },{headers})
           .then((response) => {
@@ -76,6 +77,7 @@ const AdminProductos = () =>{
         axios.post(baseUrl+'/products/api/all-products-admin/',{
             product_name: "",
             category_name:"",
+            subcategory_name:"",
             page:number
         },{headers})
         .then((response) => {
@@ -207,9 +209,12 @@ const AdminProductos = () =>{
                             }
                             <div className="card__content">
                                 <div className='row' style={{height:"50%",justifyContent:"center"}}>
-                                    <a href={'/producto/'+item.id} >
-                                        <img alt="" className='imgProducto' src={'https://obsbucket.s3.amazonaws.com/'+item.image}></img>
-                                    </a>
+                                    {
+                                        (item.image === "")
+                                        ? <a href={'/producto/'+item.id} ><img alt="" className='imgProducto' style={{objectFit:"fill"}} src='https://obsbucket.s3.amazonaws.com/assets/images/imgDefault.png'></img></a>
+                                        : <a href={'/producto/'+item.id} ><img alt="" className='imgProducto' src={'https://obsbucket.s3.amazonaws.com/'+item.image}></img></a>
+                                    }
+                                    
                                 </div>
                                 <div className='module line-clamp'>
                                     <a href={'/producto/'+item.id} style={{color:"black",textDecoration:"none"}}><p style={{fontWeight:"bold"}}>{item.product_name}</p></a>

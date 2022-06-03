@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from 'react';
 
-import { Form,Button,Row,Col,Modal } from 'react-bootstrap';
+import { Form,Button,Row,Col,Modal,InputGroup,FormControl } from 'react-bootstrap';
 import axios from 'axios';
 
 import '../config';
@@ -9,7 +9,7 @@ import AppbarAdmin from './AppbarAdmin';
 var baseUrl = global.config.i18n.route.url;
 var token = localStorage.getItem('tokenAdmin');
 
-
+var categoriaSeleccionada = 0;
 
 const headers = {
     'Content-Type': 'application/json',
@@ -19,6 +19,7 @@ const headers = {
 
 const AdminAñadir = () =>{
     const [listCategoria,setlistCategoria] = useState([]);
+    const [listSubCategoria,setlistSubCategoria] = useState([]);
     const [listProductsErr, setlistProductsErr] = useState([])
 
     const [selectedFile, setSelectedFile] = useState()
@@ -35,7 +36,8 @@ const AdminAñadir = () =>{
         precio: "",
         existencias: "",
 
-        category:""
+        category:"",
+        categoryAdd:""
     })
 
     function handleChange(evt) {
@@ -43,6 +45,20 @@ const AdminAñadir = () =>{
         const value = evt.target.value;
         setInputs(values => ({ ...values, [name]: value }))
         console.log(name,value)
+    }
+
+    function loadSubcategorias(evt) {
+        
+        categoriaSeleccionada = parseInt(document.getElementById('selectCategoria').value)
+        console.log(categoriaSeleccionada);
+
+        listCategoria.map((item,index) =>(
+            (item[0][0].id === categoriaSeleccionada)
+            ? setlistSubCategoria(item[1])
+            : console.log('')
+    
+        ))
+
     }
 
     //get categorias
@@ -80,12 +96,44 @@ const AdminAñadir = () =>{
             }
         }
     }
+    function methodEliminarSubCategoria() {
+
+        var checkboxes = document.getElementsByName('subcategorias');
+        for (var i = 0, n = checkboxes.length; i < n; i++) {
+            if (checkboxes[i].checked === true) {
+                axios.delete(baseUrl + '/subcategories/api/delete/' + checkboxes[i].value, { headers })
+                    .then((response) => {
+                        loadCategories();
+                        console.log(response)
+
+                    })
+                    .catch((error) => {
+                    });
+            }
+        }
+    }
       
 
       //post categoria
       const handleSubmitCategoria = (event) => {
         axios.post(baseUrl + '/categories/api/register/', {
             category_name: inputs.category,
+        }, { headers })
+            .then((response) => {
+                //console.log(response);
+                loadCategories();
+                inputs.category = ""
+
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    const handleSubmitCategoriaAdd = (event) => {
+        axios.post(baseUrl + '/subcategories/api/register', {
+            categories:parseInt(document.getElementById('selectCategoriaAdd').value),
+            subcategory_name: inputs.categoryAdd,
         }, { headers })
             .then((response) => {
                 //console.log(response);
@@ -120,6 +168,7 @@ const AdminAñadir = () =>{
 
         let formData = new FormData();
         formData.append('categories', parseInt(document.getElementById('selectCategoria').value))
+        formData.append('subcategory', parseInt(document.getElementById('selectSubCategoria').value))
         formData.append('product_name', inputs.nombre)
         formData.append('price', parseFloat(inputs.precio))
         formData.append('description', inputs.descripcion)
@@ -207,15 +256,28 @@ const AdminAñadir = () =>{
                         <Row className="mb-3">
                             <Form.Group>
                                 <Form.Label id="errorcategoria">Selecciona categoria</Form.Label>
-                                <Form.Select id='selectCategoria' className='inputRegistro' required>
+                                <Form.Select id='selectCategoria' className='inputRegistro' required onChange={loadSubcategorias}>
                                     <option value="">Selecciona categoria</option>
                                     {listCategoria.map((item, index) => (
-                                        <option key={index} value={item.id} >{item.category_name}</option>
+                                        <option key={index} value={item[0][0].id} >{item[0][0].category_name}</option>
                                     ))}
                                 </Form.Select>
                             </Form.Group>
 
                         </Row>
+
+                        <Row className="mb-3">
+                            <Form.Group>
+                                <Form.Label id="errorcategoria">Selecciona subcategoria</Form.Label>
+                                <Form.Select id='selectSubCategoria' className='inputRegistro' required>
+                                    {listSubCategoria.map((item, index) => (
+                                        <option key={index} value={item.id} >{item.subcategory_name}</option>
+                                    ))}
+                                </Form.Select>
+                            </Form.Group>
+
+                        </Row>
+
                         <Row className="mb-3">
                             <Form.Group>
                                 <Form.Label>Descripcion Corta</Form.Label>
@@ -229,16 +291,23 @@ const AdminAñadir = () =>{
                             </Form.Group>
                         </Row>
                         <Row className="mb-3">
-                            <Form.Group as={Col}>
-                                <Form.Label>Precio</Form.Label>
-                                <Form.Control required type="text" name="precio" className='inputRegistro' value={inputs.precio} onChange={handleChange} />
-                            </Form.Group>
+                            <InputGroup as={Col}>
+                                <InputGroup.Text id="basic-addon1">Precio</InputGroup.Text>
+                                <FormControl required type="text" name="precio" className='inputRegistro' value={inputs.precio} onChange={handleChange} />
+                                <InputGroup.Text>$</InputGroup.Text>
+                            </InputGroup>
 
                             <Form.Group as={Col}>
                                 <Form.Label>Existencias</Form.Label>
                                 <Form.Control required type="text" name="existencias" className='inputRegistro' value={inputs.existencias} onChange={handleChange} />
                             </Form.Group>
+
+                   
+                   
+
+                            
                         </Row>
+                        
 
                         <Button style={{ marginLeft: 10, float: "right", backgroundColor: "#C12C30", borderColor: "#C12C30" }} onClick={handleSubmit} >
                             Agregar
@@ -258,9 +327,9 @@ const AdminAñadir = () =>{
                     <div style={{ padding: 30, backgroundColor: "#DFDFDF" }}>
                         {listCategoria.map((item, index) => (
                             <div key={index} className="form-check">
-                                <input className="form-check-input" type="checkbox" value={item.id} name='foo' />
+                                <input className="form-check-input" type="checkbox" value={item[0][0].id} name='foo' />
                                 <label className="form-check-label" htmlFor="flexCheckChecked">
-                                    {item.category_name}
+                                    {item[0][0].category_name}
                                 </label>
                             </div>
                         ))}
@@ -286,6 +355,71 @@ const AdminAñadir = () =>{
 
                                 <div className='container' style={{ textAlign: "center" }}>
                                     <Button style={{ marginTop: 25, width: "100%", backgroundColor: "#C12C30", borderColor: "#C12C30" }} onClick={handleSubmitCategoria}>
+                                        Registrar
+                                    </Button>
+                                </div>
+                            </Row>
+                        </Form>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <hr />
+                            
+            <div className='row'>
+                <div className='col-12 col-md-6'>
+                    <span>Lista de subcategoria</span>
+
+                    <div style={{ padding: 30, backgroundColor: "#DFDFDF" }}>
+                        {listCategoria.map((item, index) => (
+                           <div key={index}>
+                               <h6><b>{item[0][0].category_name}</b></h6>
+                               {(listCategoria[index][1]).map((data,index2) =>
+                                    <div key={index2} className="form-check">
+                                        <input className="form-check-input" type="checkbox" value={data.id} name='subcategorias' />
+                                        <label className="form-check-label" htmlFor="flexCheckChecked">
+                                            {data.subcategory_name}
+                                        </label>
+                                    </div>
+                                )}
+                           </div>
+                        ))}
+
+                        <div className='container' style={{ textAlign: "end" }}>
+                            <Button style={{ backgroundColor: "#404345", borderColor: "#404345" }} onClick={() => { methodEliminarSubCategoria() }} >
+                                Eliminar
+                            </Button>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div className='col-12 col-md-6'>
+                    <span>Agregar nueva Subcategoria</span>
+                    <div style={{ padding: 30, backgroundColor: "#DFDFDF" }}>
+                        <Form>
+                            <Row className='mb-3'>
+                                <Form.Group>
+                                    <Form.Label id="errorcategoria">Selecciona categoria</Form.Label>
+                                    <Form.Select id='selectCategoriaAdd' required>
+                                        <option value="">Selecciona categoria</option>
+                                        {listCategoria.map((item, index) => (
+                                            <option key={index} value={item[0][0].id} >{item[0][0].category_name}</option>
+                                        ))}
+                                    </Form.Select>
+                                </Form.Group>
+                            </Row>
+                            <Row className="mb-3">
+
+                                <Form.Group>
+                                    <Form.Label>Nombre de la subcategoria</Form.Label>
+                                    <Form.Control placeholder='Nombre de la Subcategoria' required type="text" name="categoryAdd" value={inputs.categoryAdd} onChange={handleChange} />
+                                </Form.Group>
+
+                                <div className='container' style={{ textAlign: "center" }}>
+                                    <Button style={{ marginTop: 25, width: "100%", backgroundColor: "#C12C30", borderColor: "#C12C30" }} onClick={handleSubmitCategoriaAdd}>
                                         Registrar
                                     </Button>
                                 </div>

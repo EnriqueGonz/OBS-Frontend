@@ -6,7 +6,7 @@ import '../config';
 
 var baseUrl = global.config.i18n.route.url;
 var token = localStorage.getItem('token');
-var id_usuario = localStorage.getItem('idUsuario');
+//var id_usuario = localStorage.getItem('idUsuario');
 var username = localStorage.getItem('username');
 
 const headers = {
@@ -69,7 +69,7 @@ const UserDatos = () =>{
 
       function methodUpdateUser() {
           console.log('methodUpdateUser');
-          axios.put(baseUrl+'/users/api/update_customer/'+id_usuario+'/',{
+          axios.put(baseUrl+'/users/api/update-account/'+username+'/',{
             first_name:inputs.first_name,
             last_name:inputs.last_name,
             email:inputs.email,
@@ -84,9 +84,35 @@ const UserDatos = () =>{
           });
 
       }
+
+      function changePassword(){
+        if(inputsPassword.newPassword === inputsPassword.newPassword2){
+            axios.put(baseUrl+'/password/api/change-password/'+username+'/',{
+                old_password:inputs.actualPassword,
+                new_password:inputs.newPassword,
+              },{ headers })
+              .then((response) => {
+                console.log(response);
+                localStorage.clear();
+                window.location.href = "/Perfil/"
+              })
+              .catch((error) => {
+                console.log(error.response.status);
+                if(error.response.status === 304){
+                    document.getElementById('msgAlerta').style.display = "block"
+
+                }
+              });
+        }else{
+            document.getElementById('msgError').style.display = "block"
+        }
+
+      }
     
     return(    
         <>
+        <h3>Mis datos</h3>
+        <hr></hr>
         <div className='row'>
             <div className='col-12 col-md-4 ' style={{marginBottom:50}}>
                 <div className='datosPersonales'>
@@ -137,7 +163,10 @@ const UserDatos = () =>{
                         <Form.Control style={{backgroundColor:"#A1C4CE",borderRadius:0}} required type="password" name="newPassword2" value={inputsPassword.newPassword2} onChange={handleChange} />
                         </Form.Group>
                     </Row>
-                    <Button style={{marginTop:20,background:"#C12C30",borderRadius:0,border:"none",float:"right"}} type="button">
+                    <p>Nota: *Al actualizar tu contraseña deberas iniciar sesion.</p>
+                    <p id="msgAlerta" style={{display:"none"}}>Las contraseñas no esta siendo modificada</p>
+                    <p id="msgError" style={{color:"red",display:"none"}}>Error. Las contraseñas no coinciden</p>
+                    <Button style={{marginTop:20,background:"#C12C30",borderRadius:0,border:"none",float:"right"}} type="button" onClick = {() => { changePassword()} }>
                         <b>CAMBIAR</b>
                     </Button>
                 </Form> 

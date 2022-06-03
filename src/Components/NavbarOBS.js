@@ -3,7 +3,10 @@ import { Navbar,Container,Nav } from 'react-bootstrap';
 import imgBanner from '../images/banner.png';
 import { ReactComponent as IconEmail} from '../images/icons/email.svg'
 import { ReactComponent as IconTelefono} from '../images/icons/telefono.svg'
+import { ReactComponent as Logueo} from '../images/icons/IconLogueo.svg'
 import { ReactComponent as Redes} from '../images/icons/RedesSociales.svg'
+
+var name = localStorage.getItem('NombreUser');
 
 const NavbarOBS = () =>{
     return(    
@@ -18,7 +21,24 @@ const NavbarOBS = () =>{
                     <p><b>Servicio: Lunes-Sábado / 9:00 -18:00 hrs</b></p>
                 </div>
                 <div style={{color:"white",paddingRight:20}}>
-                    <Redes style={{width:"160px"}}/>
+                    {(name === null)
+                    ? <Redes/>
+                    :   (name === "Administrador")
+                        ?   <button className='btn' onClick={event =>  window.location.href='/admin/inicio'} style={{display:"flex",backgroundColor:"#FFF",border:"solid #000 2px",borderRadius:15}}>
+                                <Logueo style={{width:"50px"}}/>   
+                                <div>
+                                    <h6>¡Bienvenido!</h6>
+                                    <span>{name}</span>
+                                </div>
+                            </button>
+                        :   <button className='btn' style={{display:"flex",backgroundColor:"#FFF",border:"solid #000 2px",borderRadius:15}}>
+                                <Logueo style={{width:"50px"}}/>   
+                                <div>
+                                    <h6>¡Bienvenido!</h6>
+                                    <span>{name}</span>
+                                </div>
+                            </button>
+                    }
                 </div>
             </div>
         </div>

@@ -1,8 +1,29 @@
-import React from 'react';
+import React, {useState,useEffect} from 'react';
 import imgServicios from '../images/circulos.png';
 import header from '../images/header-nosotros.png';
+import axios from 'axios';
+
+import '../config';
+var baseUrl = global.config.i18n.route.url;
 
 const Nosotros = () =>{
+    const [listOpiniones,setlistOpiniones] = useState([]);
+
+    useEffect(() =>{  
+        try {
+          axios.get(baseUrl+'/opinions/api/public-access-opinions/')
+          .then((response) => {
+              console.log(response.data)
+            setlistOpiniones(response.data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    
+        } catch (error) {
+          console.log(' . ', error);
+        }// eslint-disable-next-line react-hooks/exhaustive-deps
+      },[setlistOpiniones])
 
       return(
           <div>
@@ -47,6 +68,29 @@ const Nosotros = () =>{
 
             <div className="barraContacto" style={{marginTop:50,marginBottom:50,paddingLeft: 50,paddingTop: 110}}>
                 <button className="btn btn-light" style={{fontSize: 26,fontWeight: "bold",borderRadius:25}}>CONTÁCTANOS</button>
+            </div>
+
+
+            <div className='container'>
+                <h2><b>Casos de exito</b></h2>
+            </div>
+            <div className='container' style={{display:"flex",overflowX:"auto"}}>
+                <div style={{display:"flex"}}>
+                    {listOpiniones.map((item,index) => (
+                        <div key={index} style={{border:"solid #B2B2B2 3px", width:350,height:230, marginRight:40,position:"relative",padding:25,borderRadius:15}}>
+                        {(() => {
+                            const rows = [];
+                            for (let i = 0; i < item.rate; i++) {
+                            rows.push(<span key={i} style={{fontSize:25,color:"orange"}}>★</span>);
+                            }
+                            return rows;
+                        })()}
+                        <p className='module line-clamp2'>{item.message}</p>
+                        <p style={{position:"absolute",bottom:"1%"}}><b>{item.user}</b></p>
+        
+                        </div>
+                    ))}
+                </div>
             </div>
             
           </div>

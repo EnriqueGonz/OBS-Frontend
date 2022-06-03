@@ -9,6 +9,8 @@ import AppbarAdmin from './AppbarAdmin';
 var baseUrl = global.config.i18n.route.url;
 var token = localStorage.getItem('tokenAdmin');
 
+var categoriaSeleccionada = 0;
+
 const headers = {
     'Content-Type': 'application/json',
     'Authorization': `Token ${token}`
@@ -18,6 +20,7 @@ const headers = {
 const AdminProductoUpdate = () =>{
     var { idproducto,idcategoria } = useParams(); // params
     const [listCategoria,setlistCategoria] = useState([]);
+    const [listSubCategoria,setlistSubCategoria] = useState([]);
 
     const [selectedFile, setSelectedFile] = useState()
     const [preview, setPreview] = useState()
@@ -37,7 +40,19 @@ const AdminProductoUpdate = () =>{
         const value = evt.target.value;
         setInputs(values => ({ ...values, [name]: value }))
     }
+    function loadSubcategorias(evt) {
+        
+        categoriaSeleccionada = parseInt(document.getElementById('selectCategoria').value)
+        console.log(categoriaSeleccionada);
 
+        listCategoria.map((item,index) =>(
+            (item[0][0].id === categoriaSeleccionada)
+            ? setlistSubCategoria(item[1])
+            : console.log('')
+    
+        ))
+
+    }
     //get categorias
     useEffect(() =>{  
         try {
@@ -82,6 +97,7 @@ const AdminProductoUpdate = () =>{
 
         let formData = new FormData();
         formData.append('categories', parseInt(document.getElementById('selectCategoria').value))
+        formData.append('subcategory', parseInt(document.getElementById('selectSubCategoria').value))
         formData.append('product_name', inputs.product_name)
         formData.append('price', parseFloat(inputs.price))
         formData.append('description', inputs.description)
@@ -125,7 +141,12 @@ const AdminProductoUpdate = () =>{
                 <div className='col'>
                     <h3><b>Editar producto</b></h3>
                     <button className='btn' style={{position:"relative"}} onClick={() => { clickinput() }}>
-                        <img id="img1" src={'https://obsbucket.s3.amazonaws.com/'+ inputs.image} alt="" style={{width:"100%",objectFit:"cover"}}></img>
+                        {
+                            (inputs.image === "")
+                            ? <img id="img1" src='https://obsbucket.s3.amazonaws.com/assets/images/imgDefault.png' alt="" style={{width:"100%",objectFit:"cover"}}></img>
+                            : <img id="img1" src={'https://obsbucket.s3.amazonaws.com/'+ inputs.image} alt="" style={{width:"100%",objectFit:"cover"}}></img>
+                        }
+                        
                         <p style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%, -50%)"}}><b>Selecciona imagen</b></p>
                         <img alt='' src={preview} style={{ width: "90%" }} />
                         <input type="file" id="inputIMG" onChange={handleFileSelect}  style={{display:"none"}}></input>
@@ -142,10 +163,20 @@ const AdminProductoUpdate = () =>{
                         <Row className="mb-3">
                             <Form.Group>
                                 <Form.Label id="errorcategoria">Selecciona categoria</Form.Label>
-                                <Form.Select id='selectCategoria' className='inputRegistro'>
+                                <Form.Select id='selectCategoria' className='inputRegistro' required onChange={loadSubcategorias}>
                                     <option value={idcategoria}>{inputs.category_name}</option>
                                     {listCategoria.map((item, index) => (
-                                        <option key={index} value={item.id} >{item.category_name}</option>
+                                        <option key={index} value={item[0][0].id} >{item[0][0].category_name}</option>
+                                    ))}
+                                </Form.Select>
+                            </Form.Group>
+                        </Row>
+                        <Row className="mb-3">
+                            <Form.Group>
+                                <Form.Label id="errorcategoria">Selecciona subcategoria</Form.Label>
+                                <Form.Select id='selectSubCategoria' className='inputRegistro' required>
+                                    {listSubCategoria.map((item, index) => (
+                                        <option key={index} value={item.id} >{item.subcategory_name}</option>
                                     ))}
                                 </Form.Select>
                             </Form.Group>

@@ -73,7 +73,7 @@ const AdminPedidos = () =>{
 
             <div>
                 {listPedidos.map((item,index) => (
-                    <div key={index} style={{width:"100%",backgroundColor:"#E4E4E4",padding:25}}>
+                    <div key={index} style={{width:"100%",backgroundColor:"#E4E4E4",padding:25,marginBottom:20}}>
                         <div className='row'>
                             <div className='col-12 col-md-4'>
                                 <p><b>Numero de pedido: </b>{item[0][0].delivery_number}</p>

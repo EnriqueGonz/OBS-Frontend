@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import header from '../images/img.png';
+
 import { Form,Button,Row,Modal,Col } from 'react-bootstrap';
 import axios from 'axios';
 import '../config';
 
 var baseUrl = global.config.i18n.route.url;
 
-const ForgotPassword = () =>{
+const RestorePassword = () =>{
+    var { uidd,rtoken } = useParams(); // params
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
 
     const [inputs, setinputs] = useState({
-        email: '', // int
+        campo1: '', 
+        campo2: '', 
     })
 
     function handleChange(evt) {
@@ -23,17 +27,23 @@ const ForgotPassword = () =>{
 
 
 
-function enviarEmail(){
-    axios.post(baseUrl+'/password/api/request-reset/',{
-        email:inputs.email,
-    })
-    .then((response) => {
-        console.log(response);
-        handleShow();
-    })
-    .catch((error) => {
-    console.log(error);
-    });
+function restablecer(){
+    if(inputs.campo1 === inputs.campo2){
+        axios.post(baseUrl+'/password/reset/'+uidd+'/'+rtoken+'/',{
+            password:inputs.campo1,
+        })
+        .then((response) => {
+            console.log(response);
+            handleShow();
+        })
+        .catch((error) => {
+        console.log(error);
+        });
+
+    }else{
+        document.getElementById('msgError').style.display = "block"
+
+    }
 }
 
 
@@ -50,14 +60,21 @@ function enviarEmail(){
                     <Form>
                         <Row style={{marginBottom:5}}>
                             <Form.Group as={Col} controlId="">
-                            <Form.Label>Introduce Email:</Form.Label>
-                            <Form.Control style={{backgroundColor:"#A1C4CE",borderRadius:0}} required type="text" name="email" value={inputs.email} onChange={handleChange} />
+                            <Form.Label>Introduce Contraseña:</Form.Label>
+                            <Form.Control style={{backgroundColor:"#A1C4CE",borderRadius:0}} required type="password" name="campo1" value={inputs.campo1} onChange={handleChange} />
                             </Form.Group>
                         </Row>
-                        <span>&nbsp;&nbsp;Recibirás un correo electrónico con el enlace para poder cambiar tu contraseña</span><br></br>
+                        <Row style={{marginBottom:5}}>
+                            <Form.Group as={Col} controlId="">
+                            <Form.Label>Confirma contraseña:</Form.Label>
+                            <Form.Control style={{backgroundColor:"#A1C4CE",borderRadius:0}} required type="password" name="campo2" value={inputs.campo2} onChange={handleChange} />
+                            </Form.Group>
+                        </Row>
+                        <span id='msgError' style={{color:"red",display:"none"}}>Las contraseñas no coinciden</span>
+                        
                         <div className='container' style={{textAlign:"end"}}>
-                            <Button style={{marginTop:20,background:"#C12C30",borderRadius:0,border:"none"}} type="button" onClick = {() => { enviarEmail()} }>
-                                <b>Enviar</b>
+                            <Button style={{marginTop:20,background:"#C12C30",borderRadius:0,border:"none"}} type="button" onClick = {() => { restablecer()} }>
+                                <b>Restablecer</b>
                             </Button>
                         </div>
                     </Form>
@@ -71,14 +88,14 @@ function enviarEmail(){
                         <img src='https://obsbucket.s3.amazonaws.com/mailings/images/logo.png' alt=""></img>
                     </div>
                     <br></br><br></br>
-                    <h3>¡Solicitud para restablecer contraseña realizada con exito!</h3>
-                    <h4>En breve recibiras las instrucciones para restablecer tu contraseña.</h4>
+                    <h3>¡Contraseña actualizada con exito!</h3>
+                    <h4>Inicia sesion en la plataforma con tu nueva contraseña.</h4>
                     <h5>Gracias!</h5>
                     <p><b>-OfficeBS-</b></p>
                 </div>
             </Modal.Body>
             <Modal.Footer>
-                <Button style={{backgroundColor:"#C12C30",border:"none",borderRadius:0}} onClick={event =>  window.location.href='/inicio'}><b>OK</b></Button>
+                <Button style={{backgroundColor:"#C12C30",border:"none",borderRadius:0}} onClick={event =>  window.location.href='/Perfil'}><b>OK</b></Button>
             </Modal.Footer>
         </Modal>
             
@@ -87,4 +104,4 @@ function enviarEmail(){
 
 }
 
-export default ForgotPassword;
+export default RestorePassword;

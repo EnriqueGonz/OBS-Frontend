@@ -34,7 +34,13 @@ const UserCarShop = () => {
         axios.get(baseUrl+'/shoppingcart/api/my-shopping-cart/'+username+'/', { headers })
         .then((response) => {
           console.log(response);
-          setlistProducts(response.data);
+          if(response.data === ""){
+              setlistProducts([])
+          }else{
+            setlistProducts(response.data);
+
+          }
+          
         })
         .catch((error) => {
           console.log(error);
@@ -45,12 +51,12 @@ const UserCarShop = () => {
     }// eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setlistProducts])
 
-    let costo_total = 0;
 
+  
+    let costo_total = 0;
 
     listProducts.map((item) =>(
         costo_total += parseFloat(item[0][0]["total_price"])
-
     ))
 
 
@@ -84,21 +90,26 @@ const UserCarShop = () => {
         });
     }
 
-    function methodReloadCarShop(){
-        
+    function makeOrder(){
+        window.location.href = "/pagar"
+    }
+
+    function test(){
+        console.log('click')
         var inputsAmount = document.getElementsByName('foo');
         for(var i=0, n=inputsAmount.length;i<n;i++) {
             
             if( parseInt(inputsAmount[i].value) === parseInt(listProducts[i][0][0]["amount"])){
-                console.log(listProducts[i][0][0]["amount"])
-                console.log(inputsAmount[i].value )
+                //console.log(listProducts[i][0][0]["amount"])
+                //console.log(inputsAmount[i].value )
             }else{
-                console.log('-')
+                //console.log('-')
                 axios.put(baseUrl+'/shoppingcart/api/update/'+listProducts[i][0][0]["id"]+'/',{
                     amount:parseInt(inputsAmount[i].value)
                 }, { headers })
                 .then((response) => {
-                console.log(response);
+                methodRefreshList();
+                //console.log(response);
                 })
                 .catch((error) => {
                 console.log(error);
@@ -106,68 +117,68 @@ const UserCarShop = () => {
             }
 
         }
-        window.location.href = "/Micarrito"
-
     }
 
   return (
     <>
-        <div>
-              <img src={header} alt="" className="imgHeader"></img>
-          </div>
+      <div>
+        <img src={header} alt="" className="imgHeader"></img>
+      </div>
       <div className='row'>
         <div className='col-12' style={{ padding: 20, textAlign:"-webkit-center" }}>
-        <div style={{width:"85%"}}>
-        <table className="table">
-            <thead>
-                <tr>
-                <th scope="col">Eliminar</th>
-                <th scope="col"></th>
-                <th scope="col">Producto</th>
-                <th scope="col">Precio</th>
-                <th scope="col">Cantidad</th>
-                <th scope="col">Subtotal</th>
-                </tr>
-            </thead>
-            <tbody>
-                {listProducts.map((item,index) => (
-                    <tr key={index}>
-                        <td style={{position:"relative"}}>
-                            <div style={{position:"absolute",top:"15%"}}>
-                                <button onClick = {() => { methodModalDelCarShop(item[0][0]["id"])} } style={{ fontSize: 35 }} className="btn btnRemove"><MdDeleteOutline /></button>
-                            </div>
-                        </td>
-                        <td>
-                            <a href={'/producto/'+item[1][0]["id"]}><img style={{width:65,height:65,margin:10}} src={'https://obsbucket.s3.amazonaws.com/'+item[1][0]["image"]} alt=""></img></a>
-                        </td>
-                        <td>
-                            <a href={'/producto/'+item[1][0]["id"]}><h5 style={{color:"#C12C30"}}><b>{item[1][0]["product_name"]} <br/></b></h5></a><p>{item[1][0]["description"]}</p>
-                        </td>
-                        <td>
-                            {item[0][0]["unit_price"]}
-                        </td>
-                        <td>
-                            <input style={{width:50}} type="number" defaultValue={item[0][0]["amount"]} min="1" max="100" name='foo'/>
-                        </td>
-                        <td>
-                            {item[0][0]["total_price"]}
-                        </td>
-                    </tr>
-                ))}
-                <tr>
-                    <td colSpan="4"></td>
-                    <td colSpan="1"><b>Total:</b></td>
-                    <td colSpan="1"><b>{'$' + costo_total+'MXN'}</b></td>
-                </tr>
-                <tr>
-                    <td colSpan="3">{/* <input type="text" placeholder='Ingresa Cupon:'  /><button style={{marginLeft:5,fontSize:13,backgroundColor:"#C12C30",color:"white" }} className="btn btnRemove">Aplicar cupon</button> */}</td>
-                    <td colSpan="3" style={{textAlign:"-webkit-right"}}><button onClick = {() => { methodReloadCarShop()} } style={{backgroundColor:"#C12C30",color:"white" }} className="btn btnRemove">Actualizar carrito</button></td>
-                </tr>
-            </tbody>
-        </table>
-
-        
+            <div style={{width:"85%"}}>
+                <table className="table">
+                    <thead>
+                        <tr>
+                        <th scope="col">Eliminar</th>
+                        <th scope="col"></th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {listProducts.map((item,index) => (
+                            <tr key={index}>
+                                <td style={{position:"relative"}}>
+                                    <div style={{position:"absolute",top:"15%"}}>
+                                        <button onClick = {() => { methodModalDelCarShop(item[0][0]["id"])} } style={{ fontSize: 35 }} className="btn btnRemove"><MdDeleteOutline /></button>
+                                    </div>
+                                </td>
+                                <td>
+                                    {
+                                        (item[1][0]["image"] === "")
+                                        ? <a href={'/producto/'+item[1][0]["id"]}><img style={{width:65,height:65,margin:10,objectFit:"fill"}} src='https://obsbucket.s3.amazonaws.com/assets/images/imgDefault.png' alt=""></img></a>
+                                        : <a href={'/producto/'+item[1][0]["id"]}><img style={{width:65,height:65,margin:10}} src={'https://obsbucket.s3.amazonaws.com/'+item[1][0]["image"]} alt=""></img></a>
+                                    }
+                                    
+                                </td>
+                                <td>
+                                    <a href={'/producto/'+item[1][0]["id"]}><h5 style={{color:"#C12C30"}}><b>{item[1][0]["product_name"]} <br/></b></h5></a><p>{item[1][0]["short_description"]}</p>
+                                </td>
+                                <td>
+                                    {"$"+item[0][0]["unit_price"]}
+                                </td>
+                                <td>
+                                    <input style={{width:50}} type="number" defaultValue={item[0][0]["amount"]} min="1" max="100" name='foo' onChange = {() => { test()} }/>
+                                </td>
+                                <td>
+                                    {"$"+item[0][0]["total_price"]}
+                                </td>
+                            </tr>
+                        ))}
+                        <tr>
+                            <td colSpan="4"></td>
+                            <td colSpan="1"><b>Total:</b></td>
+                            <td colSpan="1"><b>{'$' + costo_total.toFixed(2)+'MXN'}</b></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
+        <div className='container' style={{textAlign:"end",width:"85%"}}>
+            <button onClick = {() => { makeOrder()} } style={{backgroundColor:"#C12C30",color:"white" }} className="btn btnRemove">Proceder al pago</button> 
         </div>
       </div>
 

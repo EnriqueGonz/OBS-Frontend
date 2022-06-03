@@ -3,9 +3,15 @@ import { Navbar,Container,Nav } from 'react-bootstrap';
 import imgBanner from '../images/banner.png';
 import { ReactComponent as IconEmail} from '../images/icons/email.svg'
 import { ReactComponent as IconTelefono} from '../images/icons/telefono.svg'
-import { ReactComponent as Redes} from '../images/icons/RedesSociales.svg'
 
 const AppbarAdmin = () =>{
+
+    function cerrarSesion(){
+        localStorage.clear();
+        window.location.href = "/inicio"
+    }
+
+
     return(    
         <>
         <div >
@@ -18,7 +24,11 @@ const AppbarAdmin = () =>{
                     <p><b>Servicio: Lunes-Sábado / 9:00 -18:00 hrs</b></p>
                 </div>
                 <div style={{color:"white",paddingRight:20}}>
-                    <Redes style={{width:"160px"}}/>
+                    <button className='btn' onClick = {() => { cerrarSesion()} } style={{backgroundColor:"#C12C30",border:"solid #C12C30 2px",borderRadius:0}}> 
+                        <div>
+                            <h6 style={{marginBottom:0,color:"white"}}>Salir</h6>
+                        </div>
+                    </button>
                 </div>
             </div>
         </div>
@@ -34,7 +44,7 @@ const AppbarAdmin = () =>{
                     <Nav.Link href="/admin/productos/">Productos</Nav.Link>
                     <Nav.Link href="/admin/añadir">Añadir</Nav.Link>
                     <Nav.Link href="/admin/pedidos/">Pedidos</Nav.Link>
-                    <Nav.Link href="/contacto/">Contacto</Nav.Link>
+                    <Nav.Link href="/admin/opiniones/">Opiniones</Nav.Link>
                 </Nav>
             </Navbar.Collapse>
             </Container>

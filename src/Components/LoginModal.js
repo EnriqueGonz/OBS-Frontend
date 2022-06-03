@@ -92,7 +92,8 @@ const LoginModal = () => {
                     localStorage.setItem('token', response.data.token);
                     localStorage.setItem('idUsuario', response.data.pk);
                     localStorage.setItem('username', response.data.username);
-                    //window.location.href = '/Micarrito'
+                    localStorage.setItem('NombreUser', response.data.first_name);
+                    window.location.href = '/Micarrito'
                 }).catch((err) => {
                     console.log(err);
                     setLoginError(true);
@@ -127,7 +128,7 @@ const LoginModal = () => {
                                 </Form.Group>
                                 {loginError ? <LoginErrorMessage /> : null}
                             </Row>
-                            <a href="/retorepassword" style={{ paddingRight: 15 }}>¿Olvidate la contraseña</a>
+                            <a href="/olvide-mi-contraseña/" style={{ paddingRight: 15 }}>¿Olvidate la contraseña</a>
                             <p>¿No tienes una cuenta? <a href="/Perfil"><b style={{display:"inline-block",color:"#C12C30"}}>Registrate</b></a></p>
                             <Button style={{ marginTop: 20, background: "#C12C30", borderRadius: 0, border: "none", float: "right", borderStyle: "none" }} type="button" onClick={handleSubmitLogin}>
                                 <b>Acceder</b>

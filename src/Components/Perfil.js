@@ -219,12 +219,14 @@ const Perfil = () => {
                         localStorage.setItem('tokenAdmin', response.data.token);
                         localStorage.setItem('idAdmin', response.data.pk);
                         localStorage.setItem('usernameAdmin', response.data.username);
+                        localStorage.setItem('NombreUser', 'Administrador');
                         window.location.href = '/admin/inicio/'
 
                     }else{
                         localStorage.setItem('token', response.data.token);
                         localStorage.setItem('idUsuario', response.data.pk);
                         localStorage.setItem('username', response.data.username);
+                        localStorage.setItem('NombreUser', response.data.first_name);
                         window.location.href = '/Perfil/'
                     }
                 }).catch((err) => {
@@ -267,7 +269,7 @@ const Perfil = () => {
                                 </Form.Group>
                                 {loginError ? <LoginErrorMessage /> : null}
                             </Row>
-                            <a href="/retorepassword" style={{ paddingRight: 15 }}>¿Olvidate la contraseña</a>
+                            <a href="/olvide-mi-contraseña/" style={{ paddingRight: 15 }}>&nbsp;&nbsp;¿Olvidate la contraseña?</a>
                             <Button style={{ marginTop: 20, background: "#C12C30", borderRadius: 0, border: "none", float: "right", borderStyle: "none" }} type="button" onClick={handleSubmitLogin}>
                                 <b>Acceder</b>
                             </Button>
