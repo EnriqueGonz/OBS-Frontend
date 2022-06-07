@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import header from '../images/HeaderCarrito.png';
 import '../Productos.css';
-import { Modal,Form,Col,Row,Button } from 'react-bootstrap';
+import { Form,Col,Row,Button } from 'react-bootstrap';
 import '../config';
-
+import PayWithCreditCard from "./PayWithCreditCard.js";
 
 var baseUrl = global.config.i18n.route.url;
 var token = localStorage.getItem('token');
@@ -130,7 +130,6 @@ function reloadDirecciones(){
   }
 
   function procederAlPago(){
-      console.log('pagar')
       var checkboxes = document.getElementsByName('direcciones');
       for(var i=0, n=checkboxes.length;i<n;i++) {
           if(checkboxes[i].checked === true){
@@ -160,7 +159,7 @@ function reloadDirecciones(){
             ))
             
             rowOrder.push([datasUserRow]);
-            rowOrder.push([datasOrderRow]);
+            rowOrder.push(datasOrderRow);
 
             console.log(rowOrder);
 
@@ -169,7 +168,25 @@ function reloadDirecciones(){
                 order: rowOrder
             }, { headers }
             ).then((response) => {
-                console.log(response.data)
+                console.log(response)
+
+
+                if(document.getElementById('PayPal').checked){
+                    window.location.href = "/checkout/buy/paypal/"+id_usuario+"/"+response.data[0][0].orders_id+"/Carrito de compras/"+costo_total.toFixed(2)
+                }
+                if(document.getElementById('Tarjeta').checked){
+                    let dataProductPay = {
+                        user: id_usuario,
+                        order: response.data[0][0].orders_id,
+                        product_name: "carrito de compras",
+                    }
+
+                    PayWithCreditCard.payWithCreditCard(dataProductPay);
+                    
+                }
+                if(document.getElementById('MercadoPago').checked){
+                    
+                }
 
             }).catch((error) => {
                 console.log(error)
@@ -284,19 +301,19 @@ function reloadDirecciones(){
         <div className='container'>
             <h4><b>3.- Formas de pago</b></h4>
             <div className="form-check" style={{padding:5, marginBottom:10,backgroundColor:"#ECECEC"}}>
-                <input className="form-check-input" type="radio" name="flexRadioDefault" defaultChecked/>
+                <input className="form-check-input" type="radio" id="PayPal" name="flexRadioDefault" defaultChecked/>
                 <label className="form-check-label" htmlFor="flexRadioDefault1">
                     PayPal
                 </label>
             </div>
             <div className="form-check" style={{padding:5, marginBottom:10,backgroundColor:"#ECECEC"}}>
-                <input className="form-check-input" type="radio" name="flexRadioDefault"/>
+                <input className="form-check-input" type="radio" id="Tarjeta" name="flexRadioDefault"/>
                 <label className="form-check-label" htmlFor="flexRadioDefault2">
                     Tarjeta de credito/ debito
                 </label>
             </div>
             <div className="form-check" style={{padding:5, marginBottom:10,backgroundColor:"#ECECEC"}}>
-                <input className="form-check-input" type="radio" name="flexRadioDefault"/>
+                <input className="form-check-input" type="radio" id="MercadoPago" name="flexRadioDefault"/>
                 <label className="form-check-label" htmlFor="flexRadioDefault2">
                     Mercado Pago
                 </label>
@@ -311,7 +328,7 @@ function reloadDirecciones(){
                     <h2>Pagas:</h2>
                 </div>
                 <div className='col' style={{textAlign:"center"}}>
-                    <h2><b>${costo_total}</b></h2>
+                    <h2><b>{'$' + costo_total.toFixed(2)+'MXN'}</b></h2>
                     <Button style={{ background: "#C12C30", borderRadius: 0, border: "none" }} type="button"  onClick={() => { procederAlPago()} } >
                         <b>Pagar</b>
                     </Button>

@@ -22,6 +22,7 @@ import AdminOpiniones from './Components/AdminOpiniones';
 import ForgotPassword from './Components/ForgotPassword';
 import RestorePassword from './Components/RestorePassword';
 import ConfirmOrder from './Components/ConfirmOrder';
+import PayPal from './Components/Paypal';
 
 var token = localStorage.getItem('token');  
 var tokenAdmin = localStorage.getItem('tokenAdmin');  
@@ -119,6 +120,19 @@ function App() {
             <NavbarOBS/>
             <ConfirmOrder/>
         </Route>
+        <Route path="/success">
+            <NavbarOBS/>
+            <Perfil/>
+        </Route>
+
+
+
+        {/* Pagos */}
+        <Route path="/checkout/buy/paypal/:idusuario/:idorder/:productName/:total">
+            <NavbarOBS/>
+            <PayPal/>
+        </Route>
+
         
         </Switch>
         <FooterOBS/>
