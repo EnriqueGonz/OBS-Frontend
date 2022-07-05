@@ -5,12 +5,15 @@ import '../Productos.css';
 import { Form,Col,Row,Button } from 'react-bootstrap';
 import '../config';
 import PayWithCreditCard from "./PayWithCreditCard.js";
+import ReactDOM from 'react-dom';
+import PayPal from './Paypal';
 
 var baseUrl = global.config.i18n.route.url;
 var token = localStorage.getItem('token');
 var username = localStorage.getItem('username');
 var id_usuario = localStorage.getItem('idUsuario');
 var iddireccion = 0;
+
 
 const headers = {
   'Content-Type': 'application/json',
@@ -21,6 +24,7 @@ const headers = {
 
 
 const ConfirmOrder = () => {
+
     const [listProducts, setlistProducts] = useState([]);
 
     const [listDirecciones, setlistDirecciones] = useState([]);
@@ -172,7 +176,13 @@ function reloadDirecciones(){
 
 
                 if(document.getElementById('PayPal').checked){
-                    window.location.href = "/checkout/buy/paypal/"+id_usuario+"/"+response.data[0][0].orders_id+"/Carrito de compras/"+costo_total.toFixed(2)
+                    //window.location.href = "/checkout/buy/paypal/"+id_usuario+"/"+response.data[0][0].orders_id+"/Carrito de compras/"+costo_total.toFixed(2)    
+                    ReactDOM.render(
+                        <PayPal idusuario={id_usuario} idorder={response.data[0][0].orders_id} product_name={"Carrito de compras"} precio={costo_total.toFixed(2)}/>,
+                        document.querySelector("#root")
+                    );
+
+
                 }
                 if(document.getElementById('Tarjeta').checked){
                     let dataProductPay = {
@@ -185,6 +195,19 @@ function reloadDirecciones(){
                     
                 }
                 if(document.getElementById('MercadoPago').checked){
+                    axios.post(baseUrl+'/payment/api/save-payment-mercado-pago/',{
+                        user:parseInt(id_usuario),
+                        order:response.data[0][0].orders_id,
+                
+                    },{ headers })
+                    .then((response) => {
+                        console.log(response.data);
+                        window.location.href = '/checkout/buy/mercadopago/'+response.data.qr_data+'/'
+                    })
+                    .catch((error) => {
+                        console.log(error.response);
+                    });
+
                     
                 }
 
@@ -195,9 +218,7 @@ function reloadDirecciones(){
 
 
   }
-
     
-
 
 
   return (
@@ -301,19 +322,19 @@ function reloadDirecciones(){
         <div className='container'>
             <h4><b>3.- Formas de pago</b></h4>
             <div className="form-check" style={{padding:5, marginBottom:10,backgroundColor:"#ECECEC"}}>
-                <input className="form-check-input" type="radio" id="PayPal" name="flexRadioDefault" defaultChecked/>
-                <label className="form-check-label" htmlFor="flexRadioDefault1">
-                    PayPal
-                </label>
-            </div>
-            <div className="form-check" style={{padding:5, marginBottom:10,backgroundColor:"#ECECEC"}}>
-                <input className="form-check-input" type="radio" id="Tarjeta" name="flexRadioDefault"/>
+                <input className="form-check-input" type="radio" id="Tarjeta" name="flexRadioDefault" value={"Tajeta"} defaultChecked />
                 <label className="form-check-label" htmlFor="flexRadioDefault2">
                     Tarjeta de credito/ debito
                 </label>
             </div>
             <div className="form-check" style={{padding:5, marginBottom:10,backgroundColor:"#ECECEC"}}>
-                <input className="form-check-input" type="radio" id="MercadoPago" name="flexRadioDefault"/>
+                <input className="form-check-input" type="radio" id="PayPal" name="flexRadioDefault" value={"PayPal"} />
+                <label className="form-check-label" htmlFor="flexRadioDefault1">
+                    PayPal
+                </label>
+            </div>
+            <div className="form-check" style={{padding:5, marginBottom:10,backgroundColor:"#ECECEC"}}>
+                <input className="form-check-input" type="radio" id="MercadoPago" name="flexRadioDefault" value={"MercadoPago"} />
                 <label className="form-check-label" htmlFor="flexRadioDefault2">
                     Mercado Pago
                 </label>
@@ -332,9 +353,13 @@ function reloadDirecciones(){
                     <Button style={{ background: "#C12C30", borderRadius: 0, border: "none" }} type="button"  onClick={() => { procederAlPago()} } >
                         <b>Pagar</b>
                     </Button>
+                    
                 </div>
             </div>
         </div>
+
+
+        
         </>
 
   )

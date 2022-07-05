@@ -25,16 +25,16 @@ const NavbarOBS = () =>{
                     ? <Redes/>
                     :   (name === "Administrador")
                         ?   <button className='btn' onClick={event =>  window.location.href='/admin/inicio'} style={{display:"flex",backgroundColor:"#FFF",border:"solid #000 2px",borderRadius:15}}>
-                                <Logueo style={{width:"50px"}}/>   
+                                <Logueo style={{width:"25px"}}/>   
                                 <div>
-                                    <h6>¡Bienvenido!</h6>
+                                    <h6 style={{margin:0}}>¡Bienvenido!</h6>
                                     <span>{name}</span>
                                 </div>
                             </button>
                         :   <button className='btn' style={{display:"flex",backgroundColor:"#FFF",border:"solid #000 2px",borderRadius:15}}>
-                                <Logueo style={{width:"50px"}}/>   
+                                <Logueo style={{width:"25px"}}/>   
                                 <div>
-                                    <h6>¡Bienvenido!</h6>
+                                    <h6 style={{margin:0}}>¡Bienvenido!</h6>
                                     <span>{name}</span>
                                 </div>
                             </button>

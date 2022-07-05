@@ -35,6 +35,11 @@ const UserPedidos = () => {
     }// eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setlistOrder])
 
+
+  function redirectPedido(id){
+      window.location.href = '/user/pedido/'+id+'/'
+  }
+
   return (
     <>
     <h3>Mis pedidos</h3>
@@ -46,11 +51,11 @@ const UserPedidos = () => {
                     <div className='row'>
                         <div className='col-12 col-md-4'>
                             <p><b>Numero de pedido: </b>{item[0][0].delivery_number}</p>
-                            <p><b>Fecha del pedido: </b>{item[0][0].order_date}</p>
+                            <p><b>Id del pedido: </b>{item[0][0].id}</p>
                             <p><b>Status: </b>{item[0][0].status}</p>
                         </div>
                         <div className='col-12 col-md-8'>
-                            <div className='row'>
+                            <div className='row' style={{overflow:"hidden"}}>
                                 <div className='col'>
                                     <span>Fecha de compra</span>
                                     <div style={{backgroundColor:"white",padding:5,textAlign:"center"}}>
@@ -58,9 +63,9 @@ const UserPedidos = () => {
                                     </div>
                                 </div>
                                 <div className='col'>
-                                    <span>Pedido realizado</span>
+                                    <span>Costo total</span>
                                     <div style={{backgroundColor:"white",padding:5,textAlign:"center"}}>
-                                        <b>{item[0][0].order_date}</b>
+                                        <b>${item[0][0].full_payment} MXN</b>
                                     </div>
                                 </div>
                                 <div className='col'>
@@ -70,7 +75,7 @@ const UserPedidos = () => {
                                             (item[0][0].status === "Pendiente")
                                             ? <b><span className="badge" style={{backgroundColor:"#F9B233"}}> </span>{item[0][0].status}</b>
                                             : (item[0][0].status === "Entregado")
-                                            ? <b><span className="badge" style={{backgroundColor:"#414141"}}> </span>{item[0][0].status}</b>
+                                            ? <b><span className="badge" style={{backgroundColor:"#26B9DD"}}> </span>{item[0][0].status}</b>
                                             : (item[0][0].status === "Cancelado")
                                             ? <b><span className="badge" style={{backgroundColor:"#C12C30"}}> </span>{item[0][0].status}</b>
                                             : (item[0][0].status === "En camino")
@@ -80,12 +85,22 @@ const UserPedidos = () => {
                                     </div>    
                                 </div>
                                 <br/><br/><br/>
-                                <span>Metodo de pago</span>
+                                <span>Productos</span>
                                 <div style={{backgroundColor:"white",padding:5,marginLeft:12}}>
-                                    <b>{item[0][0].status}</b>
+                                    <div className='container' style={{display:"flex",overflowX:"auto",padding:0}}>
+                                        <div style={{display:"flex"}}>
+                                            {listOrder[index][2].map((item2,index2) => (
+                                                <img key={index2} style={{width:30,height:30,objectFit:"cover",borderRadius:50}} src={item2[0].image} alt=""></img>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </div>   
                                 
                             </div>
+                            <div className='container' style={{textAlign:"end",paddingTop:15}}>
+                                <button className='btn' style={{backgroundColor:"#C12C30",color:"white",borderRadius:0,borderColor:"#C12C30"}} onClick = {() => { redirectPedido(item[0][0].id)} }>Ver detalles</button>
+                            </div>
+                            
                             
 
                         </div>

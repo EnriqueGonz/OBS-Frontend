@@ -32,7 +32,7 @@
     .grid-container-productos {
         display: grid;
         grid-template-columns: 25% 25% 25% 25%;
-        grid-gap: 5px;
+        grid-gap: 15px;
         place-content: center;
     }
     .CategoriasMenu{
@@ -132,4 +132,8 @@
     font-weight: bold;
     transform: scale(1.5);
     
+  }
+
+  .cardProducto{
+    background-color: white;
   }

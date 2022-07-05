@@ -63,7 +63,9 @@ width: -webkit-fill-available;
 
 @media (max-width: 767.98px) {
     .navbarobs{
-        justify-content: center
+        justify-content: center;
+        display: block;
+        text-align: -webkit-center;
 
     }
     .barraContacto{
@@ -157,10 +159,31 @@ width: -webkit-fill-available;
     line-height: 28px;
     align-items: center;
     position: relative;
-    max-width: 190px;
+    max-width: 280px;
+   }
+   .groupTienda {
+    display: flex;
+    line-height: 28px;
+    align-items: center;
+    position: relative;
+    max-width: 380px;
    }
    
    .inputSearch {
+    width: 100%;
+    height: 40px;
+    line-height: 28px;
+    padding: 0 1rem;
+    padding-left: 2.5rem;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    outline: none;
+    background-color: #DFDFDF;
+    color: #000;
+    transition: .3s ease;
+   }
+
+   .inputSearchTienda {
     width: 100%;
     height: 40px;
     line-height: 28px;
@@ -177,8 +200,17 @@ width: -webkit-fill-available;
    .inputSearch::placeholder {
     color: #9e9ea7;
    }
+   .inputSearchTienda::placeholder {
+    color: #9e9ea7;
+   }
    
    .inputSearch:focus, inputSearch:hover {
+    outline: none;
+    border-color: rgba(234,76,137,0.4);
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgb(234 76 137 / 10%);
+   }
+   .inputSearchTienda:focus, inputSearchTienda:hover {
     outline: none;
     border-color: rgba(234,76,137,0.4);
     background-color: #fff;

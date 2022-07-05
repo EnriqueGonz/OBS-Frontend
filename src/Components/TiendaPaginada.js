@@ -6,7 +6,7 @@ import { ReactComponent as IconCarShop } from '../images/icons/CarShop.svg'
 import { Dropdown, Pagination, Modal } from 'react-bootstrap';
 import LoginModal from './LoginModal';
 import '../config';
-
+import { useParams } from 'react-router-dom';
 
 var baseUrl = global.config.i18n.route.url;
 var paginas = 0;
@@ -19,7 +19,9 @@ const headers = {
 };
 
 
-const Tienda = () => {
+const TiendaPaginada = () => {
+    var { pagina,nombrecategoria,idsubcategoria } = useParams(); // params
+
     const [input, setInput] = useState({
         nombre: '',
     });
@@ -30,12 +32,10 @@ const Tienda = () => {
 
 
     const [listProducts, setlistProducts] = useState([]);
-    const [listCategoria, setlistCategoria] = useState([]);
     const [array, setArray] = useState([]);
-    const [nombreCategoria, setnombreCategoria] = useState("");
-    const [nombreSubCategoria, setnombreSubCategoria] = useState("");
-
-    document.title = "Office BS  nuestros articulos de papeleria"
+    const [listCategoria, setlistCategoria] = useState([]);
+    const [nombreCategoria, setnombreCategoria] = useState(nombrecategoria);
+    const [nombreSubCategoria, setnombreSubCategoria] = useState(idsubcategoria);
 
     useEffect(() => {
         try {
@@ -59,9 +59,9 @@ const Tienda = () => {
         try {
             axios.post(baseUrl + '/products/api/all-products/', {
                 product_name: "",
-                category_name: "",
-                subcategory_name: "",
-                page: 1,
+                category_name: nombrecategoria,
+                subcategory_name: idsubcategoria,
+                page: pagina,
             })
                 .then((response) => {
                     console.log(response);
@@ -81,15 +81,7 @@ const Tienda = () => {
     }, [setlistProducts], [setArray])
 
     function methodName(number) {
-
-        if(nombreCategoria === "" && nombreSubCategoria === "" && input.nombre === ""){
-            reloadproducts(number)
-        }else if(input.nombre !== ""){
-            reloadproducts3(number)
-        }else if(nombreCategoria !== "" && nombreSubCategoria !== ""){
-            reloadproducts2(number);
-
-        }
+        window.location.href = '/catalog/page/' + number + '/'+nombreCategoria+'/'+nombreSubCategoria+'/'
     }
 
     function methodAddCarShop(id_producto) {
@@ -123,9 +115,16 @@ const Tienda = () => {
 
     let items = [];
     for (let number = 1; number <= paginas; number++) {
-        items.push(
-            <li className="page-item" key={number}><button className="page-link" onClick={() => { methodName(number,nombreCategoria,nombreSubCategoria) }}>{number}</button></li>,
-        );
+        if (number === parseInt(pagina)) {
+            items.push(
+                <li className="page-item" key={number}><button className="page-link" style={{ backgroundColor: "#C12C30", color: "white" }} onClick={() => { methodName(number) }}>{number}</button></li>,
+            );
+        } else {
+            items.push(
+                <li className="page-item" key={number}><button className="page-link" onClick={() => { methodName(number) }}>{number}</button></li>,
+            );
+        }
+
     }
 
     const paginationBasic = (
@@ -135,52 +134,6 @@ const Tienda = () => {
         </div>
     );
 
-    function reloadproducts(num) {
-        axios.post(baseUrl + '/products/api/all-products/', {
-            product_name: "",
-            category_name: "",
-            subcategory_name: "",
-            page: num
-        })
-        .then((response) => {
-            setlistProducts(response.data[1]);
-            window.location.href = '#productos'
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-    }
-    function reloadproducts2(num) {
-        axios.post(baseUrl + '/products/api/all-products/', {
-            product_name: "",
-            category_name: nombreCategoria,
-            subcategory_name: nombreSubCategoria,
-            page: num
-        })
-        .then((response) => {
-            setlistProducts(response.data[1]);
-            window.location.href = '#productos'
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-    }
-    function reloadproducts3(num) {
-        axios.post(baseUrl + '/products/api/all-products/', {
-            product_name: input.nombre,
-            category_name: nombreCategoria,
-            subcategory_name: nombreSubCategoria,
-            page: num
-        })
-        .then((response) => {
-            setlistProducts(response.data[1]);
-            window.location.href = '#productos'
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-    }
-
     function buscarPorNombre(evt) {
         const name = evt.target.name;
         const value = evt.target.value;
@@ -189,10 +142,10 @@ const Tienda = () => {
 
 
         axios.post(baseUrl + '/products/api/all-products/', {
-            product_name: input.nombre,
-            category_name: nombreCategoria,
-            subcategory_name: nombreSubCategoria,
-            page: 1
+            product_name:input.nombre,
+            category_name:nombreCategoria,
+            subcategory_name:nombreSubCategoria,
+            page:pagina
         })
             .then((response) => {
                 console.log(response);
@@ -200,7 +153,7 @@ const Tienda = () => {
                 setlistProducts(response.data[1]);
                 for (let num = 0; num < array.length; num++) {
                     setArray([...array, num])
-
+                    
                 }
             })
             .catch((error) => {
@@ -212,25 +165,8 @@ const Tienda = () => {
     function buscarSubcategoria(categoria, subcategoria) {
         setnombreCategoria(categoria)
         setnombreSubCategoria(subcategoria)
+        window.location.href = '/catalog/page/' + 1 + '/'+categoria+'/'+subcategoria+'/'
 
-        axios.post(baseUrl + '/products/api/all-products/', {
-            product_name: "",
-            category_name: categoria,
-            subcategory_name: subcategoria,
-            page: 1,
-        })
-            .then((response) => {
-                console.log(response);
-                paginas = response.data[0][0]["num_pages"];
-                setlistProducts(response.data[1]);
-                for (let num = 0; num < array.length; num++) {
-                    setArray([...array, num])
-
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            });
     }
 
 
@@ -257,12 +193,11 @@ const Tienda = () => {
                 ))}
             </div>
 
-
+            <a name="Productos" href='/'> </a>
             <div id='wrapper' style={{ width: "100%", backgroundColor: "#F2F6F8" }}>
                 <div id="sticky">
-                    <button className='btn-flotante' onClick={() => { methodShowCarShop() }}><IconCarShop style={{ width: 30 }} /><br></br> Ir al carrito</button>
+                    <button className='btn-flotante' onClick={() => { methodShowCarShop() }}><IconCarShop style={{ width: 30 }} /><br></br> Ir al asdcarrito</button>
                 </div>
-                <a name='productos' href='/'> </a>
                 <div className='container' style={{ marginBottom: 20 }}>
                     <div style={{ textAlign: "-webkit-right" }}>
                         <div className="groupTienda">
@@ -322,4 +257,4 @@ const Tienda = () => {
     )
 }
 
-export default Tienda;
+export default TiendaPaginada;
