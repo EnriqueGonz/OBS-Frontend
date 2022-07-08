@@ -26,6 +26,7 @@ import SuccessShop from './Components/SuccessShop';
 import Testqr from './Components/Testqr';
 import UserPedidoSpecific from './Components/UserPedidoSpecific';
 import AdminPedidoSpecific from './Components/AdminPedidoSpecific';
+import PreguntasFrecuentes from './Components/PreguntasFrecuentes';
 
 var token = localStorage.getItem('token');
 var tokenAdmin = localStorage.getItem('tokenAdmin');
@@ -62,6 +63,10 @@ function App() {
                     <Route path="/Producto/:idproducto/">
                         <NavbarOBS />
                         <ProductoEspecifico />
+                    </Route>
+                    <Route path="/Preguntas-Frecuentes">
+                        <NavbarOBS />
+                        <PreguntasFrecuentes />
                     </Route>
 
                     <Route path="/Micarrito/">

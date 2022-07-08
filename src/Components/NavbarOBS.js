@@ -55,6 +55,7 @@ const NavbarOBS = () =>{
                     <Nav.Link href="/Tienda">Tienda</Nav.Link>
                     <Nav.Link href="/Perfil/">Perfil</Nav.Link>
                     <Nav.Link href="/contacto/">Contacto</Nav.Link>
+                    <Nav.Link href="/Preguntas-Frecuentes/">¿FyQ?</Nav.Link>
                 </Nav>
             </Navbar.Collapse>
             </Container>

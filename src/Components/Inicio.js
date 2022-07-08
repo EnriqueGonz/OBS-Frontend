@@ -126,7 +126,7 @@ const Inicio = () => {
                                 <p>Y asi experimenta lo facil y seguro que es comprar con nosotros</p>
                                 <div style={{ display: "flex", placeContent: "center" }}>
                                     <input placeholder="Ingresa tu correo electronico"></input>
-                                    <button className='btn' style={{ borderRadius: 0, backgroundColor: "#C12C30", color: "white" }}>Enviar</button>
+                                    <a className='btn' style={{ borderRadius: 0, backgroundColor: "#C12C30", color: "white" }} href='/Perfil'>Enviar</a>
                                 </div>
                                 <br /><br />
                                 <p>Se enviará una contraseña a tu dirección de correo electrónico.</p>
