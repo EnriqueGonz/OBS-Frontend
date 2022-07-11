@@ -1,6 +1,13 @@
 
 /*Movil*/
 @media (max-width: 767.98px) {
+    .paginacion{
+        grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto !important;
+        margin-top: 125px !important;
+    }
+    .marginMovil{
+        margin-bottom: 190px !important;
+    }
     .grid-container-productos {
         display: grid;
         grid-template-columns: 49% 49%;

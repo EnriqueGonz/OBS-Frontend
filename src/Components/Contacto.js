@@ -14,28 +14,18 @@ var baseUrl = global.config.i18n.route.url;
 
 
 const Contacto = () => {
-    const [inputs, setInputs] = useState({
-        nombre: "",
-        email: "",
-        mensaje: "",
-    })
+    const [validated] = useState(false);
 
-    function handleChange(evt) {
-        evt.preventDefault();
-        const name = evt.target.name;
-        const value = evt.target.value;
-        setInputs(values => ({ ...values, [name]: value }))
-    }
-
-
-    function enviarMail() {
-        axios.get(baseUrl + '/mailer/api/emailjs-credentials/')
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    axios.get(baseUrl + '/mailer/api/emailjs-credentials/')
             .then((response) => {
                 console.log(response)
                 let emailJsData = response.data;
                 let body = {
                     from_name: inputs.nombre,
                     from_email: inputs.correo,
+                    reply_to: inputs.correo,
                     message: inputs.mensaje,
                 }
                 emailjs.send(emailJsData.service_id, emailJsData.template_id, body, emailJsData.public_key)
@@ -49,6 +39,20 @@ const Contacto = () => {
                 console.log(error);
             });
 
+  };
+
+
+    const [inputs, setInputs] = useState({
+        nombre: "",
+        correo: "",
+        mensaje: "",
+    })
+
+    function handleChange(evt) {
+        evt.preventDefault();
+        const name = evt.target.name;
+        const value = evt.target.value;
+        setInputs(values => ({ ...values, [name]: value }))
     }
 
 
@@ -62,7 +66,7 @@ const Contacto = () => {
                 <div className="row">
                     <div className='col'>
                         <h2><b>&nbsp; Contactanos</b></h2>
-                        <p><IconEmail style={{ width: 30, height: "100%", filter: "invert(1)" }} /> Contacto@officeobs.com.mx</p>
+                        <p><IconEmail style={{ width: 30, height: "100%", filter: "invert(1)" }} /> contacto@officebs.com.mx</p>
                         <p><IconTelefono style={{ width: 23, height: "100%", filter: "invert(1)" }} />&nbsp; 56 21818583</p>
                     </div>
                     <div className='col'>
@@ -84,12 +88,12 @@ const Contacto = () => {
 
 
             <div className='container' style={{ marginTop: 50 }} >
-                <div className='MisionVision'>
-                    <div className='grid-item'>
+                <div className='row'>
+                    <div className='col-12 col-md-6'>
                         <div className='column'>
                             <h2 style={{ borderLeft: "solid", borderWidth: 10, borderColor: "#C4C4C4" }}><b>&nbsp; Escribenos</b></h2>
                             <div className="container">
-                                <Form>
+                                <Form validated={validated} onSubmit={handleSubmit}>
                                     <Row style={{ marginBottom: 5 }}>
                                         <Form.Group as={Col} controlId="">
                                             <Form.Label>Nombre</Form.Label>
@@ -99,7 +103,7 @@ const Contacto = () => {
                                     <Row style={{ marginBottom: 5 }}>
                                         <Form.Group as={Col} controlId="">
                                             <Form.Label>Email</Form.Label>*
-                                            <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} required type="text" name="email" onChange={handleChange} />
+                                            <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} required type="text" name="correo" onChange={handleChange} />
                                         </Form.Group>
                                     </Row>
                                     <Row style={{ marginBottom: 5 }}>
@@ -108,14 +112,14 @@ const Contacto = () => {
                                             <Form.Control as="textarea" style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} required type="text" name="mensaje" onChange={handleChange} />
                                         </Form.Group>
                                     </Row>
-                                    <Button style={{ marginTop: 20, background: "#C12C30", borderRadius: 0, border: "none", float: "right" }} type="button" onClick={ () => enviarMail() }>
+                                    <Button style={{ marginTop: 20, background: "#C12C30", borderRadius: 0, border: "none", float: "right" }} type="submit">
                                         <b>Acceder</b>
                                     </Button>
                                 </Form>
                             </div>
                         </div>
                     </div>
-                    <div className='grid-item'>
+                    <div className='col-12 col-md-6'>
                         <div className='column'>
                             <h2 style={{ borderLeft: "solid", borderWidth: 10, borderColor: "#C4C4C4" }}><b>&nbsp; Ubícanos</b></h2>
                         </div>

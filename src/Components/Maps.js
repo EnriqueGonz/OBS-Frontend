@@ -18,7 +18,7 @@ const Maps = () => {
     <MapContainer
       center={[19.509066, -99.196682,16.28]} // MX
       zoom={6}
-      style={{ height: "100%", width:"100%" }}
+      style={{ height: "350px", width:"100%" }}
        whenReady={(map) => {
          map.target.on("click", function (e) {
            const { lat, lng } = e.latlng;

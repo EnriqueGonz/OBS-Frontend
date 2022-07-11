@@ -52,13 +52,7 @@ width: -webkit-fill-available;
     background-repeat-y: no-repeat;
     background-size: cover;
 }
-.barraPerfil{
-    background-image: url(./images/barraPerfil.png);
-    height: 388px;;
-    background-repeat-x: no-repeat;
-    background-repeat-y: no-repeat;
-    background-size: cover;
-}
+
 
 
 @media (max-width: 767.98px) {
@@ -69,7 +63,14 @@ width: -webkit-fill-available;
 
     }
     .barraContacto{
-        background-image: url(./images/barraContato.png);
+        background-image: url(./images/BarraContactoMovil.png);
+    }
+    .barraPerfil{
+        background-image: url(./images/BarraPerfilMovil.png);
+        height: 388px;;
+        background-repeat-x: no-repeat;
+        background-repeat-y: no-repeat;
+        background-size: contain;
     }
     .bgFooterMovil{
         background-color: #3D3D3D;
@@ -104,6 +105,13 @@ width: -webkit-fill-available;
       }
     .barraContacto{
         background-image: url(./images/barraContato.png);
+    }
+    .barraPerfil{
+        background-image: url(./images/barraPerfil.png);
+        height: 388px;;
+        background-repeat-x: no-repeat;
+        background-repeat-y: no-repeat;
+        background-size: cover;
     }
     .MisionVision{
         display: grid;

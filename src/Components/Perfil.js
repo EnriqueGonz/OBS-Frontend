@@ -18,12 +18,14 @@ const Perfil = () => {
         first_name: '',
         email: '',
         password: '',
+        phone:'',
         confirm_password: '',
     });
 
     // inputs Validate Register
     const [validateFirstN, setValidateFirstN] = useState(false);
     const [validateEmail, setValidateEmail] = useState(false);
+    const [validatePhone, setValidatePhone] = useState(false);
     const [pwDoNotMatch, setPwDoNotMatch] = useState(false);
     const [errorMessage, setErrorMessage] = useState(false);
     const [registerError, setRegisterError] = useState(false);
@@ -66,6 +68,11 @@ const Perfil = () => {
     const EmailMessage = () => (
         <div style={{ marginBottom: "1%" }}>
             <span style={{ color: "#FF5733" }}>Por favor, ingrese un correo válido.</span>
+        </div>
+    )
+    const PhoneMessage = () => (
+        <div style={{ marginBottom: "1%" }}>
+            <span style={{ color: "#FF5733" }}>Por favor, ingrese un numero de 10 a 13 digitos.</span>
         </div>
     )
 
@@ -144,10 +151,20 @@ const Perfil = () => {
             return false;
         }
 
+        if (validator.isMobilePhone(inputUser.phone,['es-MX'])) {
+            setValidatePhone(false);
+        } else {
+            setValidatePhone(true);
+            return false;
+        }
+
+
+
         return true;
     }
 
     const handleSubmitRegister = (evt) => {
+        evt.preventDefault();
         setRegisterError(false);
         setErrorMessage(false);
 
@@ -162,6 +179,7 @@ const Perfil = () => {
                     first_name: inputUser.first_name,
                     last_name: 'null', // This field will send as null
                     email: inputUser.email,
+                    phone: inputUser.phone,
                     password: inputUser.password,
                 }, { headers }).then((response) => {
                     console.log(response);
@@ -276,7 +294,7 @@ const Perfil = () => {
                         </Form>
                     </div>
                     <div className="container">
-                        <Form onSubmit={handleSubmitRegister}>
+                        <Form validated={false} onSubmit={handleSubmitRegister}>
                             <h2 style={{ borderLeft: "solid", borderWidth: 10, borderColor: "#C4C4C4" }}><b>&nbsp; Registrate</b></h2>
                             <Row style={{ marginBottom: 5 }}>
                                 <Form.Group as={Col} >
@@ -290,6 +308,14 @@ const Perfil = () => {
                                     <Form.Label>Email *</Form.Label>*
                                     <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0, borderStyle: "none" }} required type="email" name="email" value={inputUser.email} onChange={handleChangeRegister} />
                                     {validateEmail ? <EmailMessage /> : null}
+                                </Form.Group>
+                            </Row>
+
+                            <Row style={{ marginBottom: 5 }}>
+                                <Form.Group as={Col} >
+                                    <Form.Label>Numero Telefonico *</Form.Label>*
+                                    <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0, borderStyle: "none" }} required type="number" name="phone" value={inputUser.phone} onChange={handleChangeRegister} />
+                                    {validatePhone ? <PhoneMessage /> : null}
                                 </Form.Group>
                             </Row>
 
@@ -311,7 +337,7 @@ const Perfil = () => {
                                 {errorMessage ? <PasswordNotStrongMessage /> : null}
                                 {registerError ? <RegisterErrorMessage /> : null}
                             </Row>
-                            <Button style={{ marginTop: 20, background: "#C12C30", borderRadius: 0, border: "none", float: "right" }} type="button" onClick={handleSubmitRegister}>
+                            <Button style={{ marginTop: 20, background: "#C12C30", borderRadius: 0, border: "none", float: "right" }} type="submit">
                                 <b>REGISTRARSE</b>
                             </Button>
                         </Form>

@@ -350,7 +350,7 @@ function reloadDirecciones(){
                 </div>
                 <div className='col' style={{textAlign:"center"}}>
                     <h2><b>{'$' + costo_total.toFixed(2)+'MXN'}</b></h2>
-                    <Button style={{ background: "#C12C30", borderRadius: 0, border: "none" }} type="button" onClick={() => { procederAlPago()} } >
+                    <Button style={{ background: "#C12C30", borderRadius: 0, border: "none" }} type="button" /* onClick={() => { procederAlPago()} } */ >
                         <b>Pagar</b>
                     </Button>
                     

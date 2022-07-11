@@ -117,7 +117,7 @@ const Nosotros = () => {
 
 
             <div className="barraContacto" style={{ marginTop: 50, marginBottom: 50, paddingLeft: 50, paddingTop: 110 }}>
-                <button className="btn btn-light" style={{ fontSize: 26, fontWeight: "bold", borderRadius: 25 }}>CONTÁCTANOS</button>
+                <a className="btn btn-light" style={{ fontSize: 26, fontWeight: "bold", borderRadius: 25 }} href='/Contacto'>CONTÁCTANOS</a>
             </div>
 
 

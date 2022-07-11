@@ -22,8 +22,9 @@ const ForgotPassword = () =>{
 
 
 
+const enviarEmail = (event) => {
 
-function enviarEmail(){
+    event.preventDefault();
     axios.post(baseUrl+'/password/api/request-reset/',{
         email:inputs.email,
     })
@@ -33,6 +34,7 @@ function enviarEmail(){
     })
     .catch((error) => {
     console.log(error);
+    document.getElementById('msgerror').style.display = "block"
     });
 }
 
@@ -47,16 +49,17 @@ function enviarEmail(){
             <div className='container' style={{marginTop:50}} >
                 <div className='container' style={{width:"80%"}} >
                     <h2 style={{ borderLeft: "solid", borderWidth: 10, borderColor: "#C4C4C4" }}><b>&nbsp; ¿Olvidaste la contraseña?</b></h2>
-                    <Form>
+                    <Form validated={false} onSubmit={enviarEmail}>
                         <Row style={{marginBottom:5}}>
                             <Form.Group as={Col} controlId="">
                             <Form.Label>Introduce Email:</Form.Label>
-                            <Form.Control style={{backgroundColor:"#A1C4CE",borderRadius:0}} required type="text" name="email" value={inputs.email} onChange={handleChange} />
+                            <Form.Control style={{backgroundColor:"#A1C4CE",borderRadius:0}} required type="email" name="email" value={inputs.email} onChange={handleChange} />
                             </Form.Group>
                         </Row>
+                        <span id="msgerror" style={{display:"none", color:"red"}}>&nbsp;&nbsp;Ocurrio un  error, valida que el correo sea valido.</span><br></br>
                         <span>&nbsp;&nbsp;Recibirás un correo electrónico con el enlace para poder cambiar tu contraseña</span><br></br>
                         <div className='container' style={{textAlign:"end"}}>
-                            <Button style={{marginTop:20,background:"#C12C30",borderRadius:0,border:"none"}} type="button" onClick = {() => { enviarEmail()} }>
+                            <Button style={{marginTop:20,background:"#C12C30",borderRadius:0,border:"none"}} type="submit">
                                 <b>Enviar</b>
                             </Button>
                         </div>

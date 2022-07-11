@@ -11,7 +11,7 @@ const FooterOBS = () =>{
             <div className='bgFooterMovil' style={{width:"55%",position:"absolute",bottom:"10%",left:"22%"}}>
               <div className='row'>
                 <div className='col' style={{color:"white",lineHeight:"10px"}}>
-                  <p><IconEmail/> Contacto@officeobs.com.mx</p>
+                  <p><IconEmail/> contacto@officebs.com.mx</p>
                   <p><IconTelefono/>&nbsp; 56 21818583</p>
                   <p>Servicio:Lunes-Sabado / 9:00 - 18:00 hrs</p>
                 </div>

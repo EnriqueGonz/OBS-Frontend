@@ -17,7 +17,7 @@ const AppbarAdmin = () =>{
         <div >
             <div className="navbar navbarobs" style={{backgroundImage: `url(${imgBanner})`,backgroundRepeat:"no-repeat",backgroundSize:"cover"}}>
                 <div style={{color:"white",paddingLeft:20}}>
-                    <p><IconEmail/> Contacto@officeobs.com.mx</p>
+                    <p><IconEmail/> contacto@officebs.com.mx</p>
                     <p><IconTelefono/>&nbsp; 56 21818583</p>
                 </div>
                 <div>
