@@ -27,6 +27,7 @@ import Testqr from './Components/Testqr';
 import UserPedidoSpecific from './Components/UserPedidoSpecific';
 import AdminPedidoSpecific from './Components/AdminPedidoSpecific';
 import PreguntasFrecuentes from './Components/PreguntasFrecuentes';
+import ConfirmMail from './Components/ConfirmMail';
 
 var token = localStorage.getItem('token');
 var tokenAdmin = localStorage.getItem('tokenAdmin');
@@ -87,6 +88,11 @@ function App() {
                     <Route path="/password/reset/:uidd/:rtoken/">
                         <NavbarOBS />
                         <RestorePassword />
+                    </Route>
+
+                    <Route path="/mailer/api/confirm-mail/:uidd/:rtoken/">
+                        <NavbarOBS />
+                        <ConfirmMail />
                     </Route>
 
                     <Route path="/Perfil" render={() => {
