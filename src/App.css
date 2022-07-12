@@ -51,6 +51,7 @@ width: -webkit-fill-available;
     background-repeat-x: no-repeat;
     background-repeat-y: no-repeat;
     background-size: cover;
+
 }
 
 
@@ -70,7 +71,7 @@ width: -webkit-fill-available;
         height: 388px;;
         background-repeat-x: no-repeat;
         background-repeat-y: no-repeat;
-        background-size: contain;
+        background-size: cover;
     }
     .bgFooterMovil{
         background-color: #3D3D3D;

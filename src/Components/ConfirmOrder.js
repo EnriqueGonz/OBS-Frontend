@@ -133,6 +133,7 @@ function reloadDirecciones(){
 
   }
 
+    // eslint-disable-next-line
   function procederAlPago(){
       var checkboxes = document.getElementsByName('direcciones');
       for(var i=0, n=checkboxes.length;i<n;i++) {

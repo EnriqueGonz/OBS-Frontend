@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import header from '../images/headerPerfil.png';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Button, Row, Col, Modal } from 'react-bootstrap';
 import axios from 'axios';
 import validator from 'validator'
 import '../config';
@@ -18,9 +18,13 @@ const Perfil = () => {
         first_name: '',
         email: '',
         password: '',
-        phone:'',
+        phone: '',
         confirm_password: '',
     });
+
+
+    const [show, setShow] = useState(false);
+    const handleShow = () => setShow(true);
 
     // inputs Validate Register
     const [validateFirstN, setValidateFirstN] = useState(false);
@@ -151,7 +155,7 @@ const Perfil = () => {
             return false;
         }
 
-        if (validator.isMobilePhone(inputUser.phone,['es-MX'])) {
+        if (validator.isMobilePhone(inputUser.phone, ['es-MX'])) {
             setValidatePhone(false);
         } else {
             setValidatePhone(true);
@@ -175,7 +179,7 @@ const Perfil = () => {
 
         if (is_valid_pw === true && isValidInputsRegister === true && passwordisStrong === true) {
             try {
-                axios.post(baseUrl+'/users/api/register/', {
+                axios.post(baseUrl + '/users/api/register/', {
                     first_name: inputUser.first_name,
                     last_name: 'null', // This field will send as null
                     email: inputUser.email,
@@ -183,6 +187,8 @@ const Perfil = () => {
                     password: inputUser.password,
                 }, { headers }).then((response) => {
                     console.log(response);
+                    handleShow();
+
                 }).catch((err) => {
                     console.log(err);
                     setPwDoNotMatch(false);
@@ -227,20 +233,20 @@ const Perfil = () => {
 
         if (isValidaEmailPwLogin === true) {
             try {
-                axios.post(baseUrl+'/access/api/login/', {
+                axios.post(baseUrl + '/access/api/login/', {
                     email: inputLogin.emailLogin,
                     password: inputLogin.passwordLogin,
                 }, { headers }).then((response) => {
                     console.log(response);
                     localStorage.clear();
-                    if(response.data.is_staff === true){
+                    if (response.data.is_staff === true) {
                         localStorage.setItem('tokenAdmin', response.data.token);
                         localStorage.setItem('idAdmin', response.data.pk);
                         localStorage.setItem('usernameAdmin', response.data.username);
                         localStorage.setItem('NombreUser', 'Administrador');
                         window.location.href = '/admin/inicio/'
 
-                    }else{
+                    } else {
                         localStorage.setItem('token', response.data.token);
                         localStorage.setItem('idUsuario', response.data.pk);
                         localStorage.setItem('username', response.data.username);
@@ -298,14 +304,14 @@ const Perfil = () => {
                             <h2 style={{ borderLeft: "solid", borderWidth: 10, borderColor: "#C4C4C4" }}><b>&nbsp; Registrate</b></h2>
                             <Row style={{ marginBottom: 5 }}>
                                 <Form.Group as={Col} >
-                                    <Form.Label>Nombre de usuario</Form.Label>
+                                    <Form.Label>Nombre de usuario *</Form.Label>
                                     <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0, borderStyle: "none" }} required type="text" name="first_name" value={inputUser.first_name} onChange={handleChangeRegister} />
                                     {validateFirstN ? <FirstNameMessage /> : null}
                                 </Form.Group>
                             </Row>
                             <Row style={{ marginBottom: 5 }}>
                                 <Form.Group as={Col} >
-                                    <Form.Label>Email *</Form.Label>*
+                                    <Form.Label>Email *</Form.Label>
                                     <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0, borderStyle: "none" }} required type="email" name="email" value={inputUser.email} onChange={handleChangeRegister} />
                                     {validateEmail ? <EmailMessage /> : null}
                                 </Form.Group>
@@ -313,7 +319,7 @@ const Perfil = () => {
 
                             <Row style={{ marginBottom: 5 }}>
                                 <Form.Group as={Col} >
-                                    <Form.Label>Numero Telefonico *</Form.Label>*
+                                    <Form.Label>Numero Telefonico *</Form.Label>
                                     <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0, borderStyle: "none" }} required type="number" name="phone" value={inputUser.phone} onChange={handleChangeRegister} />
                                     {validatePhone ? <PhoneMessage /> : null}
                                 </Form.Group>
@@ -345,6 +351,20 @@ const Perfil = () => {
                 </div>
             </div>
             <div className="barraPerfil"></div><br /><br /><br />
+
+            <Modal show={show} size="md" >
+                <Modal.Body style={{ margin: 20 }}>
+                    <div>
+                        <h2>Gracias por registrarte a Office Business Solution</h2>
+
+                        <p>Tu registro a sido un exito, a continuacion debes de validar tu cuenta confirmando el correo que te llego tu correo registrado.</p>
+
+                        <Button style={{ marginTop: 20, background: "#C12C30", borderRadius: 0, border: "none", float: "right" }} onClick={ () => window.location.reload(false)}>
+                            <b>OK</b>
+                        </Button>
+                    </div>
+                </Modal.Body>
+            </Modal>
         </>
     )
 }

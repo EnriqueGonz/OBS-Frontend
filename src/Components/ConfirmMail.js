@@ -35,7 +35,7 @@ const ConfirmMail = () => {
                     <h2 style={{ borderLeft: "solid", borderWidth: 10, borderColor: "#C4C4C4" }}><b>&nbsp; Gracias por confirmar tu correo electronico</b></h2>
                     <p>Da click en el boton para iniciar sesion con tus datos</p>
 
-                    <button className='btn' onClick={() => confirmarMail()}>Confirmar</button>
+                    <button className='btn' style={{backgroundColor:"#A0282B", borderColor:"#A0282B",borderRadius:0,color:"white" }} onClick={() => confirmarMail()}>Confirmar</button>
                     
                 </div>
             </div>
