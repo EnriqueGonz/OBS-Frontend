@@ -24,7 +24,7 @@ const Testqr = () => {
                             <li><b>Paso 1</b> Ingresa a la App de Mercado Pago</li>
                             <li><b>Paso 2</b> Escanea el codigo QR</li>
                             <li><b>Paso 3</b> Seleccioná tu medio de pago: débito, crédito o dinero en Mercado Pago.</li>
-                            <li><b>Paso 4</b> Avisá que pagaste !y listo!</li>
+                            <li><b>Paso 4</b> Avisá que pagaste ¡y listo!</li>
                     </ul>
                 </div>
 

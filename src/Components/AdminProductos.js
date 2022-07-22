@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import '../Productos.css';
 import { Pagination, Form, Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
 
@@ -13,7 +13,6 @@ var token = localStorage.getItem('tokenAdmin');
 var paginas = 0;
 var idproducto = 0;
 
-
 const headers = {
     'Content-Type': 'application/json',
     'Authorization': `Token ${token}`
@@ -23,7 +22,7 @@ const headers = {
 const AdminProductos = () => {
     const [listProducts, setlistProducts] = useState([]);
     const [listCategoria, setlistCategoria] = useState([]);
-    const [categoria, setcategoria] = useState("Todos");
+    
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -77,12 +76,13 @@ const AdminProductos = () => {
         axios.post(baseUrl + '/products/api/all-products-admin/', {
             product_name: "",
             category_name: "",
-            subcategory_name: "",
+            subcategory_name: document.getElementById('selectCategoria').value,
             page: number
         }, { headers })
             .then((response) => {
                 console.log(response);
                 setlistProducts(response.data[1]);
+                window.location.href = '#productos'
             })
             .catch((error) => {
                 console.log(error);
@@ -93,13 +93,13 @@ const AdminProductos = () => {
     let items = [];
     for (let number = 1; number <= paginas; number++) {
         items.push(
-            <li className="page-item" key={number}><button className="page-link" onClick={() => { methodLoadPage(number) }}>{number}</button></li>,
+            <li className="page-item" key={number}><button style={{width:40}} className="page-link" onClick={() => { methodLoadPage(number) }}>{number}</button></li>,
         );
     }
 
     const paginationBasic = (
         <div>
-            <Pagination style={{ justifyContent: "center" }}>{items}</Pagination>
+            <Pagination className='paginacion' style={{ justifyContent: "center", display:"grid", gridTemplateColumns:"auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto"  }}>{items}</Pagination>
             <br />
         </div>
     );
@@ -144,23 +144,17 @@ const AdminProductos = () => {
 
     }
 
-
     function BuscarPorCategoria(evt) {
-        if (document.getElementById('selectCategoria').value === "") {
-            setcategoria("Todos")
-        } else {
-            setcategoria(document.getElementById('selectCategoria').value)
-        }
-
-
+        
         try {
             axios.post(baseUrl + '/products/api/all-products-admin/', {
                 product_name: "",
-                category_name: document.getElementById('selectCategoria').value,
+                category_name: "",
+                subcategory_name: document.getElementById('selectCategoria').value,
                 page: 1
             }, { headers })
                 .then((response) => {
-                    paginas = response.data[0][0]["num_pages "];
+                    paginas = response.data[0][0]["num_pages"];
                     setlistProducts(response.data[1]);
                 })
                 .catch((error) => {
@@ -177,22 +171,32 @@ const AdminProductos = () => {
         window.location.href = '/admin/producto/api/update/' + number + '/' + categoriaProducto + '/'
     }
 
+    
+
     return (
+
         <div>
             <AppbarAdmin />
 
             <>
+                <a name='productos' href='/'> </a>
                 <div className='container'>
                     <div style={{ width: "100%", textAlign: "justify" }}>
                         <div className='row' style={{ marginTop: 20, marginBottom: 20 }}>
                             <div className='col'>
-                                <h3><b>{categoria}</b></h3>
+                                
                             </div>
                             <div className='col'>
                                 <Form.Select id='selectCategoria' onChange={BuscarPorCategoria} style={{ width: "auto", float: "right" }}>
                                     <option value="">Sin filtros</option>
                                     {listCategoria.map((item, index) => (
-                                        <option key={index} value={item.category_name} >{item.category_name}</option>
+                                        <optgroup key={index} label={item[0][0].category_name}>
+                                            {listCategoria[index][1].map((data, index2) => (
+                                                <option key={index2} value={data.id} >
+                                                    {data.subcategory_name}
+                                                </option>
+                                            ))}
+                                        </optgroup>
                                     ))}
                                 </Form.Select>
                             </div>
@@ -241,7 +245,9 @@ const AdminProductos = () => {
                         </div>
                     </div>
                 </div>
-                <div style={{ paddingTop: 20 }}>
+                
+
+                <div className='container mt-5'>
                     {paginationBasic}
                 </div>
             </>
@@ -279,7 +285,7 @@ const AdminProductos = () => {
                         <Button style={{ marginLeft: 10, float: "right", backgroundColor: "#C12C30", borderColor: "#C12C30", color: "white" }} onClick={() => { methodAgotado() }} >
                             Agotar
                         </Button>
-                        <Button style={{ marginLeft: 10, float: "right", backgroundColor: "#E94E1B", borderColor: "#E94E1B" }} onClick={handleClose2}>
+                        <Button style={{ marginLeft: 10, float: "right", backgroundColor: "#282828", borderColor: "#282828" }} onClick={handleClose2}>
                             Volver
                         </Button>
 

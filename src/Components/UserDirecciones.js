@@ -73,14 +73,15 @@ const UserDirecciones = () => {
 
     }
 
-    function AgregarDireccion() {
+    const AgregarDireccion = (evt) => {
+        evt.preventDefault();
         axios.post(baseUrl + '/addresses/api/register/', {
             user: parseInt(id_usuario),
             street: inputs.street,
             avenue: inputs.avenue,
             neighborhood: inputs.neighborhood,
             street_number: inputs.street_number,
-            apartment_number: "0",
+            apartment_number: inputs.apartment_number,
             postal_code: parseInt(inputs.postal_code),
             city: inputs.city,
             state: inputs.state,
@@ -152,7 +153,7 @@ const UserDirecciones = () => {
             </div>
             <div className='row' id="addDireccion" style={{ display: "none" }}>
                 <div className='col-12' style={{ padding: 30 }}>
-                    <Form>
+                    <Form validated={true} onSubmit={AgregarDireccion}>
                         <h2 style={{ borderLeft: "solid", borderWidth: 10, borderColor: "#C4C4C4" }}><b>&nbsp; Nueva direccion</b></h2>
                         <Row style={{ marginBottom: 5 }}>
                             <Form.Group as={Col}>
@@ -177,8 +178,13 @@ const UserDirecciones = () => {
                             </Form.Group>
 
                             <Form.Group as={Col} >
-                                <Form.Label>Codigo postal:</Form.Label>*
-                                <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} required type="number" name="postal_code" onChange={handleChange} value={inputs.postal_code} />
+                                <Form.Label>Numero de apartamento:</Form.Label>*
+                                <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} required type="text" name="apartment_number" onChange={handleChange} value={inputs.apartment_number} />
+                            </Form.Group>
+
+                            <Form.Group as={Col} >
+                                <Form.Label>Codigo postal: {" (5 digitos)"}</Form.Label>*
+                                <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} required pattern="[0-9]{5}"  name="postal_code" onChange={handleChange} value={inputs.postal_code} placeholder='5 digitos' />
                             </Form.Group>
                         </Row>
                         <Row style={{ marginBottom: 5 }}>
@@ -199,7 +205,7 @@ const UserDirecciones = () => {
                                 <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} as='textarea' required type="text" name="references" onChange={handleChange} value={inputs.references} />
                             </Form.Group>
                         </Row>
-                        <Button style={{ marginTop: 20, background: "#C12C30", borderRadius: 0, border: "none", float: "right" }} type="button" onClick={() => { AgregarDireccion() }}>
+                        <Button style={{ marginTop: 20, background: "#C12C30", borderRadius: 0, border: "none", float: "right" }} type="submit" >
                             <b>Agregar</b>
                         </Button>
                     </Form>

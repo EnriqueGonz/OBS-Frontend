@@ -32,7 +32,8 @@ const AdminProductoUpdate = () =>{
         price: "",
         unit_of_existence: "",
         image: "",
-        category_name:""
+        category_name:"",
+        subcategory_name:""
     })
 
     function handleChange(evt) {
@@ -40,6 +41,8 @@ const AdminProductoUpdate = () =>{
         const value = evt.target.value;
         setInputs(values => ({ ...values, [name]: value }))
     }
+
+
     function loadSubcategorias(evt) {
         
         categoriaSeleccionada = parseInt(document.getElementById('selectCategoria').value)
@@ -53,6 +56,7 @@ const AdminProductoUpdate = () =>{
         ))
 
     }
+
     //get categorias
     useEffect(() =>{  
         try {
@@ -115,6 +119,12 @@ const AdminProductoUpdate = () =>{
         })
         .catch(err => {
             console.log(err.response);
+            if( document.getElementById('selectSubCategoria').value === ""){
+                document.getElementById('msgerror').style.display ="block";
+            }else{
+                document.getElementById('msgerror2').style.display ="block";
+            }
+            
         });
     
     }
@@ -138,7 +148,7 @@ const AdminProductoUpdate = () =>{
         <AppbarAdmin/>
         <div className='container' style={{paddingTop:40}}>
             <div className='row'>
-                <div className='col'>
+                <div className='col-12 col-md-6'>
                     <h3><b>Editar producto</b></h3>
                     <button className='btn' style={{position:"relative"}} onClick={() => { clickinput() }}>
                         {
@@ -152,7 +162,7 @@ const AdminProductoUpdate = () =>{
                         <input type="file" id="inputIMG" onChange={handleFileSelect}  style={{display:"none"}}></input>
                     </button>
                 </div>
-                <div className='col'>
+                <div className='col-12 col-md-6'>
                     <Form>
                         <Row className="mb-3">
                             <Form.Group>
@@ -180,6 +190,7 @@ const AdminProductoUpdate = () =>{
                                     ))}
                                 </Form.Select>
                             </Form.Group>
+                            <span id="msgerror" style={{color:"red",display:"none"}}>Seleccione subcategoria {'(Vuela a seleccionar categoria si no aparecen las subcategorias)'}</span>
 
                         </Row>
                         <Row className="mb-3">
@@ -205,6 +216,7 @@ const AdminProductoUpdate = () =>{
                                 <Form.Control required type="text" name="unit_of_existence" className='inputRegistro' value={inputs.unit_of_existence} onChange={handleChange} />
                             </Form.Group>
                         </Row>
+                        <span id="msgerror2" style={{color:"red",display:"none"}}>Algo salio mal, intentalo mas tarde.</span>
 
                         <Button style={{ marginLeft: 10, float: "right", backgroundColor: "#C12C30", borderColor: "#C12C30" }} onClick={handleSubmit} >
                             Editar

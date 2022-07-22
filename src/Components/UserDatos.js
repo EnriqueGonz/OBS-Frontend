@@ -189,10 +189,13 @@ const UserDatos = () => {
                         console.log(error.response.status);
                         if (error.response.status === 304) {
                             document.getElementById('msgAlerta').style.display = "block"
-
+                        }else{
+                            document.getElementById('msgPass').style.display = "block"
                         }
+                        
                     });
             } else {
+                
                 document.getElementById('msgError').style.display = "block"
             }
 
@@ -258,6 +261,7 @@ const UserDatos = () => {
                             {errorMessage ? <PasswordNotStrongMessage /> : null}
                         </Row>
                         <p>Nota: *Al actualizar tu contraseña deberas iniciar sesion.</p>
+                        <p id="msgPass" style={{ display: "none",color: "red" }}>Verifica que tus credenciales sean correctas.</p>
                         <p id="msgAlerta" style={{ display: "none" }}>Las contraseñas no esta siendo modificada</p>
                         <p id="msgError" style={{ color: "red", display: "none" }}>Error. Las contraseñas no coinciden</p>
                         <Button style={{ marginTop: 20, background: "#C12C30", borderRadius: 0, border: "none", float: "right" }} type="submit">

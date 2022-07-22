@@ -82,11 +82,11 @@ const Tienda = () => {
 
     function methodName(number) {
 
-        if(nombreCategoria === "" && nombreSubCategoria === "" && input.nombre === ""){
+        if (nombreCategoria === "" && nombreSubCategoria === "" && input.nombre === "") {
             reloadproducts(number)
-        }else if(input.nombre !== ""){
+        } else if (input.nombre !== "") {
             reloadproducts3(number)
-        }else if(nombreCategoria !== "" && nombreSubCategoria !== ""){
+        } else if (nombreCategoria !== "" && nombreSubCategoria !== "") {
             reloadproducts2(number);
 
         }
@@ -124,13 +124,13 @@ const Tienda = () => {
     let items = [];
     for (let number = 1; number <= paginas; number++) {
         items.push(
-            <li className="page-item" key={number}><button style={{width:40}} className="page-link" onClick={() => { methodName(number,nombreCategoria,nombreSubCategoria) }}>{number}</button></li>,
+            <li className="page-item" key={number}><button style={{ width: 40 }} className="page-link" onClick={() => { methodName(number, nombreCategoria, nombreSubCategoria) }}>{number}</button></li>,
         );
     }
 
     const paginationBasic = (
         <div>
-            <Pagination className='paginacion' style={{ placeContent:"center", display:"grid", gridTemplateColumns:"auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto" }}>{items}</Pagination>
+            <Pagination className='paginacion' style={{ placeContent: "center", display: "grid", gridTemplateColumns: "auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto" }}>{items}</Pagination>
             <br />
         </div>
     );
@@ -142,13 +142,13 @@ const Tienda = () => {
             subcategory_name: "",
             page: num
         })
-        .then((response) => {
-            setlistProducts(response.data[1]);
-            window.location.href = '#productos'
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+            .then((response) => {
+                setlistProducts(response.data[1]);
+                window.location.href = '#productos'
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
     function reloadproducts2(num) {
         axios.post(baseUrl + '/products/api/all-products/', {
@@ -157,13 +157,13 @@ const Tienda = () => {
             subcategory_name: nombreSubCategoria,
             page: num
         })
-        .then((response) => {
-            setlistProducts(response.data[1]);
-            window.location.href = '#productos'
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+            .then((response) => {
+                setlistProducts(response.data[1]);
+                window.location.href = '#productos'
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
     function reloadproducts3(num) {
         axios.post(baseUrl + '/products/api/all-products/', {
@@ -172,13 +172,13 @@ const Tienda = () => {
             subcategory_name: nombreSubCategoria,
             page: num
         })
-        .then((response) => {
-            setlistProducts(response.data[1]);
-            window.location.href = '#productos'
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+            .then((response) => {
+                setlistProducts(response.data[1]);
+                window.location.href = '#productos'
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     function buscarPorNombre(evt) {
@@ -237,7 +237,7 @@ const Tienda = () => {
 
 
     return (
-        <div style={{ height: "100%", width: "100%" }}>
+        <div style={{backgroundColor:"#F2F6F8"}}>
             <div>
                 <img src={header} alt="" className="imgHeader"></img>
             </div>
@@ -263,52 +263,56 @@ const Tienda = () => {
                     <button className='btn-flotante' onClick={() => { methodShowCarShop() }}><IconCarShop style={{ width: 30 }} /><br></br> Ir al carrito</button>
                 </div>
                 <a name='productos' href='/'> </a>
-                <div className='container marginMovil' style={{ marginBottom: 20 }}>
-                    <div style={{ textAlign: "-webkit-right" }}>
-                        <div className="groupTienda">
-                            <svg className="icon" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
-                            <input placeholder="Buscar por nombre" type="search" className="inputSearchTienda" name="nombre" value={input.nombre} onChange={buscarPorNombre} />
-                        </div>
-                    </div>
-                </div>
 
-                <div className='container'>
-                    <div className='grid-container-productos'>
-                        {listProducts.map((item, index) => (
-                            <div className='cardProducto' key={index} style={{ marginBottom: 20 }}>
-                                <div style={{ textAlign: "center", marginBottom: 10 }}>
-                                    {
-                                        (item.image === "")
-                                            ? <a href={'/producto/' + item.id}><img alt="" className='imgProducto' style={{ objectFit: "none" }} src='https://obsbucket.s3.amazonaws.com/assets/images/imgDefault.png'></img></a>
-                                            : <a href={'/producto/' + item.id}><img alt="" className='imgProducto' src={'https://obsbucket.s3.amazonaws.com/' + item.image}></img></a>
-                                    }
-
-                                </div>
-                                <div style={{ margin: 15 }}>
-                                    <div className='module line-clamp'>
-                                        <a href={'/producto/' + item.id}><p style={{ fontWeight: "bold", color: "#C12C30" }}>{item.product_name}</p></a>
-                                    </div>
-                                    <h6>${item.price}</h6>
-                                    <button className='btn' style={{ backgroundColor: "#C12C30", color: "white", borderRadius: 0, borderColor: "#C12C30" }} onClick={() => { methodAddCarShop(item.id) }}>Agregar al carrito</button>
+                <div className='row'>
+                    <div className='col-12'>
+                        <div className='container marginMovil' style={{ marginBottom: 20 }}>
+                            <div style={{ textAlign: "-webkit-right" }}>
+                                <div className="groupTienda">
+                                    <svg className="icon" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
+                                    <input placeholder="Buscar por nombre" type="search" className="inputSearchTienda" name="nombre" value={input.nombre} onChange={buscarPorNombre} />
                                 </div>
                             </div>
-                        ))}
+                        </div>
+                    </div>
+                    <div className='col-12'>
+                        <div className='container'>
+                            <div className='grid-container-productos'>
+                                {listProducts.map((item, index) => (
+                                    <div className='cardProducto' key={index} style={{ marginBottom: 20 }}>
+                                        <div style={{ textAlign: "center", marginBottom: 10 }}>
+                                            {
+                                                (item.image === "")
+                                                    ? <a href={'/producto/' + item.id}><img alt="" className='imgProducto' style={{ objectFit: "none" }} src='https://obsbucket.s3.amazonaws.com/assets/images/imgDefault.png'></img></a>
+                                                    : <a href={'/producto/' + item.id}><img alt="" className='imgProducto' src={'https://obsbucket.s3.amazonaws.com/' + item.image}></img></a>
+                                            }
+
+                                        </div>
+                                        <div style={{ margin: 15 }}>
+                                            <div className='module line-clamp'>
+                                                <a href={'/producto/' + item.id}><p style={{ fontWeight: "bold", color: "#C12C30" }}>{item.product_name}</p></a>
+                                            </div>
+                                            <h6>${item.price}</h6>
+                                            <button className='btn' style={{ backgroundColor: "#C12C30", color: "white", borderRadius: 0, borderColor: "#C12C30" }} onClick={() => { methodAddCarShop(item.id) }}>Agregar al carrito</button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
-            </div>
-            <br /><br />
 
-            <div>
+
+
+            </div>
+
+            <div className='container'>
                 {paginationBasic}
             </div>
 
-
-            <br /><br /><br /><br />
-
-
-
-
+            
             <Modal show={show} size="md" onHide={handleClose} >
                 <Modal.Body>
                     <LoginModal />
