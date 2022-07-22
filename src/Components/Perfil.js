@@ -49,7 +49,7 @@ const Perfil = () => {
     function handleChangeRegister(evt) {
         const name = evt.target.name;
         const value = evt.target.value;
-        console.log(name, '  ', value);
+        //console.log(name, '  ', value);
         setInputUser(values => ({ ...values, [name]: value }))
     }
 

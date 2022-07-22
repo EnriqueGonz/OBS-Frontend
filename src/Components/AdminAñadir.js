@@ -44,7 +44,7 @@ const AdminAñadir = () => {
         const name = evt.target.name;
         const value = evt.target.value;
         setInputs(values => ({ ...values, [name]: value }))
-        console.log(name, value)
+        //console.log(name, value)
     }
 
     function loadSubcategorias(evt) {
@@ -116,6 +116,7 @@ const AdminAñadir = () => {
 
     //post categoria
     const handleSubmitCategoria = (event) => {
+        event.preventDefault();
         axios.post(baseUrl + '/categories/api/register/', {
             category_name: inputs.category,
         }, { headers })
@@ -131,6 +132,7 @@ const AdminAñadir = () => {
     }
 
     const handleSubmitCategoriaAdd = (event) => {
+        event.preventDefault();
         axios.post(baseUrl + '/subcategories/api/register', {
             categories: parseInt(document.getElementById('selectCategoriaAdd').value),
             subcategory_name: inputs.categoryAdd,
@@ -239,14 +241,14 @@ const AdminAñadir = () => {
                 <div className='row'>
                     <div className='col-12 col-md-6'>
                         <button className='btn' style={{ position: "relative" }} onClick={() => { clickinput() }}>
-                            <img id="img1" src='https://obsbucket.s3.amazonaws.com/assets/images/imgDefault.png' alt=""></img>
+                            <img id="img1" style={{ width: "90%" }} src='https://obsbucket.s3.amazonaws.com/assets/images/imgDefault.png' alt=""></img>
                             <p style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}><b>Selecciona imagen</b></p>
                             <img alt='' src={preview} style={{ width: "90%" }} />
                             <input type="file" id="inputIMG" onChange={handleFileSelect} style={{ display: "none" }}></input>
                         </button>
                     </div>
                     <div className='col-12 col-md-6'>
-                        <Form>
+                        <Form validated={false} onSubmit={handleSubmit}>
                             <Row className="mb-3">
                                 <Form.Group>
                                     <Form.Label>Nombre del producto</Form.Label>
@@ -309,7 +311,7 @@ const AdminAñadir = () => {
                             </Row>
 
 
-                            <Button style={{ marginLeft: 10, float: "right", backgroundColor: "#C12C30", borderColor: "#C12C30" }} onClick={handleSubmit} >
+                            <Button style={{ marginLeft: 10, float: "right", backgroundColor: "#C12C30", borderColor: "#C12C30" }} type="submit" >
                                 Agregar
                             </Button>
                         </Form>
@@ -346,7 +348,7 @@ const AdminAñadir = () => {
                     <div className='col-12 col-md-6'>
                         <span>Agregar nueva categoria</span>
                         <div style={{ padding: 30, backgroundColor: "#DFDFDF" }}>
-                            <Form>
+                            <Form validated={false} onSubmit={handleSubmitCategoria}>
                                 <Row className="mb-3">
                                     <Form.Group>
                                         <Form.Label>Nombre de la categoria</Form.Label>
@@ -354,7 +356,7 @@ const AdminAñadir = () => {
                                     </Form.Group>
 
                                     <div className='container' style={{ textAlign: "center" }}>
-                                        <Button style={{ marginTop: 25, width: "100%", backgroundColor: "#C12C30", borderColor: "#C12C30" }} onClick={handleSubmitCategoria}>
+                                        <Button style={{ marginTop: 25, width: "100%", backgroundColor: "#C12C30", borderColor: "#C12C30" }} type="submit">
                                             Registrar
                                         </Button>
                                     </div>
@@ -399,7 +401,7 @@ const AdminAñadir = () => {
                     <div className='col-12 col-md-6'>
                         <span>Agregar nueva Subcategoria</span>
                         <div style={{ padding: 30, backgroundColor: "#DFDFDF" }}>
-                            <Form>
+                            <Form validated={false} onSubmit={handleSubmitCategoriaAdd}>
                                 <Row className='mb-3'>
                                     <Form.Group>
                                         <Form.Label id="errorcategoria">Selecciona categoria</Form.Label>
@@ -419,7 +421,7 @@ const AdminAñadir = () => {
                                     </Form.Group>
 
                                     <div className='container' style={{ textAlign: "center" }}>
-                                        <Button style={{ marginTop: 25, width: "100%", backgroundColor: "#C12C30", borderColor: "#C12C30" }} onClick={handleSubmitCategoriaAdd}>
+                                        <Button style={{ marginTop: 25, width: "100%", backgroundColor: "#C12C30", borderColor: "#C12C30" }} type="submit">
                                             Registrar
                                         </Button>
                                     </div>

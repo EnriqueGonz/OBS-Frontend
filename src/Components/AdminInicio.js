@@ -13,7 +13,7 @@ const AdminInicio = () => {
             <AppbarAdmin />
             <div>
                 <div className='container' style={{ marginTop: 25 }}>
-                    <h3><b>¡Bienvenido</b></h3>
+                    <h3><b>¡Bienvenido!</b></h3>
                     <h5>Admin</h5>
                 </div>
                 <div className='container' style={{ border: "Solid", borderColor: "#C12C30", borderRadius: 20, marginTop: 25, marginBottom: 25 }}>

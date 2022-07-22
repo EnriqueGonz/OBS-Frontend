@@ -84,8 +84,8 @@ const AdminOpiniones = () => {
                                     </div>
 
                                     <p><b>Mensaje:</b></p>
-                                    <div style={{ padding: 15, backgroundColor: "white" }}>
-                                        <span>{item.message}</span>
+                                    <div style={{backgroundColor: "white",padding: 15 }}>
+                                        <p style={{wordBreak:"break-all"}}>{item.message}</p>
                                     </div>
 
                                 </div>

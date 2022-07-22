@@ -251,7 +251,7 @@ function reloadDirecciones(){
             <p id='msgError' style={{color:"red",display:"none"}}>Selecciona direccion</p>
             {listDirecciones.map((item,index) =>(
                 <div key={index}>
-                    <div className="form-check" style={{padding:5, marginBottom:10,backgroundColor:"#ECECEC"}}>
+                    <div className="form-check" style={{marginBottom:10,backgroundColor:"#ECECEC"}}>
                         <input className="form-check-input" type="radio" name="direcciones" id="Direccion" value={item.id}/>
                         <label className="form-check-label" htmlFor="flexRadioDefault1">
                             <span>{item.street} {item.avenue} Calle no. {item.street_number} No. de casa: {item.apartment_number} <br/> {item.neighborhood}, {item.city}, {item.state}. <br/>CP: {item.postal_code} <br/>Referencias: {item.references}</span>
@@ -322,19 +322,19 @@ function reloadDirecciones(){
 
         <div className='container'>
             <h4><b>3.- Formas de pago</b></h4>
-            <div className="form-check" style={{padding:5, marginBottom:10,backgroundColor:"#ECECEC"}}>
+            <div className="form-check" style={{ marginBottom:10,backgroundColor:"#ECECEC"}}>
                 <input className="form-check-input" type="radio" id="Tarjeta" name="flexRadioDefault" value={"Tajeta"} defaultChecked />
                 <label className="form-check-label" htmlFor="flexRadioDefault2">
                     Tarjeta de credito/ debito
                 </label>
             </div>
-            <div className="form-check" style={{padding:5, marginBottom:10,backgroundColor:"#ECECEC"}}>
+            <div className="form-check" style={{ marginBottom:10,backgroundColor:"#ECECEC"}}>
                 <input className="form-check-input" type="radio" id="PayPal" name="flexRadioDefault" value={"PayPal"} />
                 <label className="form-check-label" htmlFor="flexRadioDefault1">
                     PayPal
                 </label>
             </div>
-            <div className="form-check" style={{padding:5, marginBottom:10,backgroundColor:"#ECECEC"}}>
+            <div className="form-check" style={{ marginBottom:10,backgroundColor:"#ECECEC"}}>
                 <input className="form-check-input" type="radio" id="MercadoPago" name="flexRadioDefault" value={"MercadoPago"} />
                 <label className="form-check-label" htmlFor="flexRadioDefault2">
                     Mercado Pago

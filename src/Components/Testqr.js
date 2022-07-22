@@ -2,6 +2,7 @@ import React from 'react';
 import mercadoPago from '../images/mercadoPago.png';
 import infoMercadoPago from '../images/infoMercagoPago.png';
 import { useParams } from 'react-router-dom';
+import '../Pedidos.css';
 
 import QRCode from "react-qr-code";
 
@@ -32,7 +33,7 @@ const Testqr = () => {
                     <div style={{backgroundColor:"#00B6F0"}}>
                         <img src={mercadoPago} alt="" style={{width:"60%",paddingTop:40,paddingBottom:40}}></img>
                         <div style={{ textAlign:"-webkit-center" }}>
-                            <div style={{width:300,backgroundColor:"white",padding:20}}>
+                            <div className='Qrwidth' style={{backgroundColor:"white",padding:20}}>
                                 <QRCode  level='L' title='Mercado Pago QR' value={qrcode} />
                             </div>
                         </div>

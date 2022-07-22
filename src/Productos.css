@@ -2,7 +2,7 @@
 /*Movil*/
 @media (max-width: 767.98px) {
     .paginacion{
-        grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto !important;
+        grid-template-columns: auto auto auto auto auto auto auto auto !important;
         margin-top: 25px !important;
     }
     .marginMovil{

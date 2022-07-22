@@ -113,7 +113,7 @@ const Inicio = () => {
                 </div>
             </div>
 
-            <div className="tablaContainer3" style={{ textAlign: "-webkit-center" }}>
+            <div className="container-sm tablaContainer3" style={{ textAlign: "-webkit-center" }}>
                 <div className="cardRegistro" >
                     <div className="row">
                         <div className="col-4" style={{ height: 50, borderRadius: "50px 0px 0px 0px", backgroundColor: "#32BD60" }}>

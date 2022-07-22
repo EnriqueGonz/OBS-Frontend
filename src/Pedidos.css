@@ -11,3 +11,16 @@
 .detallesP{
     margin: 0px;
 }
+.Qrwidth{
+    width: 300px;
+}
+
+/* movil */
+@media (max-width: 767.98px) {
+    .Qrwidth{
+        width: 80%;
+    }
+    
+
+    
+}

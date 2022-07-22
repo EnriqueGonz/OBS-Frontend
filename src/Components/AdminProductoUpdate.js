@@ -163,7 +163,7 @@ const AdminProductoUpdate = () =>{
                     </button>
                 </div>
                 <div className='col-12 col-md-6'>
-                    <Form>
+                    <Form validated={false} onSubmit={handleSubmit}>
                         <Row className="mb-3">
                             <Form.Group>
                                 <Form.Label>Nombre del producto</Form.Label>
@@ -218,7 +218,7 @@ const AdminProductoUpdate = () =>{
                         </Row>
                         <span id="msgerror2" style={{color:"red",display:"none"}}>Algo salio mal, intentalo mas tarde.</span>
 
-                        <Button style={{ marginLeft: 10, float: "right", backgroundColor: "#C12C30", borderColor: "#C12C30" }} onClick={handleSubmit} >
+                        <Button style={{ marginLeft: 10, float: "right", backgroundColor: "#C12C30", borderColor: "#C12C30" }} type="submit" >
                             Editar
                         </Button>
                     </Form>
