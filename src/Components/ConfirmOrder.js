@@ -9,6 +9,7 @@ import ReactDOM from 'react-dom';
 import PayPal from './Paypal';
 
 var baseUrl = global.config.i18n.route.url;
+var imgUrl = global.config.i18n.route.imgUrl;
 var token = localStorage.getItem('token');
 var username = localStorage.getItem('username');
 var id_usuario = localStorage.getItem('idUsuario');
@@ -235,7 +236,7 @@ function reloadDirecciones(){
             <div style={{display:"flex"}}>
                 {listProducts.map((item,index) => (
                     <div key={index} style={{border:"solid #B2B2B2 3px", width:150,height:150, marginRight:40,position:"relative",padding:25,borderRadius:15}}>
-                        <img style={{width:100,height:100,objectFit:"cover"}} src={'https://obsbucket.s3.amazonaws.com/'+item[1][0].image} alt=""></img>
+                        <img style={{width:100,height:100,objectFit:"cover"}} src={imgUrl+item[1][0].image} alt=""></img>
                     </div>
                 ))}
             </div>
@@ -351,7 +352,7 @@ function reloadDirecciones(){
                 </div>
                 <div className='col' style={{textAlign:"center"}}>
                     <h2><b>{'$' + costo_total.toFixed(2)+'MXN'}</b></h2>
-                    <Button style={{ background: "#C12C30", borderRadius: 0, border: "none" }} type="button" /* onClick={() => { procederAlPago()} } */ >
+                    <Button style={{ background: "#C12C30", borderRadius: 0, border: "none" }} type="button" onClick={() => { procederAlPago()} } >
                         <b>Pagar</b>
                     </Button>
                     

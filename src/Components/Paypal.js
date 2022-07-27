@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 // Install: npm i @paypal/react-paypal-js
 import axios from 'axios';
@@ -11,7 +11,7 @@ import FooterOBS from "./FooterOBS";
 
 var baseUrl = global.config.i18n.route.url;
 var orderPaypal = "";
-
+var clientIdPaypal = "";
 var token = localStorage.getItem('token');
 
 
@@ -80,6 +80,22 @@ const PayPal = (parametros) => {
     function finalizarCompra(){
         window.location.href = "/Inicio"
     }
+
+    useEffect(() => {
+        try {
+            axios.get(baseUrl + '/payment/api/paypal-client/',{headers})
+                .then((response) => {
+                    console.log(response.data);
+                    //clientIdPaypal = 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+
+        } catch (error) {
+            console.log(' . ', error);
+        }// eslint-disable-next-line react-hooks/exhaustive-deps
+    })
 
 
     return (
