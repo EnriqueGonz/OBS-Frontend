@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OfficeBS</title>
+</head>
+
+<body>
+    <div style="max-width: 550px; padding-left: 35px;padding-right: 35px; margin: auto;">
+        <div style="margin-left: auto; margin-right: auto; background-color: #ffff; padding:20px;">
+            <div>
+                <div style="text-align: center; padding:20px;">
+                    <img src="https://obsbucket.s3.amazonaws.com/mailings/images/logo.png" width="200px" style="text-align: left;">
+                </div>
+                <div style="border-left: solid; border-right: solid; border-top: solid; border-color: #92DCE5; padding: 20px;">
+                    <span style="font-size: 18px;"><strong><span style="font-size: 22px;">Confirmación <br> de compra</span></strong></span>
+                    <div style="padding-bottom: 15px;">
+                        <br>
+                        <span style="font-family: 'Quicksand', sans-serif; font-size: 15px; color: #000000;">Pedido No: # {{ numero de compra}}</span>
+                        <br><br>
+                    </div>
+
+                    <div style="border: solid #7A7A7A 5px; padding: 10px;">
+                        <h3>Productos:</h3>
+
+                        <li>
+                            {Producto name}
+                        </li>
+                        <li>
+                            {Producto name}
+                        </li>
+
+                    </div>
+
+                    <div style="padding-bottom: 15px;">
+                        <br>
+                        <span style="font-family: 'Quicksand', sans-serif; font-size: 15px; color: #000000;"><b>Direccion:</b><br> {{ direccion, cp , estado, pais}}</span>
+                    </div>
+                    <div style="padding-bottom: 15px;">
+                        <br>
+                        <span style="font-family: 'Quicksand', sans-serif; font-size: 15px; color: #000000;"><b>Gracias,</b><br> Equipo OfficeBS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="position: relative;">
+            <div style="text-align: center;">
+                <img src="https://obsbucket.s3.amazonaws.com/mailings/images/footer.png" alt="" style="width: 100%;">
+                <p style="position: absolute; bottom: 6%; color: white; left: 11%;">© 2022 Office Business Solution. Todos los derechos reservados</p>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

@@ -3,10 +3,12 @@ import axios from 'axios';
 
 import '../config';
 import AppbarAdmin from './AppbarAdmin';
+import logo from '../images/logo.png';
+import { Modal, Button } from 'react-bootstrap';
 
 var baseUrl = global.config.i18n.route.url;
 var token = localStorage.getItem('tokenAdmin');
-
+var idComentario = 0;
 
 
 const headers = {
@@ -17,6 +19,11 @@ const headers = {
 
 const AdminOpiniones = () => {
     const [listOpiniones, setlistOpiniones] = useState([]);
+
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
 
     useEffect(() => {
         try {
@@ -57,14 +64,22 @@ const AdminOpiniones = () => {
     }
 
     function deleteOpinion(id) {
-        axios.delete(baseUrl + '/opinions/api/delete/' + id + '/', { headers })
+        axios.delete(baseUrl + '/opinions/api/delete/' + idComentario + '/', { headers })
             .then((response) => {
+                console.log(response)
+                handleClose();
                 reloadOpiniones();
 
             })
             .catch((error) => {
                 console.log(error);
             });
+    }
+
+    function mostrarModal(id) {
+        idComentario = id;
+        handleShow();
+        
     }
 
 
@@ -114,7 +129,7 @@ const AdminOpiniones = () => {
                                             }
                                         </div>
                                         <div className='col'>
-                                            <button className='btn botonProductosAdmin' style={{ margin: 0, backgroundColor: "#C12C30", color: "white" }} onClick={() => { deleteOpinion(item.id) }}>Eliminar comentario</button>
+                                            <button className='btn botonProductosAdmin' style={{ margin: 0, backgroundColor: "#C12C30", color: "white" }} onClick={() => { mostrarModal(item.id) }}>Eliminar comentario</button>
                                         </div>
 
                                     </div>
@@ -130,6 +145,26 @@ const AdminOpiniones = () => {
 
             </div>
 
+
+            <Modal show={show} size="md" onHide={handleClose} >
+                <Modal.Body style={{ margin: 20 }}>
+                    <div style={{ textAlign: "center", border: "solid #92DCE5 5px", padding: 25 }}>
+                        <img src={logo} alt=""></img>
+                        <h4>¿Segur@ que quieres eliminar el comentario?</h4>
+
+
+                        <Button style={{ marginLeft: 10, backgroundColor: "#282828", borderColor: "#282828" }} onClick={handleClose}>
+                            Volver
+                        </Button>
+
+                        <Button style={{ marginLeft: 10, backgroundColor: "#C12C30", borderColor: "#C12C30", color: "white" }} onClick={() => { deleteOpinion()}} >
+                            Eliminar
+                        </Button>
+
+
+                    </div>
+                </Modal.Body>
+            </Modal>
 
         </>
     )
