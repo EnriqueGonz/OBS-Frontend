@@ -81,22 +81,6 @@ const PayPal = (parametros) => {
         window.location.href = "/Inicio"
     }
 
-    useEffect(() => {
-        try {
-            axios.get(baseUrl + '/payment/api/paypal-client/',{headers})
-                .then((response) => {
-                    console.log(response.data);
-                    //clientIdPaypal = 
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-
-        } catch (error) {
-            console.log(' . ', error);
-        }// eslint-disable-next-line react-hooks/exhaustive-deps
-    })
-
 
     return (
         <>
@@ -114,7 +98,7 @@ const PayPal = (parametros) => {
                 </div>
 
                 <div style={{textAlign:"center", paddingTop:25}}>
-                    <PayPalScriptProvider options={{ "client-id": "AVqSGBZdn8kfVjYFNOvBwFHWGGUkn-D73qLXbbaYN2BfSpQoO4OcoZGfAM_o9cIGr204vq3eEHkxX0tz", currency: "MXN" }}>
+                    <PayPalScriptProvider options={{ "client-id": parametros.clientIdPaypal, currency: "MXN" }}>
                         <PayPalButtons id="botonPaypal"
                             style={{ color: "silver", layout: "horizontal", height: 48, tagline: false, shape: "pill" }}
 

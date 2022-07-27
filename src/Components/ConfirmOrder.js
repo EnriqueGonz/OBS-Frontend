@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import header from '../images/HeaderCarrito.png';
 import '../Productos.css';
-import { Form,Col,Row,Button } from 'react-bootstrap';
+import { Form, Col, Row, Button } from 'react-bootstrap';
 import '../config';
 import PayWithCreditCard from "./PayWithCreditCard.js";
 import ReactDOM from 'react-dom';
@@ -17,8 +17,8 @@ var iddireccion = 0;
 
 
 const headers = {
-  'Content-Type': 'application/json',
-  'Authorization': `Token ${token}`
+    'Content-Type': 'application/json',
+    'Authorization': `Token ${token}`
 };
 
 
@@ -34,12 +34,12 @@ const ConfirmOrder = () => {
         street: '',
         avenue: '',
         neighborhood: '',
-        street_number:'',
-        apartment_number:'',
-        postal_code:'',
-        city:'',
-        state:'',
-        references:'',
+        street_number: '',
+        apartment_number: '',
+        postal_code: '',
+        city: '',
+        state: '',
+        references: '',
     })
 
     function handleChange(evt) {
@@ -49,106 +49,106 @@ const ConfirmOrder = () => {
     }
 
 
-  useEffect(() => {
-    try {
-        axios.get(baseUrl+'/shoppingcart/api/my-shopping-cart/'+username+'/', { headers })
-        .then((response) => {
-          console.log(response);
-          setlistProducts(response.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    useEffect(() => {
+        try {
+            axios.get(baseUrl + '/shoppingcart/api/my-shopping-cart/' + username + '/', { headers })
+                .then((response) => {
+                    console.log(response);
+                    setlistProducts(response.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
 
-    } catch (error) {
-      console.log(' . ', error);
-    }// eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setlistProducts])
+        } catch (error) {
+            console.log(' . ', error);
+        }// eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [setlistProducts])
 
-  useEffect(() =>{  
-    try {
-      axios.get(baseUrl+'/addresses/api/my-addresses/'+username+'/',{ headers })
-      .then((response) => {
-        console.log(response.data);
-        setlistDirecciones(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    useEffect(() => {
+        try {
+            axios.get(baseUrl + '/addresses/api/my-addresses/' + username + '/', { headers })
+                .then((response) => {
+                    console.log(response.data);
+                    setlistDirecciones(response.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
 
-    } catch (error) {
-      console.log(' . ', error);
-    }// eslint-disable-next-line react-hooks/exhaustive-deps
-  },[setlistDirecciones])
+        } catch (error) {
+            console.log(' . ', error);
+        }// eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [setlistDirecciones])
 
 
     let costo_total = 0;
 
-    listProducts.map((item) =>(
+    listProducts.map((item) => (
         costo_total += parseFloat(item[0][0]["total_price"])
 
     ))
 
-  function mostrarForm(){
-    if(document.getElementById('addDireccion').style.display === "none"){
-        document.getElementById('addDireccion').style.display = "block"
-    }else{
-      document.getElementById('addDireccion').style.display = "none"
+    function mostrarForm() {
+        if (document.getElementById('addDireccion').style.display === "none") {
+            document.getElementById('addDireccion').style.display = "block"
+        } else {
+            document.getElementById('addDireccion').style.display = "none"
+        }
     }
-}
 
-function reloadDirecciones(){
-    axios.get(baseUrl+'/addresses/api/my-addresses/'+username+'/',{ headers })
-    .then((response) => {
-      console.log(response.data);
-      setlistDirecciones(response.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    function reloadDirecciones() {
+        axios.get(baseUrl + '/addresses/api/my-addresses/' + username + '/', { headers })
+            .then((response) => {
+                console.log(response.data);
+                setlistDirecciones(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
 
-  }
+    }
 
-  function AgregarDireccion(){
-    axios.post(baseUrl+'/addresses/api/register/',{
-        user:parseInt(id_usuario),
-        street:inputs.street,
-        avenue:inputs.avenue,
-        neighborhood:inputs.neighborhood,
-        street_number:inputs.street_number,
-        apartment_number:"0",
-        postal_code:parseInt(inputs.postal_code),
-        city:inputs.city,
-        state:inputs.state,
-        references:inputs.references,
+    function AgregarDireccion() {
+        axios.post(baseUrl + '/addresses/api/register/', {
+            user: parseInt(id_usuario),
+            street: inputs.street,
+            avenue: inputs.avenue,
+            neighborhood: inputs.neighborhood,
+            street_number: inputs.street_number,
+            apartment_number: "0",
+            postal_code: parseInt(inputs.postal_code),
+            city: inputs.city,
+            state: inputs.state,
+            references: inputs.references,
 
-    },{ headers })
-    .then((response) => {
-        console.log(response.data);
-        mostrarForm();
-        reloadDirecciones();
-    })
-    .catch((error) => {
-        console.log(error.response);
-    });
+        }, { headers })
+            .then((response) => {
+                console.log(response.data);
+                mostrarForm();
+                reloadDirecciones();
+            })
+            .catch((error) => {
+                console.log(error.response);
+            });
 
-  }
+    }
 
     // eslint-disable-next-line
-  function procederAlPago(){
-      var checkboxes = document.getElementsByName('direcciones');
-      for(var i=0, n=checkboxes.length;i<n;i++) {
-          if(checkboxes[i].checked === true){
-              console.log(checkboxes[i].value);
-              iddireccion = checkboxes[i].value
-          } 
-      }
+    function procederAlPago() {
+        var checkboxes = document.getElementsByName('direcciones');
+        for (var i = 0, n = checkboxes.length; i < n; i++) {
+            if (checkboxes[i].checked === true) {
+                console.log(checkboxes[i].value);
+                iddireccion = checkboxes[i].value
+            }
+        }
 
-      if(iddireccion === 0){
-          console.log('sin direccion');
-          document.getElementById('msgError').style.display="block"
-      }else{
-            document.getElementById('msgError').style.display="none"
+        if (iddireccion === 0) {
+            console.log('sin direccion');
+            document.getElementById('msgError').style.display = "block"
+        } else {
+            document.getElementById('msgError').style.display = "none"
 
             let rowOrder = [];
             let datasUserRow = {
@@ -157,36 +157,48 @@ function reloadDirecciones(){
             }
 
             let datasOrderRow = []
-            listProducts.map((item) =>(
+            listProducts.map((item) => (
                 datasOrderRow.push({
                     products: item[0][0]["products_id"],
                     amount: item[0][0]["amount"],
                 })
             ))
-            
+
             rowOrder.push([datasUserRow]);
             rowOrder.push(datasOrderRow);
 
             console.log(rowOrder);
 
 
-            axios.post(baseUrl+'/orders/api/register/', {
+            axios.post(baseUrl + '/orders/api/register/', {
                 order: rowOrder
             }, { headers }
             ).then((response) => {
                 console.log(response)
 
 
-                if(document.getElementById('PayPal').checked){
+                if (document.getElementById('PayPal').checked) {
                     //window.location.href = "/checkout/buy/paypal/"+id_usuario+"/"+response.data[0][0].orders_id+"/Carrito de compras/"+costo_total.toFixed(2)    
-                    ReactDOM.render(
-                        <PayPal idusuario={id_usuario} idorder={response.data[0][0].orders_id} product_name={"Carrito de compras"} precio={costo_total.toFixed(2)}/>,
-                        document.querySelector("#root")
-                    );
+
+                    axios.get(baseUrl + '/payment/api/paypal-client/', { headers })
+                        .then((resultado) => {
+                            console.log(resultado.data.paypal_client_id);
+
+                            ReactDOM.render(
+                                <PayPal idusuario={id_usuario} idorder={response.data[0][0].orders_id} product_name={"Carrito de compras"} precio={costo_total.toFixed(2)} clientIdPaypal={resultado.data.paypal_client_id}/>,
+                                document.querySelector("#root")
+                            );
+
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+
+                    
 
 
                 }
-                if(document.getElementById('Tarjeta').checked){
+                if (document.getElementById('Tarjeta').checked) {
                     let dataProductPay = {
                         user: id_usuario,
                         order: response.data[0][0].orders_id,
@@ -194,177 +206,177 @@ function reloadDirecciones(){
                     }
 
                     PayWithCreditCard.payWithCreditCard(dataProductPay);
-                    
-                }
-                if(document.getElementById('MercadoPago').checked){
-                    axios.post(baseUrl+'/payment/api/save-payment-mercado-pago/',{
-                        user:parseInt(id_usuario),
-                        order:response.data[0][0].orders_id,
-                
-                    },{ headers })
-                    .then((response) => {
-                        console.log(response.data);
-                        window.location.href = '/checkout/buy/mercadopago/'+response.data.qr_data+'/'
-                    })
-                    .catch((error) => {
-                        console.log(error.response);
-                    });
 
-                    
+                }
+                if (document.getElementById('MercadoPago').checked) {
+                    axios.post(baseUrl + '/payment/api/save-payment-mercado-pago/', {
+                        user: parseInt(id_usuario),
+                        order: response.data[0][0].orders_id,
+
+                    }, { headers })
+                        .then((response) => {
+                            console.log(response.data);
+                            window.location.href = '/checkout/buy/mercadopago/' + response.data.qr_data + '/'
+                        })
+                        .catch((error) => {
+                            console.log(error.response);
+                        });
+
+
                 }
 
             }).catch((error) => {
                 console.log(error)
             });
-      }
+        }
 
 
-  }
-    
+    }
 
 
-  return (
+
+    return (
         <>
-        <div>
-            <img src={header} alt="" className="imgHeader"></img>
-        </div>
+            <div>
+                <img src={header} alt="" className="imgHeader"></img>
+            </div>
 
-        <div className='container' style={{marginTop:35}}>
-            <h4><b>1.- Mis productos</b></h4>
-        </div>
-        <div className='container' style={{display:"flex",overflowX:"auto",backgroundColor:"#ECECEC"}}>
-            <div style={{display:"flex"}}>
-                {listProducts.map((item,index) => (
-                    <div key={index} style={{border:"solid #B2B2B2 3px", width:150,height:150, marginRight:40,position:"relative",padding:25,borderRadius:15}}>
-                        <img style={{width:100,height:100,objectFit:"cover"}} src={imgUrl+item[1][0].image} alt=""></img>
-                    </div>
+            <div className='container' style={{ marginTop: 35 }}>
+                <h4><b>1.- Mis productos</b></h4>
+            </div>
+            <div className='container' style={{ display: "flex", overflowX: "auto", backgroundColor: "#ECECEC" }}>
+                <div style={{ display: "flex" }}>
+                    {listProducts.map((item, index) => (
+                        <div key={index} style={{ border: "solid #B2B2B2 3px", width: 150, height: 150, marginRight: 40, position: "relative", padding: 25, borderRadius: 15 }}>
+                            <img style={{ width: 100, height: 100, objectFit: "cover" }} src={imgUrl + item[1][0].image} alt=""></img>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <div className='container' style={{ backgroundColor: "#ECECEC", marginBottom: 35, padding: 15 }}>
+                {listProducts.map((item, index) => (
+                    <p style={{ margin: 0 }} key={index}>{item[0][0].amount} {item[1][0].product_name}</p>
                 ))}
             </div>
-        </div>
-        <div className='container' style={{backgroundColor:"#ECECEC",marginBottom:35,padding:15}}>
-            {listProducts.map((item,index) => (
-                <p style={{margin:0}} key={index}>{item[0][0].amount} {item[1][0].product_name}</p>
-            ))}
-        </div>
 
-        <div className='container' style={{marginBottom:40}}>
-            <h4><b>2.- Mis Direcciones</b></h4>
-            <p id='msgError' style={{color:"red",display:"none"}}>Selecciona direccion</p>
-            {listDirecciones.map((item,index) =>(
-                <div key={index}>
-                    <div className="form-check" style={{marginBottom:10,backgroundColor:"#ECECEC"}}>
-                        <input className="form-check-input" type="radio" name="direcciones" id="Direccion" value={item.id}/>
-                        <label className="form-check-label" htmlFor="flexRadioDefault1">
-                            <span>{item.street} {item.avenue} Calle no. {item.street_number} No. de casa: {item.apartment_number} <br/> {item.neighborhood}, {item.city}, {item.state}. <br/>CP: {item.postal_code} <br/>Referencias: {item.references}</span>
-                        </label>
+            <div className='container' style={{ marginBottom: 40 }}>
+                <h4><b>2.- Mis Direcciones</b></h4>
+                <p id='msgError' style={{ color: "red", display: "none" }}>Selecciona direccion</p>
+                {listDirecciones.map((item, index) => (
+                    <div key={index}>
+                        <div className="form-check" style={{ marginBottom: 10, backgroundColor: "#ECECEC" }}>
+                            <input className="form-check-input" type="radio" name="direcciones" id="Direccion" value={item.id} />
+                            <label className="form-check-label" htmlFor="flexRadioDefault1">
+                                <span>{item.street} {item.avenue} Calle no. {item.street_number} No. de casa: {item.apartment_number} <br /> {item.neighborhood}, {item.city}, {item.state}. <br />CP: {item.postal_code} <br />Referencias: {item.references}</span>
+                            </label>
+                        </div>
+
                     </div>
-                    
+                ))}
+                <button onClick={() => { mostrarForm() }} style={{ backgroundColor: "#C12C30", color: "white", float: "right" }} className="btn btnRemove">Agregar direcciones</button>
+
+                <div className='row' id="addDireccion" style={{ display: "none" }}>
+                    <div className='col-12' style={{ padding: 30 }}>
+                        <Form>
+                            <h2 style={{ borderLeft: "solid", borderWidth: 10, borderColor: "#C4C4C4" }}><b>&nbsp; Nueva direccion</b></h2>
+                            <Row style={{ marginBottom: 5 }}>
+                                <Form.Group as={Col}>
+                                    <Form.Label>Calle</Form.Label>
+                                    <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} required type="text" name="street" onChange={handleChange} value={inputs.street} />
+                                </Form.Group>
+
+                                <Form.Group as={Col}>
+                                    <Form.Label>Avenida</Form.Label>
+                                    <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} required type="text" name="avenue" onChange={handleChange} value={inputs.avenue} />
+                                </Form.Group>
+
+                                <Form.Group as={Col}>
+                                    <Form.Label>Colonia</Form.Label>
+                                    <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} required type="text" name="neighborhood" onChange={handleChange} value={inputs.neighborhood} />
+                                </Form.Group>
+                            </Row>
+                            <Row style={{ marginBottom: 5 }}>
+                                <Form.Group as={Col} >
+                                    <Form.Label>Numero de calle:</Form.Label>*
+                                    <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} required type="text" name="street_number" onChange={handleChange} value={inputs.street_number} />
+                                </Form.Group>
+
+                                <Form.Group as={Col} >
+                                    <Form.Label>Codigo postal:</Form.Label>*
+                                    <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} required type="number" name="postal_code" onChange={handleChange} value={inputs.postal_code} />
+                                </Form.Group>
+                            </Row>
+                            <Row style={{ marginBottom: 5 }}>
+                                <Form.Group as={Col}>
+                                    <Form.Label>Ciudad:</Form.Label>
+                                    <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} required type="text" name="city" onChange={handleChange} value={inputs.city} />
+                                </Form.Group>
+
+                                <Form.Group as={Col}>
+                                    <Form.Label>Estado:</Form.Label>
+                                    <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} required type="text" name="state" onChange={handleChange} value={inputs.state} />
+                                </Form.Group>
+                            </Row>
+                            <Row style={{ marginBottom: 5 }}>
+
+                                <Form.Group as={Col}>
+                                    <Form.Label>Referencias:</Form.Label>
+                                    <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} as='textarea' required type="text" name="references" onChange={handleChange} value={inputs.references} />
+                                </Form.Group>
+                            </Row>
+                            <Button style={{ marginTop: 20, background: "#C12C30", borderRadius: 0, border: "none", float: "right" }} type="button" onClick={() => { AgregarDireccion() }}>
+                                <b>Agregar</b>
+                            </Button>
+                        </Form>
+                    </div>
+
                 </div>
-            ))}
-            <button onClick = {() => { mostrarForm()} } style={{backgroundColor:"#C12C30",color:"white",float:"right" }} className="btn btnRemove">Agregar direcciones</button> 
+            </div>
 
-            <div className='row' id="addDireccion" style={{display:"none"}}>
-                <div className='col-12' style={{ padding: 30 }}>
-                    <Form>
-                        <h2 style={{ borderLeft: "solid", borderWidth: 10, borderColor: "#C4C4C4" }}><b>&nbsp; Nueva direccion</b></h2>
-                        <Row style={{ marginBottom: 5 }}>
-                            <Form.Group as={Col}>
-                                <Form.Label>Calle</Form.Label>
-                                <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} required type="text" name="street" onChange={handleChange} value={inputs.street} />
-                            </Form.Group>
+            <div className='container'>
+                <h4><b>3.- Formas de pago</b></h4>
+                <div className="form-check" style={{ marginBottom: 10, backgroundColor: "#ECECEC" }}>
+                    <input className="form-check-input" type="radio" id="Tarjeta" name="flexRadioDefault" value={"Tajeta"} defaultChecked />
+                    <label className="form-check-label" htmlFor="flexRadioDefault2">
+                        Tarjeta de credito/ debito
+                    </label>
+                </div>
+                <div className="form-check" style={{ marginBottom: 10, backgroundColor: "#ECECEC" }}>
+                    <input className="form-check-input" type="radio" id="PayPal" name="flexRadioDefault" value={"PayPal"} />
+                    <label className="form-check-label" htmlFor="flexRadioDefault1">
+                        PayPal
+                    </label>
+                </div>
+                <div className="form-check" style={{ marginBottom: 10, backgroundColor: "#ECECEC" }}>
+                    <input className="form-check-input" type="radio" id="MercadoPago" name="flexRadioDefault" value={"MercadoPago"} />
+                    <label className="form-check-label" htmlFor="flexRadioDefault2">
+                        Mercado Pago
+                    </label>
+                </div>
+            </div>
 
-                            <Form.Group as={Col}>
-                                <Form.Label>Avenida</Form.Label>
-                                <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} required type="text" name="avenue" onChange={handleChange} value={inputs.avenue} />
-                            </Form.Group>
 
-                            <Form.Group as={Col}>
-                                <Form.Label>Colonia</Form.Label>
-                                <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} required type="text" name="neighborhood" onChange={handleChange} value={inputs.neighborhood} />
-                            </Form.Group>
-                        </Row>
-                        <Row style={{ marginBottom: 5 }}>
-                            <Form.Group as={Col} >
-                                <Form.Label>Numero de calle:</Form.Label>*
-                                <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} required type="text" name="street_number" onChange={handleChange} value={inputs.street_number} />
-                            </Form.Group>
 
-                            <Form.Group as={Col} >
-                                <Form.Label>Codigo postal:</Form.Label>*
-                                <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} required type="number" name="postal_code" onChange={handleChange} value={inputs.postal_code} />
-                            </Form.Group>
-                        </Row>
-                        <Row style={{ marginBottom: 5 }}>
-                            <Form.Group as={Col}>
-                                <Form.Label>Ciudad:</Form.Label>
-                                <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} required type="text" name="city" onChange={handleChange} value={inputs.city} />
-                            </Form.Group>
-
-                            <Form.Group as={Col}>
-                                <Form.Label>Estado:</Form.Label>
-                                <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} required type="text" name="state" onChange={handleChange} value={inputs.state} />
-                            </Form.Group>
-                        </Row>
-                        <Row style={{ marginBottom: 5 }}>
-
-                            <Form.Group as={Col}>
-                                <Form.Label>Referencias:</Form.Label>
-                                <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} as='textarea' required type="text" name="references" onChange={handleChange} value={inputs.references} />
-                            </Form.Group>
-                        </Row>
-                        <Button style={{ marginTop: 20, background: "#C12C30", borderRadius: 0, border: "none", float: "right" }} type="button" onClick={() => {AgregarDireccion()}}>
-                            <b>Agregar</b>
+            <div className='container' style={{ backgroundColor: "#ECECEC", marginTop: 35 }}>
+                <div className='row'>
+                    <div className='col' style={{ textAlign: "end" }}>
+                        <h2>Pagas:</h2>
+                    </div>
+                    <div className='col' style={{ textAlign: "center" }}>
+                        <h2><b>{'$' + costo_total.toFixed(2) + 'MXN'}</b></h2>
+                        <Button style={{ background: "#C12C30", borderRadius: 0, border: "none" }} type="button" onClick={() => { procederAlPago() }} >
+                            <b>Pagar</b>
                         </Button>
-                    </Form>
-                </div>
 
-            </div>
-        </div>
-
-        <div className='container'>
-            <h4><b>3.- Formas de pago</b></h4>
-            <div className="form-check" style={{ marginBottom:10,backgroundColor:"#ECECEC"}}>
-                <input className="form-check-input" type="radio" id="Tarjeta" name="flexRadioDefault" value={"Tajeta"} defaultChecked />
-                <label className="form-check-label" htmlFor="flexRadioDefault2">
-                    Tarjeta de credito/ debito
-                </label>
-            </div>
-            <div className="form-check" style={{ marginBottom:10,backgroundColor:"#ECECEC"}}>
-                <input className="form-check-input" type="radio" id="PayPal" name="flexRadioDefault" value={"PayPal"} />
-                <label className="form-check-label" htmlFor="flexRadioDefault1">
-                    PayPal
-                </label>
-            </div>
-            <div className="form-check" style={{ marginBottom:10,backgroundColor:"#ECECEC"}}>
-                <input className="form-check-input" type="radio" id="MercadoPago" name="flexRadioDefault" value={"MercadoPago"} />
-                <label className="form-check-label" htmlFor="flexRadioDefault2">
-                    Mercado Pago
-                </label>
-            </div>
-        </div>
-
-
-        
-        <div className='container' style={{backgroundColor:"#ECECEC",marginTop:35}}>
-            <div className='row'>
-                <div className='col' style={{textAlign:"end"}}>
-                    <h2>Pagas:</h2>
-                </div>
-                <div className='col' style={{textAlign:"center"}}>
-                    <h2><b>{'$' + costo_total.toFixed(2)+'MXN'}</b></h2>
-                    <Button style={{ background: "#C12C30", borderRadius: 0, border: "none" }} type="button" onClick={() => { procederAlPago()} } >
-                        <b>Pagar</b>
-                    </Button>
-                    
+                    </div>
                 </div>
             </div>
-        </div>
 
 
-        
+
         </>
 
-  )
+    )
 
 }
 export default ConfirmOrder;
