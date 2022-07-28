@@ -7,6 +7,7 @@ import '../config';
 import AppbarAdmin from './AppbarAdmin';
 
 var baseUrl = global.config.i18n.route.url;
+var imgUrl = global.config.i18n.route.imgUrl;
 var token = localStorage.getItem('tokenAdmin');
 
 var categoriaSeleccionada = 0;
@@ -153,8 +154,8 @@ const AdminProductoUpdate = () =>{
                     <button className='btn' style={{position:"relative"}} onClick={() => { clickinput() }}>
                         {
                             (inputs.image === "")
-                            ? <img id="img1" src='https://obsbucket.s3.amazonaws.com/assets/images/imgDefault.png' alt="" style={{width:"100%",objectFit:"cover"}}></img>
-                            : <img id="img1" src={'https://obsbucket.s3.amazonaws.com/'+ inputs.image} alt="" style={{width:"100%",objectFit:"cover"}}></img>
+                            ? <img id="img1" src={imgUrl+'assets/images/imgDefault.png'} alt="" style={{width:"100%",objectFit:"cover"}}></img>
+                            : <img id="img1" src={imgUrl+ inputs.image} alt="" style={{width:"100%",objectFit:"cover"}}></img>
                         }
                         
                         <p style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%, -50%)"}}><b>Selecciona imagen</b></p>

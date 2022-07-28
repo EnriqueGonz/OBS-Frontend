@@ -4,7 +4,7 @@ import axios from 'axios';
 import '../config';
 import AppbarAdmin from './AppbarAdmin';
 import logo from '../images/logo.png';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 
 var baseUrl = global.config.i18n.route.url;
 var token = localStorage.getItem('tokenAdmin');
@@ -23,6 +23,20 @@ const AdminOpiniones = () => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const [show1, setShow1] = useState(false);
+    const handleClose1 = () => setShow1(false);
+    const handleShow1 = () => setShow1(true);
+
+    const [inputs, setinputs] = useState({
+        email: '',
+    })
+
+    function handleChange(evt) {
+        const name = evt.target.name;
+        const value = evt.target.value;
+        setinputs(values => ({ ...values, [name]: value }))
+    }
 
 
     useEffect(() => {
@@ -79,7 +93,38 @@ const AdminOpiniones = () => {
     function mostrarModal(id) {
         idComentario = id;
         handleShow();
-        
+
+    }
+
+    const sendInvitacion = (event) => {
+
+        event.preventDefault();
+        axios.post(baseUrl + '/opinions/api/send-invitation/', {
+            email: inputs.email,
+        },{headers})
+            .then((response) => {
+                console.log(response);
+                document.getElementById('msgsuccess').style.display = "block"
+                document.getElementById('msgerror').style.display = "none"
+                document.getElementById('msgerror2').style.display = "none"
+
+            })
+            .catch((error) => {
+                console.log(error);
+                if(error.response.status === 307){
+                    document.getElementById('msgerror2').style.display = "block"
+                    document.getElementById('msgsuccess').style.display = "none"
+                    document.getElementById('msgerror').style.display = "none"
+                }else{
+                    document.getElementById('msgerror').style.display = "block"
+                    document.getElementById('msgsuccess').style.display = "none"
+                    document.getElementById('msgerror2').style.display = "none"
+                }
+                
+            });
+
+
+
     }
 
 
@@ -87,7 +132,18 @@ const AdminOpiniones = () => {
     return (
         <>
             <AppbarAdmin />
+
             <div className='container'>
+
+                <div className='row'>
+                    <div className='col'>
+                    </div>
+                    <div className='col' style={{textAlign:"end", padding:15}}>
+                        <button className='btn' style={{ backgroundColor: "#282828", borderColor: "#282828",color:"white" }} onClick={() => { handleShow1() }}>Enviar invitacion</button>
+                    </div>
+                </div>
+                <hr></hr>
+
                 <div style={{ paddingBottom: 25 }}>
                     {listOpiniones.map((item, index) => (
                         <div key={index} style={{ width: "100%", backgroundColor: "#E4E4E4", padding: 25, marginBottom: 20 }}>
@@ -99,8 +155,8 @@ const AdminOpiniones = () => {
                                     </div>
 
                                     <p><b>Mensaje:</b></p>
-                                    <div style={{backgroundColor: "white",padding: 15 }}>
-                                        <p style={{wordBreak:"break-all"}}>{item.message}</p>
+                                    <div style={{ backgroundColor: "white", padding: 15 }}>
+                                        <p style={{ wordBreak: "break-all" }}>{item.message}</p>
                                     </div>
 
                                 </div>
@@ -157,9 +213,45 @@ const AdminOpiniones = () => {
                             Volver
                         </Button>
 
-                        <Button style={{ marginLeft: 10, backgroundColor: "#C12C30", borderColor: "#C12C30", color: "white" }} onClick={() => { deleteOpinion()}} >
+                        <Button style={{ marginLeft: 10, backgroundColor: "#C12C30", borderColor: "#C12C30", color: "white" }} onClick={() => { deleteOpinion() }} >
                             Eliminar
                         </Button>
+
+
+                    </div>
+                </Modal.Body>
+            </Modal>
+
+
+            <Modal show={show1} size="md" onHide={handleClose1} >
+                <Modal.Body style={{ margin: 20 }}>
+                    <div style={{ textAlign: "center", border: "solid #92DCE5 5px", padding: 25 }}>
+                        <img className='mb-4 mt-3' src={logo} alt="" style={{width:120}}></img>
+                        <h4>Envia a tus clientes una invitacion para que califiquen tus servicios</h4>
+
+
+                        <div className='container mt-4'>
+                            <Form validated={false} onSubmit={sendInvitacion}>
+                                <Row style={{ marginBottom: 5 }}>
+                                    <Form.Group as={Col} controlId="">
+                                        <Form.Label>Introduce Email del tu cliente:</Form.Label>
+                                        <Form.Control style={{ backgroundColor: "#A1C4CE", borderRadius: 0 }} required type="email" name="email" value={inputs.email} onChange={handleChange} />
+                                        <span id="msgerror" style={{ display: "none", color: "red" }}>&nbsp;&nbsp;Ocurrio un  error, valida que el correo sea valido.</span><br></br>
+                                        <span id="msgerror2" style={{ display: "none", color: "red" }}>&nbsp;&nbsp;Ocurrio un  error, el usuario ya tiene una invitacion pendiente</span><br></br>
+                                        <span id="msgsuccess" style={{ display: "none", color: "blue" }}>&nbsp;&nbsp;Invitacion enviada.</span><br></br>
+                                    </Form.Group>
+                                </Row>
+
+                                <Button style={{ backgroundColor: "#282828", borderColor: "#282828" }} onClick={handleClose1}>
+                                    Volver
+                                </Button>
+                                <Button style={{ marginLeft: 10, backgroundColor: "#C12C30", borderColor: "#C12C30", color: "white" }} type="submit" >
+                                    Enviar
+                                </Button>
+                            </Form>
+
+                        </div>
+
 
 
                     </div>

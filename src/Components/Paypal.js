@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 // Install: npm i @paypal/react-paypal-js
 import axios from 'axios';
@@ -11,7 +11,6 @@ import FooterOBS from "./FooterOBS";
 
 var baseUrl = global.config.i18n.route.url;
 var orderPaypal = "";
-var clientIdPaypal = "";
 var token = localStorage.getItem('token');
 
 
@@ -60,8 +59,7 @@ const PayPal = (parametros) => {
 
 
     function successmethodpay(){
-        
-        console.log('respaldo de compra')
+
         axios.post(baseUrl+'/payment/api/save-payment-intent-paypal/',{
             user: parametros.idusuario,
             order: parametros.idorder,
@@ -70,11 +68,11 @@ const PayPal = (parametros) => {
         .then((response) => {
             console.log(response)
             handleShow();
-            //Mostrar modal o redirigirlo alv
         })
         .catch((error) => {
             console.log(error);
         });
+
     }
 
     function finalizarCompra(){
@@ -118,7 +116,7 @@ const PayPal = (parametros) => {
                                         {
                                             description: parametros.product_name, // Nombre del producto
                                             amount: {
-                                                value: 1    , // Es el precio en MXN, con todo y costo de envío.
+                                                value: parametros.precio, // Es el precio en MXN, con todo y costo de envío.
                                             },
                                         },
                                     ]

@@ -5,6 +5,7 @@ import axios from 'axios';
 import '../config';
 
 var baseUrl = global.config.i18n.route.url;
+var imgUrl = global.config.i18n.route.imgUrl;
 
 const ForgotPassword = () =>{
     const [show, setShow] = useState(false);
@@ -71,7 +72,7 @@ const enviarEmail = (event) => {
             <Modal.Body>
                 <div style={{textAlign:"center"}}>
                     <div className='container' style={{textAlign:"center"}}>
-                        <img src='https://obsbucket.s3.amazonaws.com/mailings/images/logo.png' alt=""></img>
+                        <img src={imgUrl+'mailings/images/logo.png'} alt=""></img>
                     </div>
                     <br></br><br></br>
                     <h3>¡Solicitud para restablecer contraseña realizada con exito!</h3>

@@ -9,6 +9,9 @@ import '../config';
 
 
 var baseUrl = global.config.i18n.route.url;
+var imgUrl = global.config.i18n.route.imgUrl;
+
+
 var paginas = 0;
 var token = localStorage.getItem('token');
 var id_usuario = localStorage.getItem('idUsuario');
@@ -283,8 +286,8 @@ const Tienda = () => {
                                         <div style={{ textAlign: "center", marginBottom: 10 }}>
                                             {
                                                 (item.image === "")
-                                                    ? <a href={'/producto/' + item.id}><img alt="" className='imgProducto' style={{ objectFit: "none" }} src='https://obsbucket.s3.amazonaws.com/assets/images/imgDefault.png'></img></a>
-                                                    : <a href={'/producto/' + item.id}><img alt="" className='imgProducto' src={'https://obsbucket.s3.amazonaws.com/' + item.image}></img></a>
+                                                    ? <a href={'/producto/' + item.id}><img alt="" className='imgProducto' style={{ objectFit: "none" }} src={imgUrl+'assets/images/imgDefault.png'}></img></a>
+                                                    : <a href={'/producto/' + item.id}><img alt="" className='imgProducto' src={imgUrl + item.image}></img></a>
                                             }
 
                                         </div>

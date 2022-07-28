@@ -8,6 +8,8 @@ import '../config';
 
 
 var baseUrl = global.config.i18n.route.url;
+var imgUrl = global.config.i18n.route.imgUrl;
+
 var token = localStorage.getItem('token');
 var id_usuario = localStorage.getItem('idUsuario');
 
@@ -91,8 +93,8 @@ const ProductoEspecifico = () =>{
                     <div className='col-12 col-md-4'>
                         {
                             (listProduct.image  === "")
-                            ? <img alt="" style={{width:"100%",objectFit:"none"}} src='https://obsbucket.s3.amazonaws.com/assets/images/imgDefault.png'></img>
-                            : <img alt="" style={{width:"100%"}} src={ 'https://obsbucket.s3.amazonaws.com/'+listProduct.image }></img>
+                            ? <img alt="" style={{width:"100%",objectFit:"none"}} src={imgUrl+'assets/images/imgDefault.png'}></img>
+                            : <img alt="" style={{width:"100%"}} src={ imgUrl+listProduct.image }></img>
                         }
                     </div>
                     <div className='col-12 col-md-1'></div>

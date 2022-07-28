@@ -3,12 +3,16 @@ import header from '../images/img.png';
 import { Form,Button,Row,Modal,Col } from 'react-bootstrap';
 import axios from 'axios';
 import '../config';
+import { useParams } from 'react-router-dom';
 
 var baseUrl = global.config.i18n.route.url;
+var imgUrl = global.config.i18n.route.imgUrl;
 
 var calificacion = 0;
 
 const Opiniones = () =>{
+    var { idusuario, hash } = useParams(); // params
+
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
 
@@ -48,7 +52,7 @@ function enviarOpinion(){
         document.getElementById('msgError').style.display= "none";
         document.getElementById('msgErroCheck').style.display= "none";
 
-        axios.post(baseUrl+'/opinions/api/send-opinion/4/NjUxZjcwMjYxNDgwMWJjZjM2NjkyYjBlOGU5OTVjZDM',{
+        axios.post(baseUrl+'/opinions/api/send-opinion/'+idusuario+'/'+hash,{
             user:inputs.nombre,
             message:inputs.opinion,
             rate:calificacion
@@ -76,7 +80,7 @@ function enviarOpinion(){
 
             <div className='container' style={{marginTop:50}} >
                 <div className='contianer' style={{textAlign:"center",paddingBottom:30}}>
-                    <img src='https://obsbucket.s3.amazonaws.com/mailings/images/logo.png' alt=""></img>
+                    <img src={imgUrl+'mailings/images/logo.png'} alt=""></img>
                 </div>
                 <div className='row'>
                     <div className='col-12 col-md-6'>

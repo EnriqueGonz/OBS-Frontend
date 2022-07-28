@@ -90,6 +90,11 @@ function App() {
                         <RestorePassword />
                     </Route>
 
+                    <Route path="/opinions/api/send-opinion/:idusuario/:hash">
+                        <NavbarOBS />
+                        <Opiniones />
+                    </Route>
+
                     <Route path="/mailer/api/confirm-mail/:uidd/:rtoken/">
                         <NavbarOBS />
                         <ConfirmMail />
@@ -138,10 +143,7 @@ function App() {
                     }}>
                     </Route>
 
-                    <Route path="/opiniones/" render={() => {
-                        return tokenAdmin ? <Opiniones /> : <><NavbarOBS /><Perfil /></>
-                    }}>
-                    </Route>
+                  
 
 
                     {/* Pagos */}

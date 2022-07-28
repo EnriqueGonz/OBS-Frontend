@@ -9,6 +9,7 @@ import AppbarAdmin from './AppbarAdmin';
 
 
 var baseUrl = global.config.i18n.route.url;
+var imgUrl = global.config.i18n.route.imgUrl;
 var token = localStorage.getItem('tokenAdmin');
 var paginas = 0;
 var idproducto = 0;
@@ -215,8 +216,8 @@ const AdminProductos = () => {
                                             <div className='row' style={{ height: "50%", justifyContent: "center" }}>
                                                 {
                                                     (item.image === "")
-                                                        ? <a href={'/producto/' + item.id} ><img alt="" className='imgProducto' style={{ objectFit: "fill" }} src='https://obsbucket.s3.amazonaws.com/assets/images/imgDefault.png'></img></a>
-                                                        : <a href={'/producto/' + item.id} ><img alt="" className='imgProducto' src={'https://obsbucket.s3.amazonaws.com/' + item.image}></img></a>
+                                                        ? <a href={'/producto/' + item.id} ><img alt="" className='imgProducto' style={{ objectFit: "fill" }} src={imgUrl+'assets/images/imgDefault.png'}></img></a>
+                                                        : <a href={'/producto/' + item.id} ><img alt="" className='imgProducto' src={imgUrl + item.image}></img></a>
                                                 }
 
                                             </div>

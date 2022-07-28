@@ -8,6 +8,9 @@ import '../config';
 
 
 var baseUrl = global.config.i18n.route.url;
+var imgUrl = global.config.i18n.route.imgUrl;
+
+
 var token = localStorage.getItem('token');
 var username = localStorage.getItem('username');
 var idproducto = 0;
@@ -150,8 +153,8 @@ const UserCarShop = () => {
                                             <td>
                                                 {
                                                     (item[1][0]["image"] === "")
-                                                        ? <a href={'/producto/' + item[1][0]["id"]}><img style={{ width: 65, height: 65, margin: 10, objectFit: "fill" }} src='https://obsbucket.s3.amazonaws.com/assets/images/imgDefault.png' alt=""></img></a>
-                                                        : <a href={'/producto/' + item[1][0]["id"]}><img style={{ width: 65, height: 65, margin: 10 }} src={'https://obsbucket.s3.amazonaws.com/' + item[1][0]["image"]} alt=""></img></a>
+                                                        ? <a href={'/producto/' + item[1][0]["id"]}><img style={{ width: 65, height: 65, margin: 10, objectFit: "fill" }} src={imgUrl+'assets/images/imgDefault.png'} alt=""></img></a>
+                                                        : <a href={'/producto/' + item[1][0]["id"]}><img style={{ width: 65, height: 65, margin: 10 }} src={imgUrl + item[1][0]["image"]} alt=""></img></a>
                                                 }
 
                                             </td>

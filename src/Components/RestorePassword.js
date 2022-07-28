@@ -8,6 +8,7 @@ import '../config';
 import validator from 'validator'
 
 var baseUrl = global.config.i18n.route.url;
+var imgUrl = global.config.i18n.route.imgUrl;
 
 const RestorePassword = () => {
     var { uidd, rtoken } = useParams(); // params
@@ -128,7 +129,7 @@ const RestorePassword = () => {
                 <Modal.Body>
                     <div style={{ textAlign: "center" }}>
                         <div className='container' style={{ textAlign: "center" }}>
-                            <img src='https://obsbucket.s3.amazonaws.com/mailings/images/logo.png' alt=""></img>
+                            <img src={imgUrl+'mailings/images/logo.png'} alt=""></img>
                         </div>
                         <br></br><br></br>
                         <h3>¡Contraseña actualizada con exito!</h3>

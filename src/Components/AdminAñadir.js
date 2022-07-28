@@ -7,6 +7,9 @@ import '../config';
 import AppbarAdmin from './AppbarAdmin';
 
 var baseUrl = global.config.i18n.route.url;
+var imgUrl = global.config.i18n.route.imgUrl;
+
+
 var token = localStorage.getItem('tokenAdmin');
 
 var categoriaSeleccionada = 0;
@@ -241,7 +244,7 @@ const AdminAñadir = () => {
                 <div className='row'>
                     <div className='col-12 col-md-6'>
                         <button className='btn' style={{ position: "relative" }} onClick={() => { clickinput() }}>
-                            <img id="img1" style={{ width: "90%" }} src='https://obsbucket.s3.amazonaws.com/assets/images/imgDefault.png' alt=""></img>
+                            <img id="img1" style={{ width: "90%" }} src={imgUrl + 'assets/images/imgDefault.png'} alt=""></img>
                             <p style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}><b>Selecciona imagen</b></p>
                             <img alt='' src={preview} style={{ width: "90%" }} />
                             <input type="file" id="inputIMG" onChange={handleFileSelect} style={{ display: "none" }}></input>
