@@ -1,25 +1,74 @@
-import React from 'react';
+import React, { useEffect,useRef} from 'react';
+
 import imagen2 from '../images/img.png';
 import imagen3 from '../images/pedidos.png';
 import biclogo from '../images/marcas/bic.png';
 import dixonlogo from '../images/marcas/DIXON.png';
 import sharpielogo from '../images/marcas/sharpie.png';
 import magistrallogo from '../images/marcas/magistral.png';
-
 import ContactaSoporte from '../images/ContactaSoporte.png';
 import contactaWhatsapp from '../images/contactaWhatsapp.png';
+import btnApiWhatsapp from '../images/btnApiWhatsapp.png';
 
-
+import '../animated.css';
 import { Carousel } from 'react-bootstrap';
 
 document.title = "Office BS tu papelería de confianza"
+let cantidad = 0;
 
 
 const Inicio = () => {
+
+    const clientes = useRef(null);
+    const servicios = useRef(null);
+    const productosExistencias = useRef(null);
+    const productosVendidos = useRef(null);
+
+    useEffect(() => {
+        contador();
+
+    },[])
+
+
+    function contador() {
+        let tiempo=setInterval(() => {
+            cantidad+=5
+            
+            if(cantidad <= 54){
+                clientes.current.textContent = cantidad
+            }
+            if(cantidad <= 270){
+                servicios.current.textContent = cantidad
+            }
+            if(cantidad <= 900){
+                productosExistencias.current.textContent = cantidad
+            }
+            if(cantidad <= 1000){
+                productosVendidos.current.textContent = cantidad
+            }
+
+            if(cantidad === 1000){
+                clearInterval(tiempo)
+            }
+
+         }, 25);
+    }
+
+    function methodShowWhatsapp(){
+        window.location.href ='https://api.whatsapp.com/send/?phone=525621818583&text=¡Hola!%20Necesito%20ayuda'
+    }
+
+
     return (
-        <>
+        <div>
+            <div id='stickyWhatsapp'>
+                <button className='btn btn-flotanteWhatsapp' onClick = {() => { methodShowWhatsapp()} }>
+                    <img alt="btnWhatsApp" src={btnApiWhatsapp} style={{width:150}}></img>
+                </button>    
+            </div>
+        
             <div style={{ paddingBottom: 50 }}>
-                <img src={imagen2} alt="" className="imgHeader"></img>
+                <img src={imagen2} alt="" className="imgHeader fadeInDown"></img>
             </div>
             <div className='container' style={{ width: "80%", paddingBottom: 60 }}>
                 <Carousel>
@@ -72,24 +121,29 @@ const Inicio = () => {
                 <div className="container">
                     <div className="row rowContainer">
                         <div className="col">
-                            +54<br />
+                            +<span ref={clientes}>54</span>
+                            <br />
                             <span>Clientes satisfechos</span>
                         </div>
                         <div className="col">
-                            +270<br />
+                            +<span ref={servicios}>270</span>
+                            <br />
                             <span>Servicios realizados</span>
                         </div>
                         <div className="col">
-                            +900<br />
+                            +<span ref={productosExistencias}>900</span>
+                            <br />
                             <span>Productos en existencias</span>
                         </div>
                         <div className="col">
-                            +1000<br />
+                            +<span ref={productosVendidos}>1000</span>
+                            <br />
                             <span>Productos vendidos</span>
                         </div>
                     </div>
                 </div>
             </div>
+            
             <div className='container' style={{ width: "85%" }}>
                 <h4>Contamos con las mejores marcas</h4>
             </div>
@@ -97,6 +151,7 @@ const Inicio = () => {
             <div>
                 <div className="container" style={{ backgroundColor: "#F4F4F4" }}>
                     <div className="row rowContainerLogos">
+                        
                         <div className="col">
                             <img src={biclogo} alt="logo Bic" className="medidaLogos"></img>
                         </div>
@@ -125,7 +180,7 @@ const Inicio = () => {
                                 <h3>Registrate y cotiza tu primera compra</h3>
                                 <p>Y asi experimenta lo facil y seguro que es comprar con nosotros</p>
                                 <div style={{ display: "flex", placeContent: "center" }}>
-                                    <input placeholder="Ingresa tu correo electronico"></input>
+                                    <input placeholder="Ingresa tu correo electronico" style={{width:"55%"}}></input>
                                     <a className='btn' style={{ borderRadius: 0, backgroundColor: "#C12C30", color: "white" }} href='/Perfil'>Enviar</a>
                                 </div>
                                 <br /><br />
@@ -138,7 +193,7 @@ const Inicio = () => {
             </div>
 
 
-        </>
+        </div>
     )
 
 }

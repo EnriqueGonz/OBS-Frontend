@@ -3,10 +3,12 @@ import CirculoServicios from '../images/CirculoServicios.png';
 import CirculoHonestidad from '../images/CirculoHonestidad.png';
 import CirculoResponsabilidad from '../images/CirculoResponsabilidad.png';
 import CirculoCompromiso from '../images/CirculoCompromiso.png';
+import btnApiWhatsapp from '../images/btnApiWhatsapp.png';
 
 import header from '../images/header-nosotros.png';
 import axios from 'axios';
 import '../config';
+
 var baseUrl = global.config.i18n.route.url;
 
 const Nosotros = () => {
@@ -30,15 +32,25 @@ const Nosotros = () => {
         }// eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setlistOpiniones])
 
+    function methodShowWhatsapp(){
+        window.location.href ='https://api.whatsapp.com/send/?phone=525621818583&text=¡Hola!%20Necesito%20ayuda'
+    }
+
 
 
     return (
         <div>
+            <div id='stickyWhatsapp'>
+                <button className='btn btn-flotanteWhatsapp' onClick = {() => { methodShowWhatsapp()} }>
+                    <img alt="btnWhatsApp" src={btnApiWhatsapp} style={{width:150}}></img>
+                </button>    
+            </div>
             <div style={{ marginBottom: 50 }}>
                 <img src={header} alt="" className="imgHeader"></img>
             </div>
 
             <div className="container grid-containerContacto">
+                
                 <div className="grid-item" style={{ marginBottom: 20 }}>
                     <div className="column">
                         <h3 style={{ fontSize: 48 }}>Calidad en nuestro articulos, al mejor precio.</h3>

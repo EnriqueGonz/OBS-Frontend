@@ -23,6 +23,7 @@ const headers = {
 const AdminProductos = () => {
     const [listProducts, setlistProducts] = useState([]);
     const [listCategoria, setlistCategoria] = useState([]);
+    const [cantidadPorductos, setcantidadPorductos] = useState(0);
     
 
     const [show, setShow] = useState(false);
@@ -63,6 +64,7 @@ const AdminProductos = () => {
                     console.log(response);
                     paginas = response.data[0][0]["num_pages"];
                     setlistProducts(response.data[1]);
+                    setcantidadPorductos(response.data[0][0]["total_products"]);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -185,7 +187,7 @@ const AdminProductos = () => {
                     <div style={{ width: "100%", textAlign: "justify" }}>
                         <div className='row' style={{ marginTop: 20, marginBottom: 20 }}>
                             <div className='col'>
-                                
+                                <h5>Total de Productos: {cantidadPorductos}</h5>
                             </div>
                             <div className='col'>
                                 <Form.Select id='selectCategoria' onChange={BuscarPorCategoria} style={{ width: "auto", float: "right" }}>

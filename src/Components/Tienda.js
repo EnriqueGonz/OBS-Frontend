@@ -6,7 +6,7 @@ import { ReactComponent as IconCarShop } from '../images/icons/CarShop.svg'
 import { Dropdown, Pagination, Modal } from 'react-bootstrap';
 import LoginModal from './LoginModal';
 import '../config';
-
+import btnApiWhatsapp from '../images/btnApiWhatsapp.png';
 
 var baseUrl = global.config.i18n.route.url;
 var imgUrl = global.config.i18n.route.imgUrl;
@@ -236,6 +236,10 @@ const Tienda = () => {
             });
     }
 
+    function methodShowWhatsapp(){
+        window.location.href ='https://api.whatsapp.com/send/?phone=525621818583&text=¡Hola!%20Necesito%20ayuda'
+    }
+
 
 
 
@@ -262,6 +266,11 @@ const Tienda = () => {
 
 
             <div id='wrapper' style={{ width: "100%", backgroundColor: "#F2F6F8" }}>
+                <div id='stickyWhatsapp'>
+                    <button className='btn btn-flotanteWhatsapp' onClick = {() => { methodShowWhatsapp()} }>
+                        <img alt="btnWhatsApp" src={btnApiWhatsapp} style={{width:150}}></img>
+                    </button>    
+                </div>
                 <div id="sticky">
                     <button className='btn-flotante' onClick={() => { methodShowCarShop() }}><IconCarShop style={{ width: 30 }} /><br></br> Ir al carrito</button>
                 </div>

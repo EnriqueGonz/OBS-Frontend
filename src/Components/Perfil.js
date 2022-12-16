@@ -4,6 +4,7 @@ import { Form, Button, Row, Col, Modal } from 'react-bootstrap';
 import axios from 'axios';
 import validator from 'validator'
 import '../config';
+import btnApiWhatsapp from '../images/btnApiWhatsapp.png';
 
 
 var baseUrl = global.config.i18n.route.url;
@@ -264,10 +265,17 @@ const Perfil = () => {
         }
     }
 
-
+    function methodShowWhatsapp(){
+        window.location.href ='https://api.whatsapp.com/send/?phone=525621818583&text=¡Hola!%20Necesito%20ayuda'
+    }
 
     return (
         <>
+            <div id='stickyWhatsapp'>
+                <button className='btn btn-flotanteWhatsapp' onClick = {() => { methodShowWhatsapp()} }>
+                    <img alt="btnWhatsApp" src={btnApiWhatsapp} style={{width:150}}></img>
+                </button>    
+            </div>
 
             <div>
                 <img src={header} alt="" className="imgHeader"></img>

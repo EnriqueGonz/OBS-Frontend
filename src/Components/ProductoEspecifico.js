@@ -93,34 +93,29 @@ const ProductoEspecifico = () =>{
                     <div className='col-12 col-md-4'>
                         {
                             (listProduct.image  === "")
-                            ? <img alt="" style={{width:"100%",objectFit:"none"}} src={imgUrl+'assets/images/imgDefault.png'}></img>
-                            : <img alt="" style={{width:"100%"}} src={ imgUrl+listProduct.image }></img>
+                            ? <img alt=""  style={{width:"100%",objectFit:"none"}} src={imgUrl+'assets/images/imgDefault.png'}></img>
+                            : <img alt="" className='zoomHover' style={{width:"100%"}} src={ imgUrl+listProduct.image }></img>
                         }
                     </div>
                     <div className='col-12 col-md-1'></div>
                     <div className='col-12 col-md-5'>
-                        <h1><b>{listProduct.product_name}</b></h1>
+                        <h1 style={{fontSize:"2rem"}}><b>{listProduct.product_name}</b></h1>
 
                         <h2>$ {listProduct.price}</h2>
 
                         <div style={{ display: "inline-flex", alignItems: "center" }}>
-                            <h5><b>Cantidad: </b></h5>
-                            <button style={{ fontSize: 25 }} onClick={handleOnRemove} className="btn"><MdRemove /></button>
+                            <h5 ><b>Cantidad: </b></h5>
+                            <button style={{ fontSize: 25,padding: 0,display: "flex", paddingLeft:5, paddingRight:5 }} onClick={handleOnRemove} className="btn"><MdRemove /></button>
                             <h4 style={{ padding:10,backgroundColor:"gray",color:"white" }}>{amount}</h4>
-                            <button style={{  fontSize: 25 }} onClick={handleOnAdd} className="btn"><MdAdd /></button>
+                            <button style={{ fontSize: 25,padding: 0,display: "flex", paddingLeft:5, paddingRight:5 }} onClick={handleOnAdd} className="btn"><MdAdd /></button>
                             <button className='btn' style={{paddingRight:25,paddingLeft:25,backgroundColor:"#C12C30",color:"white"}} onClick = {() => { methodAddCarShop(listProduct.id)} }>Añadir al carrito</button>
                         </div>
 
                         <br/>
-                        <div className='row'>
-                            <div className='col'>
-                                <p style={{fontSize:20}}><MdCategory/><b>Categoria:</b>{' '+listProduct.category_name}</p>
-                            </div>
-                            <div className='col'>
-                                
-                            </div>
+                        <div className='mt-3 mb-3'>
+                            <p style={{fontSize:20, display:"flex",alignItems:"center"}} ><MdCategory/><b>Categoria: &nbsp;</b> {listProduct.category_name}</p>
                         </div>
-                        <p style={{fontSize:20}}><MdInfo/><b>Descripcion:</b>{' '+listProduct.description}</p>
+                        <p style={{fontSize:20,}} ><MdInfo/><b>Descripcion:</b>{' '+listProduct.description}</p>
                         
                     </div>
                     <div className='col-12 col-md-1'></div>
